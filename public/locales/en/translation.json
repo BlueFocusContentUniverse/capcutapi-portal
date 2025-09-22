@@ -1,0 +1,116 @@
+{
+  "normal": "Normal",
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "settings": "Settings",
+    "logout": "Logout",
+    "drafts": "Drafts",
+    "video_tasks": "Video Task Status",
+    "admin": "Admin"
+  },
+  "sidebar": {
+    "title": "BF Management System",
+    "admin_fallback": "Administrator",
+    "email_fallback": "admin@example.com"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "manage": "Manage",
+    "open": "Open",
+    "set_page_size": "Set page size"
+  },
+  "login": {
+    "title": "Login",
+    "description": "Please enter your credentials to access the management panel",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login",
+    "submitting": "Logging in…",
+    "error": "Login error",
+    "email_placeholder": "Enter email",
+    "password_placeholder": "Enter password"
+  },
+  "dashboard": {
+    "title": "Admin Dashboard",
+    "subtitle": "Manage application data"
+  },
+  "users": {
+    "title": "User Management",
+    "subtitle": "Manage user accounts and profiles",
+    "manage_users": "Manage Users",
+    "loading": "Loading users…",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "status": "Status"
+  },
+  "drafts": {
+    "title": "Drafts",
+    "fields": {
+      "id": "ID",
+      "draft_id": "Draft ID",
+      "draft_name": "Draft Name",
+      "resource": "Resource",
+      "resolution": "Resolution",
+      "duration": "Duration",
+      "fps": "FPS",
+      "version": "Version",
+      "size": "Size",
+      "created": "Created",
+      "updated": "Updated",
+      "accessed": "Accessed"
+    }
+  },
+  "video_tasks": {
+    "title": "Video Task Status",
+    "fields": {
+      "id": "ID",
+      "task_id": "Task ID",
+      "draft_id": "Draft ID",
+      "status": "Status",
+      "progress": "Progress",
+      "message": "Message",
+      "draft_url": "Draft URL",
+      "created": "Created",
+      "updated": "Updated"
+    }
+  },
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "admin_users": {
+    "title": "Admin Accounts",
+    "subtitle": "Super admin only: Create and view backend admin accounts",
+    "create_admin": "Create Admin",
+    "create_dialog_title": "Create Admin",
+    "create_dialog_description": "Enter information to create a login account for backend admin",
+    "form_name": "Name",
+    "form_email": "Email",
+    "form_password": "Password",
+    "create_button": "Create",
+    "creating": "Creating...",
+    "cancel": "Cancel",
+    "list_title": "Admin List",
+    "list_description": "View existing admin accounts",
+    "search_placeholder": "Search name/email/role",
+    "loading": "Loading...",
+    "no_data": "No data",
+    "error_load_failed": "Load failed",
+    "error_create_failed": "Create failed",
+    "error_fill_all_fields": "Please fill all fields",
+    "error_password_too_short": "Password must be at least 6 characters",
+    "role_admin": "admin",
+    "role_superadmin": "superadmin"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalid_email": "Please enter a valid email"
+  }
+}
+

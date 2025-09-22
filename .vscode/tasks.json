@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Seed superadmin",
+      "type": "shell",
+      "command": "$env:SEED_SUPERADMIN_NAME='superadmin'; $env:SEED_SUPERADMIN_EMAIL='super@admin.com'; $env:SEED_SUPERADMIN_PASSWORD='NAfXn2Hka15U8D2h5r'; node ./scripts/seed-superadmin.js",
+      "problemMatcher": ["$tsc"],
+      "group": "build"
+    },
+    {
+      "label": "Build mountains-admin",
+      "type": "shell",
+      "command": "npm run build",
+      "args": [],
+      "isBackground": false,
+      "problemMatcher": ["$tsc"],
+      "group": "build"
+    }
+  ]
+}

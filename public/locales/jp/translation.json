@@ -1,0 +1,116 @@
+{
+  "normal": "通常",
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "users": "ユーザー",
+    "settings": "設定",
+    "logout": "ログアウト",
+    "drafts": "ドラフト",
+    "video_tasks": "動画生成タスク状況",
+    "admin": "管理"
+  },
+  "sidebar": {
+    "title": "BF 管理システム",
+    "admin_fallback": "管理者",
+    "email_fallback": "admin@example.com"
+  },
+  "actions": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "create": "作成",
+    "manage": "管理",
+    "open": "開く",
+    "set_page_size": "ページサイズを設定"
+  },
+  "login": {
+    "title": "ログイン",
+    "description": "ログインに使用するメールアドレスとパスワードを入力してください",
+    "email": "メール",
+    "password": "パスワード",
+    "submit": "ログイン",
+    "submitting": "ログイン中…",
+    "error": "ログインエラー",
+    "email_placeholder": "メールを入力",
+    "password_placeholder": "パスワードを入力"
+  },
+  "dashboard": {
+    "title": "管理ダッシュボード",
+    "subtitle": "アプリケーションデータを管理"
+  },
+  "users": {
+    "title": "ユーザー管理",
+    "subtitle": "ユーザーアカウントとプロフィールを管理",
+    "manage_users": "ユーザーを管理",
+    "loading": "ユーザーを読み込み中…",
+    "name": "名前",
+    "email": "メール",
+    "role": "ロール",
+    "status": "ステータス"
+  },
+  "drafts": {
+    "title": "ドラフト",
+    "fields": {
+      "id": "ID",
+      "draft_id": "ドラフトID",
+      "draft_name": "ドラフト名",
+      "resource": "リソース",
+      "resolution": "解像度",
+      "duration": "再生時間",
+      "fps": "FPS",
+      "version": "バージョン",
+      "size": "サイズ",
+      "created": "作成日時",
+      "updated": "更新日時",
+      "accessed": "アクセス日時"
+    }
+  },
+  "video_tasks": {
+    "title": "動画生成タスク状況",
+    "fields": {
+      "id": "ID",
+      "task_id": "タスクID",
+      "draft_id": "ドラフトID",
+      "status": "ステータス",
+      "progress": "進捗",
+      "message": "メッセージ",
+      "draft_url": "ドラフトURL",
+      "created": "作成日時",
+      "updated": "更新日時"
+    }
+  },
+  "pagination": {
+    "prev": "前へ",
+    "next": "次へ"
+  },
+  "admin_users": {
+    "title": "管理者アカウント",
+    "subtitle": "スーパー管理者のみ: バックエンド管理者アカウントの作成と表示",
+    "create_admin": "管理者を作成",
+    "create_dialog_title": "管理者を作成",
+    "create_dialog_description": "バックエンド管理者にログイン可能なアカウントを作成するための情報を入力してください",
+    "form_name": "名前",
+    "form_email": "メール",
+    "form_password": "パスワード",
+    "create_button": "作成",
+    "creating": "作成中...",
+    "cancel": "キャンセル",
+    "list_title": "管理者一覧",
+    "list_description": "既存の管理者アカウントを表示",
+    "search_placeholder": "名前/メール/ロールを検索",
+    "loading": "読み込み中...",
+    "no_data": "データなし",
+    "error_load_failed": "読み込み失敗",
+    "error_create_failed": "作成失敗",
+    "error_fill_all_fields": "すべてのフィールドを入力してください",
+    "error_password_too_short": "パスワードは最低6文字です",
+    "role_admin": "admin",
+    "role_superadmin": "superadmin"
+  },
+  "errors": {
+    "required": "必須項目です",
+    "invalid_email": "有効なメールアドレスを入力してください"
+  }
+}
+

@@ -1,0 +1,116 @@
+{
+  "normal": "普通",
+  "nav": {
+    "dashboard": "儀表板",
+    "users": "用戶",
+    "settings": "設定",
+    "logout": "登出",
+    "drafts": "剪映草稿箱",
+    "video_tasks": "生成視頻任務狀態",
+    "admin": "Admin 管理"
+  },
+  "sidebar": {
+    "title": "BF 管理系統",
+    "admin_fallback": "管理員",
+    "email_fallback": "admin@example.com"
+  },
+  "actions": {
+    "save": "儲存",
+    "cancel": "取消",
+    "delete": "刪除",
+    "edit": "編輯",
+    "create": "建立",
+    "manage": "管理",
+    "open": "打開",
+    "set_page_size": "設定每頁數量"
+  },
+  "login": {
+    "title": "登入",
+    "description": "請輸入您的憑據以訪問管理面板",
+    "email": "電郵",
+    "password": "密碼",
+    "submit": "登入",
+    "submitting": "登入中…",
+    "error": "登入錯誤",
+    "email_placeholder": "請輸入電郵",
+    "password_placeholder": "請輸入密碼"
+  },
+  "dashboard": {
+    "title": "管理系統儀表板",
+    "subtitle": "管理應用程式數據"
+  },
+  "users": {
+    "title": "用戶管理",
+    "subtitle": "管理用戶帳戶和個人資料",
+    "manage_users": "管理用戶",
+    "loading": "載入用戶中…",
+    "name": "姓名",
+    "email": "電郵",
+    "role": "角色",
+    "status": "狀態"
+  },
+  "drafts": {
+    "title": "剪映草稿箱",
+    "fields": {
+      "id": "ID",
+      "draft_id": "草稿 ID",
+      "draft_name": "草稿名稱",
+      "resource": "來源",
+      "resolution": "解析度",
+      "duration": "時長",
+      "fps": "幀率",
+      "version": "版本",
+      "size": "大小",
+      "created": "建立時間",
+      "updated": "更新時間",
+      "accessed": "存取時間"
+    }
+  },
+  "video_tasks": {
+    "title": "生成視頻任務狀態",
+    "fields": {
+      "id": "ID",
+      "task_id": "任務 ID",
+      "draft_id": "草稿 ID",
+      "status": "狀態",
+      "progress": "進度",
+      "message": "訊息",
+      "draft_url": "草稿連結",
+      "created": "建立時間",
+      "updated": "更新時間"
+    }
+  },
+  "pagination": {
+    "prev": "上一頁",
+    "next": "下一頁"
+  },
+  "admin_users": {
+    "title": "管理員帳戶",
+    "subtitle": "僅超級管理員可見，用於建立/查看後台管理員",
+    "create_admin": "新增管理員",
+    "create_dialog_title": "建立管理員",
+    "create_dialog_description": "輸入資訊，建立可登入後台的管理員帳號",
+    "form_name": "姓名",
+    "form_email": "電郵",
+    "form_password": "密碼",
+    "create_button": "建立",
+    "creating": "建立中...",
+    "cancel": "取消",
+    "list_title": "管理員清單",
+    "list_description": "查看既有管理員帳戶",
+    "search_placeholder": "搜尋姓名/電郵/角色",
+    "loading": "載入中...",
+    "no_data": "暫無資料",
+    "error_load_failed": "載入失敗",
+    "error_create_failed": "建立失敗",
+    "error_fill_all_fields": "請填寫所有欄位",
+    "error_password_too_short": "密碼至少 6 位",
+    "role_admin": "admin",
+    "role_superadmin": "superadmin"
+  },
+  "errors": {
+    "required": "此欄位為必填",
+    "invalid_email": "請輸入有效的電郵地址"
+  }
+}
+

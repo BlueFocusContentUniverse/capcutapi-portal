@@ -1,0 +1,116 @@
+{
+  "normal": "普通",
+  "nav": {
+    "dashboard": "仪表板",
+    "users": "用户",
+    "settings": "设置",
+    "logout": "退出登录",
+    "drafts": "剪映草稿箱",
+    "video_tasks": "生成视频任务状态(WIP)",
+    "admin": "Admin 管理"
+  },
+  "sidebar": {
+    "title": "BF 管理系统",
+    "admin_fallback": "管理员",
+    "email_fallback": "admin@example.com"
+  },
+  "actions": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "manage": "管理",
+    "open": "打开",
+    "set_page_size": "设置每页数量"
+  },
+  "login": {
+    "title": "登录",
+    "description": "请输入您的凭据以访问管理面板",
+    "email": "邮箱",
+    "password": "密码",
+    "submit": "登录",
+    "submitting": "登录中…",
+    "error": "登录出错",
+    "email_placeholder": "请输入邮箱",
+    "password_placeholder": "请输入密码"
+  },
+  "dashboard": {
+    "title": "管理系统仪表板",
+    "subtitle": "管理应用程序数据"
+  },
+  "users": {
+    "title": "用户管理",
+    "subtitle": "管理用户账户和个人资料",
+    "manage_users": "管理用户",
+    "loading": "加载用户中…",
+    "name": "姓名",
+    "email": "邮箱",
+    "role": "角色",
+    "status": "状态"
+  },
+  "drafts": {
+    "title": "剪映草稿箱",
+    "fields": {
+      "id": "ID",
+      "draft_id": "草稿 ID",
+      "draft_name": "草稿名称",
+      "resource": "来源",
+      "resolution": "分辨率",
+      "duration": "时长",
+      "fps": "帧率",
+      "version": "版本",
+      "size": "大小",
+      "created": "创建时间",
+      "updated": "更新时间",
+      "accessed": "访问时间"
+    }
+  },
+  "video_tasks": {
+    "title": "生成视频任务状态",
+    "fields": {
+      "id": "ID",
+      "task_id": "任务 ID",
+      "draft_id": "草稿 ID",
+      "status": "状态",
+      "progress": "进度",
+      "message": "消息",
+      "draft_url": "草稿链接",
+      "created": "创建时间",
+      "updated": "更新时间"
+    }
+  },
+  "pagination": {
+    "prev": "上一页",
+    "next": "下一页"
+  },
+  "admin_users": {
+    "title": "管理员账户",
+    "subtitle": "仅超级管理员可见，用于创建/查看后台管理员",
+    "create_admin": "新建管理员",
+    "create_dialog_title": "创建管理员",
+    "create_dialog_description": "输入信息，创建可登录后台的管理员账号",
+    "form_name": "姓名",
+    "form_email": "邮箱",
+    "form_password": "密码",
+    "create_button": "创建",
+    "creating": "创建中...",
+    "cancel": "取消",
+    "list_title": "管理员列表",
+    "list_description": "查看已有管理员账户",
+    "search_placeholder": "搜索姓名/邮箱/角色",
+    "loading": "加载中...",
+    "no_data": "暂无数据",
+    "error_load_failed": "加载失败",
+    "error_create_failed": "创建失败",
+    "error_fill_all_fields": "请填写所有字段",
+    "error_password_too_short": "密码至少 6 位",
+    "role_admin": "admin",
+    "role_superadmin": "superadmin"
+  },
+  "errors": {
+    "required": "此字段为必填",
+    "invalid_email": "请输入有效的邮箱地址"
+  }
+}
+

@@ -1,0 +1,22 @@
+# Enforce LF for text files
+* text=auto eol=lf
+
+# Treat common binary assets as binary (no EOL normalization)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.avif binary
+*.pdf binary
+*.zip binary
+*.7z  binary
+*.gz  binary
+*.mp4 binary
+*.mp3 binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
