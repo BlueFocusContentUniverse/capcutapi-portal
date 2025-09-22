@@ -3,36 +3,25 @@
 # ============================================
 
 # Use an official Node.js slim image (customizable via ARG)
-FROM node:lts AS base
+FROM node:lts AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy only package-related files first to leverage Docker caching
-COPY package.json package-lock.json ./
-
-# Set build-time environment variables
-ENV NODE_ENV=production
-
-
-# Install dependencies using npm ci (ensures a clean, reproducible install)
-RUN npm ci --omit=dev && npm cache clean --force
-
-# ============================================
-# Stage 2: Build the Next.js Application
-# ============================================
-
-# Use the base image to build the application
-FROM base AS builder
-
-# Copy the entire application source code into the container
 COPY . .
 
-# Build the application in standalone mode (outputs to `.next/standalone`)
+# Set build-time environment variables
+# ENV NODE_ENV=production
+
+# Install dependencies using npm ci (ensures a clean, reproducible install)
+RUN npm ci && npm cache clean --force
+
 RUN npm run build
 
+
 # ============================================
-# Stage 3: Create Production Image
+# Stage 2: Create Production Image
 # ============================================
 
 # Use the same Node.js version for the final production container
@@ -42,7 +31,7 @@ FROM node:lts-slim AS runner
 USER node
 
 # Set the port for the Next.js standalone server (default is 3000)
-ENV PORT=3010
+ENV PORT=3020
 
 # Disable Next.js telemetry during runtime
 ENV NEXT_TELEMETRY_DISABLE=1

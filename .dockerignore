@@ -9,6 +9,7 @@ yarn-error.log*
 # VCS
 .git
 .gitignore
+.gitattributes
 
 # Output
 /dist
@@ -19,7 +20,7 @@ yarn-error.log*
 *.local
 
 # Node.js
-node_modules/
+.next
 .github
 .gitignore
 scripts

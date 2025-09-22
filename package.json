@@ -1,13 +1,12 @@
 {
-  "name": "bf-next-portal",
-  "version": "0.1.0",
+  "name": "capcutapi-portal",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "format": "prettier --write ."
+    "lint": "next lint"
   },
   "type": "module",
   "dependencies": {
@@ -21,12 +20,10 @@
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.13",
-    "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.5",
-    "geist": "^1.5.1",
     "i18next": "^25.5.2",
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-backend": "^3.0.2",
@@ -45,13 +42,12 @@
     "zod": "^4.1.9"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.1",
+    "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^22",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
     "drizzle-kit": "^0.31.4",
-    "eslint": "^9.35",
+    "eslint": "^9.36.0",
     "eslint-config-next": "15.5.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",

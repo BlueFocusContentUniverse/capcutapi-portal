@@ -10,7 +10,7 @@
     "admin": "Admin"
   },
   "sidebar": {
-    "title": "BF Management System",
+    "title": "JYAPI Management System",
     "admin_fallback": "Administrator",
     "email_fallback": "admin@example.com"
   },
@@ -22,7 +22,8 @@
     "create": "Create",
     "manage": "Manage",
     "open": "Open",
-    "set_page_size": "Set page size"
+    "set_page_size": "Set page size",
+    "generate_video": "Generate video"
   },
   "login": {
     "title": "Login",
@@ -63,7 +64,8 @@
       "size": "Size",
       "created": "Created",
       "updated": "Updated",
-      "accessed": "Accessed"
+      "accessed": "Accessed",
+      "operations": "Operations"
     }
   },
   "video_tasks": {
@@ -113,4 +115,3 @@
     "invalid_email": "Please enter a valid email"
   }
 }
-

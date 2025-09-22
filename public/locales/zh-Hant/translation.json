@@ -10,7 +10,7 @@
     "admin": "Admin 管理"
   },
   "sidebar": {
-    "title": "BF 管理系統",
+    "title": "JYAPI 管理系統",
     "admin_fallback": "管理員",
     "email_fallback": "admin@example.com"
   },
@@ -22,7 +22,8 @@
     "create": "建立",
     "manage": "管理",
     "open": "打開",
-    "set_page_size": "設定每頁數量"
+    "set_page_size": "設定每頁數量",
+    "generate_video": "生成影片"
   },
   "login": {
     "title": "登入",
@@ -63,7 +64,8 @@
       "size": "大小",
       "created": "建立時間",
       "updated": "更新時間",
-      "accessed": "存取時間"
+      "accessed": "存取時間",
+      "operations": "操作"
     }
   },
   "video_tasks": {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import GenerateVideoDialog from "@/components/generate-video-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,6 +13,8 @@ import {
 } from "@/components/ui/table";
 import { getDraftsPaginated } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
+
+import { generateVideo } from "./actions";
 
 type SearchParams = Promise<{ page?: string; pageSize?: string }>;
 
@@ -71,6 +74,7 @@ export default async function DraftsPage({
             <TableHead>{t("drafts.fields.created")}</TableHead>
             <TableHead>{t("drafts.fields.updated")}</TableHead>
             <TableHead>{t("drafts.fields.accessed")}</TableHead>
+            <TableHead>{t("drafts.fields.operations")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -97,6 +101,17 @@ export default async function DraftsPage({
               </TableCell>
               <TableCell>
                 {d.accessedAt ? new Date(d.accessedAt).toLocaleString() : "-"}
+              </TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  {/* <Button variant="outline" size="sm">
+                    {t("actions.delete")}
+                  </Button> */}
+                  <GenerateVideoDialog
+                    d={d}
+                    buttonLabel={t("actions.generate_video")}
+                  />
+                </div>
               </TableCell>
             </TableRow>
           ))}
