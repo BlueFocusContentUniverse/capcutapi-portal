@@ -1,9 +1,7 @@
 "use server";
-import { redirect } from "next/navigation";
-
 import { signIn } from "@/auth";
 
-type State = { error: string | null };
+type State = { error: string | null; redirectURL: string | null };
 
 export const loginAction = async (
   _prevState: State,
@@ -13,7 +11,7 @@ export const loginAction = async (
   const password = formData.get("password")?.toString();
 
   if (!email || !password) {
-    return { error: "邮箱和密码是必填的" };
+    return { error: "邮箱和密码是必填的", redirectURL: null };
   }
   let redirectURL;
   try {
@@ -24,8 +22,8 @@ export const loginAction = async (
       redirectTo: "/",
     });
   } catch (error) {
-    return { error: "登录失败，请稍后再试" };
+    return { error: "登录失败，请稍后再试", redirectURL: null };
   }
   console.log("Redirect URL:", redirectURL);
-  redirect(redirectURL);
+  return { error: null, redirectURL };
 };

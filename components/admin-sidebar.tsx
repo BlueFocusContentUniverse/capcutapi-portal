@@ -20,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { ProfileDialog } from "@/components/profile-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
@@ -126,6 +127,7 @@ export function AdminSidebar() {
                     {session.user?.email || "admin@example.com"}
                   </p>
                 </div>
+                <ProfileDialog />
               </div>
               <Button
                 variant="ghost"

@@ -31,6 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { nextApi } from "@/lib/service";
 
 type AdminUser = {
   id: string;
@@ -40,7 +41,7 @@ type AdminUser = {
 };
 
 export function AdminUsersManagement() {
-  const { t } = useTranslation("translation");
+  const { t } = useTranslation();
   const [items, setItems] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -48,6 +49,9 @@ export function AdminUsersManagement() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<AdminUser | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const run = async () => {
@@ -79,7 +83,32 @@ export function AdminUsersManagement() {
     );
   }, [items, search]);
 
-  const onSubmit = async () => {
+  const doDelete = async () => {
+    if (!deleteTarget) return;
+    setDeleting(true);
+    setError(null);
+    try {
+      const res = await fetch(
+        `/api/admin/users?id=${encodeURIComponent(deleteTarget.id)}`,
+        { method: "DELETE" },
+      );
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.error || `Delete failed: ${res.status}`);
+      }
+      setItems((prev) => prev.filter((u) => u.id !== deleteTarget.id));
+      setDeleteOpen(false);
+      setDeleteTarget(null);
+    } catch (e) {
+      console.error(e);
+      const msg = e instanceof Error ? e.message : "Delete failed";
+      setError(msg);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const onSubmit = async (formData: FormData) => {
     setError(null);
     if (!form.name || !form.email || !form.password) {
       setError(t("admin_users.error_fill_all_fields"));
@@ -91,13 +120,11 @@ export function AdminUsersManagement() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/admin/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+      const res = await nextApi.post("admin/users", {
+        json: form,
       });
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
+        const data = await res.json<any>().catch(() => ({}));
         throw new Error(data?.error || `创建失败: ${res.status}`);
       }
       // refresh list
@@ -139,7 +166,7 @@ export function AdminUsersManagement() {
               </DialogDescription>
             </DialogHeader>
             {error && <div className="text-sm text-destructive">{error}</div>}
-            <form onSubmit={onSubmit} className="space-y-4" autoComplete="off">
+            <form action={onSubmit} className="space-y-4" autoComplete="off">
               <div className="space-y-2">
                 <Label htmlFor="name">{t("admin_users.form_name")}</Label>
                 <Input
@@ -240,13 +267,25 @@ export function AdminUsersManagement() {
                       <TableCell>{u.name ?? "-"}</TableCell>
                       <TableCell>{u.email ?? "-"}</TableCell>
                       <TableCell>
-                        <Badge
-                          variant={
-                            u.role === "superadmin" ? "default" : "secondary"
-                          }
-                        >
-                          {t(`admin_users.role_${u.role}`)}
-                        </Badge>
+                        <div className="flex items-center gap-2">
+                          <Badge
+                            variant={
+                              u.role === "superadmin" ? "default" : "secondary"
+                            }
+                          >
+                            {t(`admin_users.role_${u.role}`)}
+                          </Badge>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setDeleteTarget(u);
+                              setDeleteOpen(true);
+                            }}
+                          >
+                            {t("actions.delete")}
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
@@ -256,6 +295,32 @@ export function AdminUsersManagement() {
           </div>
         </CardContent>
       </Card>
+      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("actions.delete")}</DialogTitle>
+            <DialogDescription>
+              {deleteTarget
+                ? `Are you sure you want to delete ${
+                    deleteTarget.email ?? deleteTarget.name ?? deleteTarget.id
+                  }? This action cannot be undone.`
+                : "Are you sure?"}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setDeleteOpen(false)}>
+              {t("actions.cancel")}
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={doDelete}
+              disabled={deleting}
+            >
+              {deleting ? "Deleting..." : t("actions.delete")}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

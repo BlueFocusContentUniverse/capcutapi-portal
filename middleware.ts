@@ -20,8 +20,8 @@ export const middleware = auth((req: NextRequest) => {
   // Note: This is inverted from typical logic, but implemented as requested.
   const expiresAt = session?.expires ? new Date(session.expires).getTime() : 0;
   const now = Date.now();
-  console.log("Session expires at:", expiresAt, "Current time:", now);
   if (!session || expiresAt < now) {
+    console.log("Session expires at:", expiresAt, "Current time:", now);
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     // Preserve where the user was trying to go

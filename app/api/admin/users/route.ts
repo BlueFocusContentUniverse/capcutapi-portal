@@ -123,3 +123,41 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    if (session.user.role !== "superadmin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (!id) {
+      return NextResponse.json({ error: "'id' is required" }, { status: 400 });
+    }
+
+    const result = await db.transaction(async (tx) => {
+      // Accounts have ON DELETE CASCADE, but explicitly clearing is fine
+      await tx.delete(account).where(eq(account.userId, id));
+      const deleted = await tx.delete(user).where(eq(user.id, id)).returning();
+      return deleted[0];
+    });
+
+    if (!result) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ ok: true }, { status: 200 });
+  } catch (err) {
+    console.error("Error deleting admin user:", err);
+    return NextResponse.json(
+      { error: "Failed to delete user" },
+      { status: 500 },
+    );
+  }
+}

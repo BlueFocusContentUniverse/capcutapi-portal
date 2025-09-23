@@ -113,5 +113,20 @@
   "errors": {
     "required": "必須項目です",
     "invalid_email": "有効なメールアドレスを入力してください"
+  },
+  "profile_dialog": {
+    "settings_aria": "プロフィール設定",
+    "title": "プロフィール",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "confirm_password": "パスワード（確認）",
+    "placeholder_username": "ユーザー名を入力",
+    "placeholder_password": "新しいパスワードを入力",
+    "placeholder_confirm_password": "新しいパスワードを再入力",
+    "mismatch_error": "パスワードが一致しません",
+    "password_required_for_confirm": "先にパスワードを入力してください",
+    "no_changes": "変更はありません",
+    "save_success": "保存しました",
+    "request_failed": "リクエストに失敗しました"
   }
 }

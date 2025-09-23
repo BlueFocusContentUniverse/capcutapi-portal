@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 import { loginAction } from "@/app/login/actions";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -10,13 +10,20 @@ import { Label } from "@/components/ui/label";
 
 type State = {
   error: string | null;
+  redirectURL: string | null;
 };
 
 export default function LoginForm() {
   const [state, formAction, pending] = useActionState<State, FormData>(
     loginAction,
-    { error: null },
+    { error: null, redirectURL: null },
   );
+
+  useEffect(() => {
+    if (state?.redirectURL) {
+      window.location.href = state.redirectURL;
+    }
+  }, [state.redirectURL]);
 
   return (
     <form action={formAction} className="space-y-4" autoComplete="off">

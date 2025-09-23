@@ -113,6 +113,21 @@
   "errors": {
     "required": "此字段为必填",
     "invalid_email": "请输入有效的邮箱地址"
+  },
+  "profile_dialog": {
+    "settings_aria": "个人设置",
+    "title": "个人资料",
+    "username": "用户名",
+    "password": "密码",
+    "confirm_password": "确认密码",
+    "placeholder_username": "请输入用户名",
+    "placeholder_password": "请输入新密码",
+    "placeholder_confirm_password": "请再次输入新密码",
+    "mismatch_error": "两次输入的密码不一致",
+    "password_required_for_confirm": "请先输入密码再确认",
+    "no_changes": "没有更改",
+    "save_success": "已保存",
+    "request_failed": "请求失败"
   }
 }
 

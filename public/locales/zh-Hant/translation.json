@@ -113,6 +113,21 @@
   "errors": {
     "required": "此欄位為必填",
     "invalid_email": "請輸入有效的電郵地址"
+  },
+  "profile_dialog": {
+    "settings_aria": "個人設定",
+    "title": "個人資料",
+    "username": "使用者名稱",
+    "password": "密碼",
+    "confirm_password": "確認密碼",
+    "placeholder_username": "請輸入使用者名稱",
+    "placeholder_password": "請輸入新密碼",
+    "placeholder_confirm_password": "請再次輸入新密碼",
+    "mismatch_error": "兩次輸入的密碼不一致",
+    "password_required_for_confirm": "請先輸入密碼再確認",
+    "no_changes": "沒有變更",
+    "save_success": "已儲存",
+    "request_failed": "請求失敗"
   }
 }
 

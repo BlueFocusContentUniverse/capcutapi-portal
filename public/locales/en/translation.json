@@ -113,5 +113,20 @@
   "errors": {
     "required": "This field is required",
     "invalid_email": "Please enter a valid email"
+  },
+  "profile_dialog": {
+    "settings_aria": "Profile settings",
+    "title": "Profile",
+    "username": "Username",
+    "password": "Password",
+    "confirm_password": "Confirm password",
+    "placeholder_username": "Enter username",
+    "placeholder_password": "Enter new password",
+    "placeholder_confirm_password": "Re-enter new password",
+    "mismatch_error": "Passwords do not match",
+    "password_required_for_confirm": "Enter password before confirming",
+    "no_changes": "No changes",
+    "save_success": "Saved",
+    "request_failed": "Request failed"
   }
 }
