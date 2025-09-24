@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 import { generateVideoAction } from "@/app/(main)/drafts/actions";
 import ParamSelect from "@/components/param-select";
@@ -13,9 +14,17 @@ export default function GenerateVideoForm({
   d,
   onSuccess,
 }: {
-  d: any;
+  d: {
+    id: string | number;
+    fps?: number;
+    width?: number;
+    height?: number;
+    draftId?: string;
+    draftName?: string;
+  };
   onSuccess?: () => void;
 }) {
+  const { t } = useTranslation();
   const initialFramerate = React.useMemo(() => {
     if (d?.fps === 30) return "30fps";
     if (d?.fps === 50) return "50fps";
@@ -43,23 +52,25 @@ export default function GenerateVideoForm({
   return (
     <form action={action} ref={formRef} className="space-y-4">
       <div className="grid gap-2">
-        <Label htmlFor={`draft_id_${d.id}`}>draft_id</Label>
+        <Label htmlFor={`draft_id_${d.id}`}>
+          {t("drafts.fields.draft_id")}
+        </Label>
         <Input
           id={`draft_id_${d.id}`}
-          name="draft_id"
           defaultValue={d?.draftId ?? ""}
-          required
+          disabled
         />
+        <input type="hidden" name="draft_id" value={d?.draftId ?? ""} />
       </div>
       <ParamSelect
         id={`framerate_${d.id}`}
         name="framerate"
-        label="framerate"
+        label={t("drafts.fields.fps") || "FPS"}
         options={["30fps", "50fps", "60fps"]}
         defaultValue={initialFramerate}
       />
       <div className="grid gap-2">
-        <Label htmlFor={`name_${d.id}`}>name</Label>
+        <Label htmlFor={`name_${d.id}`}>{t("drafts.fields.draft_name")}</Label>
         <Input
           id={`name_${d.id}`}
           name="name"
@@ -70,17 +81,17 @@ export default function GenerateVideoForm({
       <ParamSelect
         id={`resolution_${d.id}`}
         name="resolution"
-        label="resolution"
+        label={t("drafts.fields.resolution")}
         options={["720P", "1080P", "2K", "4K"]}
         defaultValue={initialResolution}
       />
       <DialogFooter>
         <DialogClose asChild>
           <Button type="button" variant="outline">
-            Cancel
+            {t("actions.cancel")}
           </Button>
         </DialogClose>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{t("actions.generate_video")}</Button>
       </DialogFooter>
     </form>
   );

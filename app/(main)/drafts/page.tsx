@@ -14,8 +14,6 @@ import {
 import { getDraftsPaginated } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
 
-import { generateVideo } from "./actions";
-
 type SearchParams = Promise<{ page?: string; pageSize?: string }>;
 
 export default async function DraftsPage({

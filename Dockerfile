@@ -48,5 +48,8 @@ COPY .env.prod ./.env
 # Expose port to allow HTTP traffic
 EXPOSE $PORT
 
+# Set the timezone to Asia/Shanghai
+ENV TZ=Asia/Shanghai
+
 # Start the application using the standalone server
 ENTRYPOINT ["node", "--env-file", ".env", "server.js"]
