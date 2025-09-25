@@ -74,6 +74,7 @@
       "id": "ID",
       "task_id": "Task ID",
       "draft_id": "Draft ID",
+      "video_name": "Video Name",
       "status": "Status",
       "progress": "Progress",
       "message": "Message",

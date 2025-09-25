@@ -74,6 +74,7 @@
       "id": "ID",
       "task_id": "任務 ID",
       "draft_id": "草稿 ID",
+      "video_name": "影片名稱",
       "status": "狀態",
       "progress": "進度",
       "message": "訊息",

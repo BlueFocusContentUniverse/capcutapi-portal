@@ -74,6 +74,7 @@
       "id": "ID",
       "task_id": "タスクID",
       "draft_id": "ドラフトID",
+      "video_name": "動画名",
       "status": "ステータス",
       "progress": "進捗",
       "message": "メッセージ",

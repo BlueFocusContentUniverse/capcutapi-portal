@@ -35,6 +35,7 @@ export const videoTasks = pgTable(
     id: serial().primaryKey().notNull(),
     taskId: varchar("task_id", { length: 255 }).notNull(),
     draftId: varchar("draft_id", { length: 255 }).notNull(),
+    videoName: varchar("video_name", { length: 255 }),
     status: varchar({ length: 64 }).notNull(),
     progress: integer(),
     message: text(),

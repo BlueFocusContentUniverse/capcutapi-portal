@@ -55,8 +55,8 @@ export default async function VideoTasksPage({
             <TableHead>{t("video_tasks.fields.id")}</TableHead>
             <TableHead>{t("video_tasks.fields.task_id")}</TableHead>
             <TableHead>{t("video_tasks.fields.draft_id")}</TableHead>
+            <TableHead>{t("video_tasks.fields.video_name")}</TableHead>
             <TableHead>{t("video_tasks.fields.status")}</TableHead>
-            <TableHead>{t("video_tasks.fields.progress")}</TableHead>
             <TableHead>{t("video_tasks.fields.message")}</TableHead>
             <TableHead>{t("video_tasks.fields.draft_url")}</TableHead>
             <TableHead>{t("video_tasks.fields.created")}</TableHead>
@@ -69,8 +69,13 @@ export default async function VideoTasksPage({
               <TableCell>{task.id}</TableCell>
               <TableCell className="font-mono">{task.taskId}</TableCell>
               <TableCell className="font-mono">{task.draftId}</TableCell>
+              <TableCell
+                className="max-w-[24rem] truncate"
+                title={task.videoName ?? undefined}
+              >
+                {task.videoName ?? "-"}
+              </TableCell>
               <TableCell>{task.status}</TableCell>
-              <TableCell>{task.progress ?? "-"}%</TableCell>
               <TableCell
                 className="max-w-[24rem] truncate"
                 title={task.message ?? undefined}

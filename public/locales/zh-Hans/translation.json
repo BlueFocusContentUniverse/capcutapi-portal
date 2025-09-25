@@ -6,7 +6,7 @@
     "settings": "设置",
     "logout": "退出登录",
     "drafts": "剪映草稿箱",
-    "video_tasks": "生成视频任务状态(WIP)",
+    "video_tasks": "生成视频任务状态",
     "admin": "Admin 管理"
   },
   "sidebar": {
@@ -74,6 +74,7 @@
       "id": "ID",
       "task_id": "任务 ID",
       "draft_id": "草稿 ID",
+      "video_name": "视频名称",
       "status": "状态",
       "progress": "进度",
       "message": "消息",

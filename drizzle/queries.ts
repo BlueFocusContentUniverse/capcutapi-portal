@@ -64,6 +64,7 @@ export type VideoTaskListItem = {
   id: number;
   taskId: string;
   draftId: string;
+  videoName: string | null;
   status: string;
   progress: number | null;
   message: string | null;
@@ -84,6 +85,7 @@ export async function getVideoTasksPaginated(page: number, pageSize: number) {
         id: videoTasks.id,
         taskId: videoTasks.taskId,
         draftId: videoTasks.draftId,
+        videoName: videoTasks.videoName,
         status: videoTasks.status,
         progress: videoTasks.progress,
         message: videoTasks.message,
