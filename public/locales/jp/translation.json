@@ -24,7 +24,8 @@
     "open": "開く",
     "set_page_size": "ページサイズを設定",
     "generate_video": "動画を生成",
-    "archive_draft": "ドラフトをアーカイブ"
+    "archive_draft": "ドラフトをアーカイブ",
+    "view_draft_data": "ドラフトデータを表示"
   },
   "login": {
     "title": "ログイン",
@@ -53,6 +54,7 @@
   },
   "drafts": {
     "title": "ドラフト",
+    "view_data": "ドラフトデータを表示",
     "fields": {
       "id": "ID",
       "draft_id": "ドラフトID",
@@ -121,6 +123,9 @@
   "errors": {
     "required": "必須項目です",
     "invalid_email": "有効なメールアドレスを入力してください"
+  },
+  "common": {
+    "loading": "読み込み中"
   },
   "profile_dialog": {
     "settings_aria": "プロフィール設定",

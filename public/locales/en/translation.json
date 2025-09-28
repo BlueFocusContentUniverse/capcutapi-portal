@@ -24,7 +24,8 @@
     "open": "Open",
     "set_page_size": "Set page size",
     "generate_video": "Generate video",
-    "archive_draft": "Archive draft"
+    "archive_draft": "Archive draft",
+    "view_draft_data": "View Draft Data"
   },
   "login": {
     "title": "Login",
@@ -53,6 +54,7 @@
   },
   "drafts": {
     "title": "Drafts",
+    "view_data": "View Draft Data",
     "fields": {
       "id": "ID",
       "draft_id": "Draft ID",
@@ -121,6 +123,9 @@
   "errors": {
     "required": "This field is required",
     "invalid_email": "Please enter a valid email"
+  },
+  "common": {
+    "loading": "Loading"
   },
   "profile_dialog": {
     "settings_aria": "Profile settings",

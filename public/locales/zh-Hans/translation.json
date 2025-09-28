@@ -24,7 +24,8 @@
     "open": "打开",
     "set_page_size": "设置每页数量",
     "generate_video": "生成视频",
-    "archive_draft": "归档草稿"
+    "archive_draft": "归档草稿",
+    "view_draft_data": "查看草稿数据"
   },
   "login": {
     "title": "登录",
@@ -53,6 +54,7 @@
   },
   "drafts": {
     "title": "剪映草稿箱",
+    "view_data": "查看草稿数据",
     "fields": {
       "id": "ID",
       "draft_id": "草稿 ID",
@@ -121,6 +123,9 @@
   "errors": {
     "required": "此字段为必填",
     "invalid_email": "请输入有效的邮箱地址"
+  },
+  "common": {
+    "loading": "加载中"
   },
   "profile_dialog": {
     "settings_aria": "个人设置",

@@ -24,7 +24,8 @@
     "open": "打開",
     "set_page_size": "設定每頁數量",
     "generate_video": "生成影片",
-    "archive_draft": "封存草稿"
+    "archive_draft": "封存草稿",
+    "view_draft_data": "查看草稿資料"
   },
   "login": {
     "title": "登入",
@@ -53,6 +54,7 @@
   },
   "drafts": {
     "title": "剪映草稿箱",
+    "view_data": "查看草稿資料",
     "fields": {
       "id": "ID",
       "draft_id": "草稿 ID",
@@ -121,6 +123,9 @@
   "errors": {
     "required": "此欄位為必填",
     "invalid_email": "請輸入有效的電郵地址"
+  },
+  "common": {
+    "loading": "載入中"
   },
   "profile_dialog": {
     "settings_aria": "個人設定",
