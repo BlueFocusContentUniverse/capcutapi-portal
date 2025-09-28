@@ -23,7 +23,8 @@
     "manage": "管理",
     "open": "開く",
     "set_page_size": "ページサイズを設定",
-    "generate_video": "動画を生成"
+    "generate_video": "動画を生成",
+    "archive_draft": "ドラフトをアーカイブ"
   },
   "login": {
     "title": "ログイン",
@@ -65,7 +66,12 @@
       "created": "作成日時",
       "updated": "更新日時",
       "accessed": "アクセス日時",
-      "operations": "操作"
+      "operations": "操作",
+      "draft_folder": "ドラフトフォルダー",
+      "select_draft_file": "ドラフトファイルを選択"
+    },
+    "placeholders": {
+      "draft_folder": "ドラフトフォルダーを選択"
     }
   },
   "video_tasks": {
@@ -80,7 +86,8 @@
       "message": "メッセージ",
       "draft_url": "ドラフトURL",
       "created": "作成日時",
-      "updated": "更新日時"
+      "updated": "更新日時",
+      "operations": "操作"
     }
   },
   "pagination": {

@@ -23,7 +23,8 @@
     "manage": "管理",
     "open": "打開",
     "set_page_size": "設定每頁數量",
-    "generate_video": "生成影片"
+    "generate_video": "生成影片",
+    "archive_draft": "封存草稿"
   },
   "login": {
     "title": "登入",
@@ -65,7 +66,12 @@
       "created": "建立時間",
       "updated": "更新時間",
       "accessed": "存取時間",
-      "operations": "操作"
+      "operations": "操作",
+      "draft_folder": "草稿資料夾",
+      "select_draft_file": "選擇草稿檔案"
+    },
+    "placeholders": {
+      "draft_folder": "選擇草稿資料夾"
     }
   },
   "video_tasks": {
@@ -80,7 +86,8 @@
       "message": "訊息",
       "draft_url": "草稿連結",
       "created": "建立時間",
-      "updated": "更新時間"
+      "updated": "更新時間",
+      "operations": "操作"
     }
   },
   "pagination": {

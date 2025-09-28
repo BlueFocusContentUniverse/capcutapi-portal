@@ -23,7 +23,8 @@
     "manage": "管理",
     "open": "打开",
     "set_page_size": "设置每页数量",
-    "generate_video": "生成视频"
+    "generate_video": "生成视频",
+    "archive_draft": "归档草稿"
   },
   "login": {
     "title": "登录",
@@ -65,7 +66,12 @@
       "created": "创建时间",
       "updated": "更新时间",
       "accessed": "访问时间",
-      "operations": "操作"
+      "operations": "操作",
+      "draft_folder": "草稿文件夹",
+      "select_draft_file": "选择草稿文件"
+    },
+    "placeholders": {
+      "draft_folder": "选择草稿文件夹"
     }
   },
   "video_tasks": {
@@ -80,7 +86,8 @@
       "message": "消息",
       "draft_url": "草稿链接",
       "created": "创建时间",
-      "updated": "更新时间"
+      "updated": "更新时间",
+      "operations": "操作"
     }
   },
   "pagination": {

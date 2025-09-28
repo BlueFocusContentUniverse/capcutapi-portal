@@ -23,7 +23,8 @@
     "manage": "Manage",
     "open": "Open",
     "set_page_size": "Set page size",
-    "generate_video": "Generate video"
+    "generate_video": "Generate video",
+    "archive_draft": "Archive draft"
   },
   "login": {
     "title": "Login",
@@ -65,7 +66,12 @@
       "created": "Created",
       "updated": "Updated",
       "accessed": "Accessed",
-      "operations": "Operations"
+      "operations": "Operations",
+      "draft_folder": "Draft Folder",
+      "select_draft_file": "Select Draft File"
+    },
+    "placeholders": {
+      "draft_folder": "Select draft folder"
     }
   },
   "video_tasks": {
@@ -80,7 +86,8 @@
       "message": "Message",
       "draft_url": "Draft URL",
       "created": "Created",
-      "updated": "Updated"
+      "updated": "Updated",
+      "operations": "Operations"
     }
   },
   "pagination": {

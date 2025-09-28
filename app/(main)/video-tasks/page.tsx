@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import ArchiveDraftDialog from "@/components/archive-draft-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -57,10 +58,11 @@ export default async function VideoTasksPage({
             <TableHead>{t("video_tasks.fields.draft_id")}</TableHead>
             <TableHead>{t("video_tasks.fields.video_name")}</TableHead>
             <TableHead>{t("video_tasks.fields.status")}</TableHead>
-            <TableHead>{t("video_tasks.fields.message")}</TableHead>
-            <TableHead>{t("video_tasks.fields.draft_url")}</TableHead>
+            {/* <TableHead>{t("video_tasks.fields.message")}</TableHead> */}
+            {/* <TableHead>{t("video_tasks.fields.draft_url")}</TableHead> */}
             <TableHead>{t("video_tasks.fields.created")}</TableHead>
             <TableHead>{t("video_tasks.fields.updated")}</TableHead>
+            <TableHead>{t("video_tasks.fields.operations")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -76,7 +78,7 @@ export default async function VideoTasksPage({
                 {task.videoName ?? "-"}
               </TableCell>
               <TableCell>{task.status}</TableCell>
-              <TableCell
+              {/* <TableCell
                 className="max-w-[24rem] truncate"
                 title={task.message ?? undefined}
               >
@@ -94,7 +96,7 @@ export default async function VideoTasksPage({
                 ) : (
                   "-"
                 )}
-              </TableCell>
+              </TableCell> */}
               <TableCell>
                 {task.createdAt
                   ? new Date(task.createdAt).toLocaleString()
@@ -104,6 +106,12 @@ export default async function VideoTasksPage({
                 {task.updatedAt
                   ? new Date(task.updatedAt).toLocaleString()
                   : "-"}
+              </TableCell>
+              <TableCell>
+                <ArchiveDraftDialog
+                  d={{ id: task.id, draftId: task.draftId }}
+                  buttonLabel={t("actions.archive_draft")}
+                />
               </TableCell>
             </TableRow>
           ))}
