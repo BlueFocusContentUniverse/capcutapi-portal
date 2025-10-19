@@ -1,6 +1,8 @@
 import { Users } from "lucide-react";
+import { headers } from "next/headers";
 import Link from "next/link";
 
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,12 +12,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { serverTranslation } from "@/lib/i18n/server";
-import { auth } from "@/auth";
 
 export default async function DashboardPage() {
   const { t } = await serverTranslation();
-  const session = await auth();
-  const isSuperadmin = session?.user?.role === "superadmin";
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const isSuperadmin = session?.user?.email === "admin@example.com";
 
   return (
     <div className="space-y-8">

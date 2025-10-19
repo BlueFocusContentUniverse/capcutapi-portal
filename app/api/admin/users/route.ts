@@ -1,20 +1,21 @@
-import type { AdapterAccountType } from "@auth/core/adapters";
 import { eq } from "drizzle-orm";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { db } from "@/drizzle/db";
-import { account, user } from "@/drizzle/schema";
-import { hashPassword } from "@/lib/password";
+import { account, user } from "@/drizzle/schema/portal";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (session.user.role !== "superadmin") {
+    if (session.user.email !== "super@admin.com") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -44,13 +45,15 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Allow only superadmin role
-    if (session.user.role !== "superadmin") {
+    if (session.user.email !== "super@admin.com") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -76,45 +79,15 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check uniqueness
-    const existing = await db
-      .select()
-      .from(user)
-      .where(eq(user.email, email))
-      .limit(1);
-    if (existing.length > 0) {
-      return NextResponse.json(
-        { error: "Email already exists" },
-        { status: 409 },
-      );
-    }
-
-    const hashed = await hashPassword(password);
-
-    const result = await db.transaction(async (tx) => {
-      const now = new Date();
-      const [newUser] = await tx
-        .insert(user)
-        .values({ name, email, createdAt: now, updatedAt: now })
-        .returning();
-
-      await tx.insert(account).values({
-        userId: newUser.id,
-        type: "credentials" as AdapterAccountType,
-        provider: "credentials",
-        providerAccountId: email,
-        access_token: hashed,
-        createdAt: now,
-        updatedAt: now,
-      });
-
-      return newUser;
+    const result = await auth.api.createUser({
+      body: {
+        email,
+        password,
+        name,
+      },
     });
 
-    return NextResponse.json(
-      { id: result.id, name: result.name, email: result.email },
-      { status: 201 },
-    );
+    return NextResponse.json(result, { status: 201 });
   } catch (err) {
     console.error("Error creating user (admin):", err);
     return NextResponse.json(
@@ -126,12 +99,14 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (session.user.role !== "superadmin") {
+    if (session.user.email !== "super@admin.com") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

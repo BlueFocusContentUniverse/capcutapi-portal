@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1757578469991,
-      "tag": "0000_stormy_silver_surfer",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1758253580462,
-      "tag": "0001_useful_white_queen",
+      "when": 1760695490604,
+      "tag": "0000_red_mandarin",
       "breakpoints": true
     }
   ]

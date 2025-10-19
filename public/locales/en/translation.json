@@ -38,6 +38,21 @@
     "email_placeholder": "Enter email",
     "password_placeholder": "Enter password"
   },
+  "signup": {
+    "title": "Sign Up",
+    "description": "Create your account to access the management panel",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "image": "Profile Image (optional)",
+    "submit": "Sign Up",
+    "submitting": "Signing up…",
+    "error": "Sign up error",
+    "name_placeholder": "Enter your name",
+    "email_placeholder": "Enter your email",
+    "password_placeholder": "Enter password (min 8 characters)",
+    "image_placeholder": "Enter profile image URL"
+  },
   "dashboard": {
     "title": "Admin Dashboard",
     "subtitle": "Manage application data"
@@ -74,6 +89,9 @@
     },
     "placeholders": {
       "draft_folder": "Select draft folder"
+    },
+    "tips": {
+      "location_hint": "Enter the path of the draft file marked with a red line"
     }
   },
   "video_tasks": {
@@ -131,13 +149,17 @@
     "settings_aria": "Profile settings",
     "title": "Profile",
     "username": "Username",
-    "password": "Password",
+    "old_password": "Old password",
+    "new_password": "New password",
     "confirm_password": "Confirm password",
     "placeholder_username": "Enter username",
-    "placeholder_password": "Enter new password",
+    "placeholder_old_password": "Enter current password",
+    "placeholder_new_password": "Enter new password",
     "placeholder_confirm_password": "Re-enter new password",
     "mismatch_error": "Passwords do not match",
-    "password_required_for_confirm": "Enter password before confirming",
+    "password_required_for_confirm": "Enter new password before confirming",
+    "old_new_password_same": "Old password and new password cannot be the same",
+    "old_password_required": "Old password is required to set new password",
     "no_changes": "No changes",
     "save_success": "Saved",
     "request_failed": "Request failed"

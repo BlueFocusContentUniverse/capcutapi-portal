@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -63,6 +64,20 @@ export default function ArchiveDraftForm({
           onChange={(e) => setDirectoryPath(e.target.value)}
           placeholder={t("drafts.placeholders.draft_folder") ?? ""}
         />
+        {/* Visual Reference: Draft Location in Global Settings */}
+        <div className="mt-3 rounded-md border border-gray-200 bg-gray-50 p-2">
+          <p className="text-xs text-gray-600 mb-2 font-medium">
+            📍 {t("drafts.tips.location_hint")}
+          </p>
+          <Image
+            src="/archive-tip.jpg"
+            alt="Draft Location Setting Reference"
+            width={400}
+            height={250}
+            className="w-full rounded border border-gray-300"
+            priority={false}
+          />
+        </div>
       </div>
 
       <DialogFooter>

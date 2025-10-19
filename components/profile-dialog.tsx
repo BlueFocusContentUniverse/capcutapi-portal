@@ -1,7 +1,6 @@
 "use client";
 
 import { Settings, User } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -16,14 +15,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSession } from "@/lib/auth-client";
 import { nextApi } from "@/lib/service";
 
 export function ProfileDialog() {
-  const { data: session, update } = useSession();
+  const { data: session, refetch } = useSession();
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(session?.user?.name ?? "");
-  const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +34,8 @@ export function ProfileDialog() {
     setOpen(v);
     if (v) {
       setName(session?.user?.name ?? "");
-      setPassword("");
+      setOldPassword("");
+      setNewPassword("");
       setConfirmPassword("");
       setError(null);
       setSuccess(null);
@@ -45,17 +47,28 @@ export function ProfileDialog() {
     setSuccess(null);
     startTransition(async () => {
       try {
-        if (confirmPassword && !password) {
+        if (confirmPassword && !newPassword) {
           setError(t("profile_dialog.password_required_for_confirm"));
           return;
         }
-        if (password && confirmPassword && password !== confirmPassword) {
+        if (newPassword && confirmPassword && newPassword !== confirmPassword) {
           setError(t("profile_dialog.mismatch_error"));
+          return;
+        }
+        if (newPassword && oldPassword && oldPassword === newPassword) {
+          setError(t("profile_dialog.old_new_password_same"));
+          return;
+        }
+        if (newPassword && !oldPassword) {
+          setError(t("profile_dialog.old_password_required"));
           return;
         }
         const payload: Record<string, string> = {};
         if (name && name !== session?.user?.name) payload.name = name;
-        if (password) payload.password = password;
+        if (newPassword) {
+          payload.oldPassword = oldPassword;
+          payload.password = newPassword;
+        }
 
         if (Object.keys(payload).length === 0) {
           setSuccess(t("profile_dialog.no_changes"));
@@ -71,12 +84,12 @@ export function ProfileDialog() {
         const updated = (await res.json().catch(() => null)) as {
           name?: string;
         } | null;
-        await update();
+        refetch();
         if (updated?.name) {
           setName(updated.name);
         }
         setSuccess(t("profile_dialog.save_success"));
-      } catch (e) {
+      } catch {
         setError(t("profile_dialog.request_failed"));
       }
     });
@@ -111,13 +124,28 @@ export function ProfileDialog() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">{t("profile_dialog.password")}</Label>
+            <Label htmlFor="oldPassword">
+              {t("profile_dialog.old_password")}
+            </Label>
             <Input
-              id="password"
+              id="oldPassword"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={t("profile_dialog.placeholder_password") || ""}
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              placeholder={t("profile_dialog.placeholder_old_password") || ""}
+              disabled={isPending}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="newPassword">
+              {t("profile_dialog.new_password")}
+            </Label>
+            <Input
+              id="newPassword"
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder={t("profile_dialog.placeholder_new_password") || ""}
               disabled={isPending}
             />
           </div>

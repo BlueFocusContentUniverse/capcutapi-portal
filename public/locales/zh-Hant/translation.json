@@ -74,6 +74,9 @@
     },
     "placeholders": {
       "draft_folder": "選擇草稿資料夾"
+    },
+    "tips": {
+      "location_hint": "請輸入紅線標註的草稿資料夾路徑"
     }
   },
   "video_tasks": {
@@ -131,13 +134,17 @@
     "settings_aria": "個人設定",
     "title": "個人資料",
     "username": "使用者名稱",
-    "password": "密碼",
+    "old_password": "舊密碼",
+    "new_password": "新密碼",
     "confirm_password": "確認密碼",
     "placeholder_username": "請輸入使用者名稱",
-    "placeholder_password": "請輸入新密碼",
+    "placeholder_old_password": "請輸入目前密碼",
+    "placeholder_new_password": "請輸入新密碼",
     "placeholder_confirm_password": "請再次輸入新密碼",
     "mismatch_error": "兩次輸入的密碼不一致",
-    "password_required_for_confirm": "請先輸入密碼再確認",
+    "password_required_for_confirm": "請先輸入新密碼再確認",
+    "old_new_password_same": "舊密碼和新密碼不能相同",
+    "old_password_required": "設定新密碼需要輸入舊密碼",
     "no_changes": "沒有變更",
     "save_success": "已儲存",
     "request_failed": "請求失敗"

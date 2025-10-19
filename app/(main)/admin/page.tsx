@@ -1,12 +1,14 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
-
-import { AdminUsersManagement } from "../../../components/admin-users-management";
+import { AdminUsersManagement } from "@/components/admin-users-management";
 
 export default async function AdminUsersPage() {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "superadmin") {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user || session.user.email !== "super@admin.com") {
     redirect("/");
   }
   return <AdminUsersManagement />;

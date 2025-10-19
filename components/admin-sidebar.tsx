@@ -12,8 +12,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -22,6 +21,7 @@ import { ProfileDialog } from "@/components/profile-dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { signOut, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -35,9 +35,15 @@ export function AdminSidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const { t } = useTranslation();
-
+  const router = useRouter();
   const handleSignOut = () => {
-    signOut({ callbackUrl: "/login" });
+    signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+      },
+    });
   };
 
   return (
@@ -90,7 +96,7 @@ export function AdminSidebar() {
                   </Link>
                 );
               })}
-              {session?.user?.role === "superadmin" && (
+              {session?.user?.email === "super@admin.com" && (
                 <Link
                   href="/admin"
                   className={cn(

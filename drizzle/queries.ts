@@ -1,7 +1,7 @@
 import { count, desc } from "drizzle-orm";
 
 import { db } from "./db";
-import { drafts, videoTasks } from "./schema";
+import { drafts, videoTasks } from "./schema/public";
 
 export type DraftListItem = {
   id: number;

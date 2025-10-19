@@ -38,6 +38,21 @@
     "email_placeholder": "请输入邮箱",
     "password_placeholder": "请输入密码"
   },
+  "signup": {
+    "title": "注册",
+    "description": "创建您的账户以访问管理面板",
+    "name": "姓名",
+    "email": "邮箱",
+    "password": "密码",
+    "image": "头像图片（可选）",
+    "submit": "注册",
+    "submitting": "注册中…",
+    "error": "注册出错",
+    "name_placeholder": "请输入姓名",
+    "email_placeholder": "请输入邮箱",
+    "password_placeholder": "请输入密码（至少8位）",
+    "image_placeholder": "请输入头像图片链接"
+  },
   "dashboard": {
     "title": "管理系统仪表板",
     "subtitle": "管理应用程序数据"
@@ -74,6 +89,9 @@
     },
     "placeholders": {
       "draft_folder": "选择草稿文件夹"
+    },
+    "tips": {
+      "location_hint": "请输入红线标注的草稿文件夹路径"
     }
   },
   "video_tasks": {
@@ -131,13 +149,17 @@
     "settings_aria": "个人设置",
     "title": "个人资料",
     "username": "用户名",
-    "password": "密码",
+    "old_password": "旧密码",
+    "new_password": "新密码",
     "confirm_password": "确认密码",
     "placeholder_username": "请输入用户名",
-    "placeholder_password": "请输入新密码",
+    "placeholder_old_password": "请输入当前密码",
+    "placeholder_new_password": "请输入新密码",
     "placeholder_confirm_password": "请再次输入新密码",
     "mismatch_error": "两次输入的密码不一致",
-    "password_required_for_confirm": "请先输入密码再确认",
+    "password_required_for_confirm": "请先输入新密码再确认",
+    "old_new_password_same": "旧密码和新密码不能相同",
+    "old_password_required": "设置新密码需要输入旧密码",
     "no_changes": "没有更改",
     "save_success": "已保存",
     "request_failed": "请求失败"

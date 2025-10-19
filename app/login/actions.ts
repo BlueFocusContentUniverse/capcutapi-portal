@@ -1,5 +1,5 @@
 "use server";
-import { signIn } from "@/auth";
+import { auth } from "@/auth";
 
 type State = { error: string | null; redirectURL: string | null };
 
@@ -13,17 +13,19 @@ export const loginAction = async (
   if (!email || !password) {
     return { error: "邮箱和密码是必填的", redirectURL: null };
   }
-  let redirectURL;
   try {
-    redirectURL = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-      redirectTo: "/",
+    await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+        callbackURL: "/",
+      },
     });
-  } catch (error) {
-    return { error: "登录失败，请稍后再试", redirectURL: null };
+  } catch (e) {
+    return {
+      error: e instanceof Error ? e.message : "登录失败",
+      redirectURL: null,
+    };
   }
-  console.log("Redirect URL:", redirectURL);
-  return { error: null, redirectURL };
+  return { error: null, redirectURL: "/" };
 };

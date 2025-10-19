@@ -38,6 +38,21 @@
     "email_placeholder": "メールを入力",
     "password_placeholder": "パスワードを入力"
   },
+  "signup": {
+    "title": "アカウント登録",
+    "description": "管理パネルにアクセスするためのアカウントを作成してください",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "image": "プロフィール画像（オプション）",
+    "submit": "登録",
+    "submitting": "登録中…",
+    "error": "登録エラー",
+    "name_placeholder": "お名前を入力",
+    "email_placeholder": "メールアドレスを入力",
+    "password_placeholder": "パスワードを入力（8文字以上）",
+    "image_placeholder": "プロフィール画像のURLを入力"
+  },
   "dashboard": {
     "title": "管理ダッシュボード",
     "subtitle": "アプリケーションデータを管理"
@@ -74,6 +89,9 @@
     },
     "placeholders": {
       "draft_folder": "ドラフトフォルダーを選択"
+    },
+    "tips": {
+      "location_hint": "赤線でマークされたドラフトフォルダーのパスを入力してください"
     }
   },
   "video_tasks": {
@@ -131,13 +149,17 @@
     "settings_aria": "プロフィール設定",
     "title": "プロフィール",
     "username": "ユーザー名",
-    "password": "パスワード",
+    "old_password": "古いパスワード",
+    "new_password": "新しいパスワード",
     "confirm_password": "パスワード（確認）",
     "placeholder_username": "ユーザー名を入力",
-    "placeholder_password": "新しいパスワードを入力",
+    "placeholder_old_password": "現在のパスワードを入力",
+    "placeholder_new_password": "新しいパスワードを入力",
     "placeholder_confirm_password": "新しいパスワードを再入力",
     "mismatch_error": "パスワードが一致しません",
-    "password_required_for_confirm": "先にパスワードを入力してください",
+    "password_required_for_confirm": "先に新しいパスワードを入力してください",
+    "old_new_password_same": "古いパスワードと新しいパスワードは同じにできません",
+    "old_password_required": "新しいパスワードを設定するには古いパスワードが必要です",
     "no_changes": "変更はありません",
     "save_success": "保存しました",
     "request_failed": "リクエストに失敗しました"
