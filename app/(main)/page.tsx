@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 
 import { auth } from "@/auth";
+import { DashboardCharts } from "@/components/dashboard-charts";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getDraftCounts, getVideoTaskCounts } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
 
 export default async function DashboardPage() {
@@ -19,6 +21,12 @@ export default async function DashboardPage() {
     headers: await headers(),
   });
   const isSuperadmin = session?.user?.email === "admin@example.com";
+
+  // Fetch dashboard data
+  const [draftCounts, videoTaskCounts] = await Promise.all([
+    getDraftCounts(),
+    getVideoTaskCounts(),
+  ]);
 
   return (
     <div className="space-y-8">
@@ -33,6 +41,12 @@ export default async function DashboardPage() {
           </p>
         </div>
       </div>
+
+      {/* Charts Section */}
+      <DashboardCharts
+        draftCounts={draftCounts}
+        videoTaskCounts={videoTaskCounts}
+      />
 
       {/* Quick Actions */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

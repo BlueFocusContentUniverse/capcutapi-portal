@@ -174,3 +174,101 @@ export async function getVideoTasksPaginated(
     pageSize: safePageSize,
   };
 }
+
+// Dashboard count queries
+export async function getDraftCounts() {
+  const [totalDrafts, weeklyDrafts] = await Promise.all([
+    db
+      .select({ value: count() })
+      .from(drafts)
+      .then((rows) => Number(rows[0]?.value ?? 0)),
+    getWeeklyDrafts(),
+  ]);
+
+  return {
+    total: totalDrafts,
+    weekly: weeklyDrafts,
+  };
+}
+
+export async function getVideoTaskCounts() {
+  const [totalTasks, weeklyTasks] = await Promise.all([
+    db
+      .select({ value: count() })
+      .from(videoTasks)
+      .then((rows) => Number(rows[0]?.value ?? 0)),
+    getWeeklyVideoTasks(),
+  ]);
+
+  return {
+    total: totalTasks,
+    weekly: weeklyTasks,
+  };
+}
+
+// Helper function to get weekly data for the last 7 days
+async function getWeeklyDrafts() {
+  const today = new Date();
+  const weeklyData = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    const dayStart = new Date(date);
+    dayStart.setHours(0, 0, 0, 0);
+    const dayEnd = new Date(date);
+    dayEnd.setHours(23, 59, 59, 999);
+
+    const draftCount = await db
+      .select({ value: count() })
+      .from(drafts)
+      .where(
+        and(
+          gte(drafts.createdAt, dayStart.toISOString()),
+          lte(drafts.createdAt, dayEnd.toISOString()),
+        ),
+      )
+      .then((rows) => Number(rows[0]?.value ?? 0));
+
+    weeklyData.push({
+      date: date.toISOString().split("T")[0], // YYYY-MM-DD format
+      count: draftCount,
+      day: date.toLocaleDateString("zh-Hans", { weekday: "short" }),
+    });
+  }
+
+  return weeklyData;
+}
+
+async function getWeeklyVideoTasks() {
+  const today = new Date();
+  const weeklyData = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    const dayStart = new Date(date);
+    dayStart.setHours(0, 0, 0, 0);
+    const dayEnd = new Date(date);
+    dayEnd.setHours(23, 59, 59, 999);
+
+    const videoTaskCount = await db
+      .select({ value: count() })
+      .from(videoTasks)
+      .where(
+        and(
+          gte(videoTasks.createdAt, dayStart.toISOString()),
+          lte(videoTasks.createdAt, dayEnd.toISOString()),
+        ),
+      )
+      .then((rows) => Number(rows[0]?.value ?? 0));
+
+    weeklyData.push({
+      date: date.toISOString().split("T")[0], // YYYY-MM-DD format
+      count: videoTaskCount,
+      day: date.toLocaleDateString("zh-Hans", { weekday: "short" }),
+    });
+  }
+
+  return weeklyData;
+}
