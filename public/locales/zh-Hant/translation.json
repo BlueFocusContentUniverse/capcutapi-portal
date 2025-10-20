@@ -93,7 +93,8 @@
       "created": "建立時間",
       "updated": "更新時間",
       "operations": "操作"
-    }
+    },
+    "search_placeholder": "搜尋草稿 ID/影片名稱"
   },
   "pagination": {
     "prev": "上一頁",

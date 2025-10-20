@@ -25,7 +25,8 @@
     "set_page_size": "设置每页数量",
     "generate_video": "生成视频",
     "archive_draft": "归档草稿",
-    "view_draft_data": "查看草稿数据"
+    "view_draft_data": "查看草稿数据",
+    "search": "搜索"
   },
   "login": {
     "title": "登录",
@@ -88,7 +89,8 @@
       "select_draft_file": "选择草稿文件"
     },
     "placeholders": {
-      "draft_folder": "选择草稿文件夹"
+      "draft_folder": "选择草稿文件夹",
+      "search_placeholder": "按草稿 ID 或名称搜索"
     },
     "tips": {
       "location_hint": "请输入红线标注的草稿文件夹路径"
@@ -108,7 +110,8 @@
       "created": "创建时间",
       "updated": "更新时间",
       "operations": "操作"
-    }
+    },
+    "search_placeholder": "按草稿 ID 或视频名称搜索"
   },
   "pagination": {
     "prev": "上一页",

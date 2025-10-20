@@ -25,7 +25,8 @@
     "set_page_size": "Set page size",
     "generate_video": "Generate video",
     "archive_draft": "Archive draft",
-    "view_draft_data": "View Draft Data"
+    "view_draft_data": "View Draft Data",
+    "search": "Search"
   },
   "login": {
     "title": "Login",
@@ -88,7 +89,8 @@
       "select_draft_file": "Select Draft File"
     },
     "placeholders": {
-      "draft_folder": "Select draft folder"
+      "draft_folder": "Select draft folder",
+      "search_placeholder": "Search by draft ID or name"
     },
     "tips": {
       "location_hint": "Enter the path of the draft file marked with a red line"
@@ -108,7 +110,8 @@
       "created": "Created",
       "updated": "Updated",
       "operations": "Operations"
-    }
+    },
+    "search_placeholder": "Search by draft ID or video name"
   },
   "pagination": {
     "prev": "Prev",

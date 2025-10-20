@@ -14,7 +14,13 @@ import {
 import { getVideoTasksPaginated } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
 
-type SearchParams = Promise<{ page?: string; pageSize?: string }>;
+type SearchParams = Promise<{
+  page?: string;
+  pageSize?: string;
+  search?: string;
+  startDate?: string;
+  endDate?: string;
+}>;
 
 export default async function VideoTasksPage({
   searchParams,
@@ -25,8 +31,17 @@ export default async function VideoTasksPage({
   const params = await searchParams;
   const page = Math.max(1, Number(params?.page ?? 1));
   const pageSize = Math.max(1, Math.min(100, Number(params?.pageSize ?? 50)));
+  const search = params?.search;
+  const startDate = params?.startDate;
+  const endDate = params?.endDate;
 
-  const { items, total } = await getVideoTasksPaginated(page, pageSize);
+  const { items, total } = await getVideoTasksPaginated(
+    page,
+    pageSize,
+    search,
+    startDate,
+    endDate,
+  );
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
   const prevPage = Math.max(1, page - 1);
@@ -34,17 +49,30 @@ export default async function VideoTasksPage({
 
   return (
     <div className="container mx-auto p-4 space-y-4">
+      <h1 className="text-xl font-semibold">{t("video_tasks.title")}</h1>
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{t("video_tasks.title")}</h1>
         <div className="flex items-center gap-2">
           <form action="" className="flex items-center gap-2">
             <Input
-              name="pageSize"
-              defaultValue={String(pageSize)}
-              className="w-24"
+              name="search"
+              defaultValue={search}
+              placeholder={t("video_tasks.search_placeholder")}
+              className="w-48"
+            />
+            <Input
+              name="startDate"
+              type="date"
+              defaultValue={startDate}
+              className="w-36"
+            />
+            <Input
+              name="endDate"
+              type="date"
+              defaultValue={endDate}
+              className="w-36"
             />
             <Button type="submit" variant="outline">
-              {t("actions.set_page_size")}
+              {t("actions.search")}
             </Button>
           </form>
         </div>
@@ -123,11 +151,27 @@ export default async function VideoTasksPage({
           Page {page} of {totalPages} · {total} total
         </div>
         <div className="flex items-center gap-2">
+          <form action="" className="flex items-center gap-2">
+            <Input
+              name="pageSize"
+              defaultValue={String(pageSize)}
+              className="w-24"
+            />
+            <Button type="submit" variant="outline">
+              {t("actions.set_page_size")}
+            </Button>
+          </form>
           <Button asChild variant="outline" disabled={page <= 1}>
             <Link
               href={{
                 pathname: "/video-tasks",
-                query: { page: String(prevPage), pageSize: String(pageSize) },
+                query: {
+                  page: String(prevPage),
+                  pageSize: String(pageSize),
+                  ...(search && { search }),
+                  ...(startDate && { startDate }),
+                  ...(endDate && { endDate }),
+                },
               }}
             >
               {t("pagination.prev")}
@@ -137,7 +181,13 @@ export default async function VideoTasksPage({
             <Link
               href={{
                 pathname: "/video-tasks",
-                query: { page: String(nextPage), pageSize: String(pageSize) },
+                query: {
+                  page: String(nextPage),
+                  pageSize: String(pageSize),
+                  ...(search && { search }),
+                  ...(startDate && { startDate }),
+                  ...(endDate && { endDate }),
+                },
               }}
             >
               {t("pagination.next")}

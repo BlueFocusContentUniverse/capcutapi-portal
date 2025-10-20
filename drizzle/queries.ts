@@ -1,4 +1,4 @@
-import { count, desc } from "drizzle-orm";
+import { and, count, desc, gte, ilike, lte, or } from "drizzle-orm";
 
 import { db } from "./db";
 import { drafts, videoTasks } from "./schema/public";
@@ -19,10 +19,39 @@ export type DraftListItem = {
   resource: string | null;
 };
 
-export async function getDraftsPaginated(page: number, pageSize: number) {
+export async function getDraftsPaginated(
+  page: number,
+  pageSize: number,
+  search?: string,
+  startDate?: string,
+  endDate?: string,
+) {
   const safePageSize = Math.max(1, Math.min(100, Math.floor(pageSize || 10)));
   const safePage = Math.max(1, Math.floor(page || 1));
   const offset = (safePage - 1) * safePageSize;
+
+  // Build search conditions
+  const conditions = [];
+
+  if (search) {
+    // Search in draftId, draftName
+    conditions.push(
+      or(
+        ilike(drafts.draftId, `%${search}%`),
+        ilike(drafts.draftName, `%${search}%`),
+      ),
+    );
+  }
+
+  if (startDate) {
+    conditions.push(gte(drafts.createdAt, startDate));
+  }
+
+  if (endDate) {
+    conditions.push(lte(drafts.createdAt, endDate));
+  }
+
+  const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
   const [items, totalRow] = await Promise.all([
     db
@@ -42,12 +71,14 @@ export async function getDraftsPaginated(page: number, pageSize: number) {
         resource: drafts.resource,
       })
       .from(drafts)
+      .where(whereClause)
       .orderBy(desc(drafts.createdAt))
       .limit(safePageSize)
       .offset(offset),
     db
       .select({ value: count() })
       .from(drafts)
+      .where(whereClause)
       .then((rows) => rows[0]),
   ]);
 
@@ -74,10 +105,39 @@ export type VideoTaskListItem = {
   updatedAt: string;
 };
 
-export async function getVideoTasksPaginated(page: number, pageSize: number) {
+export async function getVideoTasksPaginated(
+  page: number,
+  pageSize: number,
+  search?: string,
+  startDate?: string,
+  endDate?: string,
+) {
   const safePageSize = Math.max(1, Math.min(100, Math.floor(pageSize || 10)));
   const safePage = Math.max(1, Math.floor(page || 1));
   const offset = (safePage - 1) * safePageSize;
+
+  // Build search conditions
+  const conditions = [];
+
+  if (search) {
+    // Search in draftId, videoName
+    conditions.push(
+      or(
+        ilike(videoTasks.draftId, `%${search}%`),
+        ilike(videoTasks.videoName, `%${search}%`),
+      ),
+    );
+  }
+
+  if (startDate) {
+    conditions.push(gte(videoTasks.createdAt, startDate));
+  }
+
+  if (endDate) {
+    conditions.push(lte(videoTasks.createdAt, endDate));
+  }
+
+  const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
   const [items, totalRow] = await Promise.all([
     db
@@ -95,12 +155,14 @@ export async function getVideoTasksPaginated(page: number, pageSize: number) {
         updatedAt: videoTasks.updatedAt,
       })
       .from(videoTasks)
+      .where(whereClause)
       .orderBy(desc(videoTasks.createdAt))
       .limit(safePageSize)
       .offset(offset),
     db
       .select({ value: count() })
       .from(videoTasks)
+      .where(whereClause)
       .then((rows) => rows[0]),
   ]);
 

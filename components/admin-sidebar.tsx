@@ -5,12 +5,12 @@ import {
   Home,
   LogOut,
   Menu,
-  Mountain,
   Trophy,
   User,
   Users,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -68,7 +68,7 @@ export function AdminSidebar() {
         <div className="flex h-full flex-col">
           {/* Header */}
           <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
-            <Mountain className="h-8 w-8 text-sidebar-primary" />
+            <Image src="/kox-logo-web.png" alt="logo" width={32} height={32} />
             <span className="ml-2 text-lg font-semibold text-sidebar-foreground">
               {t("sidebar.title")}
             </span>
