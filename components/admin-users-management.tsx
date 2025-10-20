@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus, Search } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Badge } from "@/components/ui/badge";
@@ -40,18 +40,58 @@ type AdminUser = {
   role: "admin" | "superadmin";
 };
 
+async function createAdminUser(
+  prevState: { error: string | null },
+  formData: FormData,
+) {
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  if (!name || !email || !password) {
+    return { error: "Please fill in all fields" };
+  }
+
+  if (password.length < 6) {
+    return { error: "Password must be at least 6 characters" };
+  }
+
+  try {
+    const res = await nextApi.post("admin/users", {
+      json: { name, email, password },
+    });
+
+    if (!res.ok) {
+      const data = await res.json<{ error?: string }>().catch(() => ({}));
+      return {
+        error:
+          (data as { error?: string }).error ||
+          `Creation failed: ${res.status}`,
+      };
+    }
+
+    // Return success state
+    return { error: null };
+  } catch (e) {
+    console.error(e);
+    return { error: e instanceof Error ? e.message : "Creation failed" };
+  }
+}
+
 export function AdminUsersManagement() {
   const { t } = useTranslation();
   const [items, setItems] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<AdminUser | null>(null);
   const [deleting, setDeleting] = useState(false);
+
+  const [formState, formAction, isPending] = useActionState(createAdminUser, {
+    error: null,
+  });
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const run = async () => {
@@ -63,15 +103,27 @@ export function AdminUsersManagement() {
         setItems(data);
       } catch (e: unknown) {
         console.error(e);
-        const msg =
-          e instanceof Error ? e.message : t("admin_users.error_load_failed");
-        setError(msg);
+        setError(t("admin_users.error_load_failed"));
       } finally {
         setLoading(false);
       }
     };
     run();
   }, []);
+
+  // Handle successful form submission
+  useEffect(() => {
+    if (formState.error === null && !isPending) {
+      // Form submission was successful, refresh the list and close dialog
+      const refreshUsers = async () => {
+        const res = await fetch("/api/admin/users");
+        const data = await res.json();
+        setItems(data);
+      };
+      refreshUsers();
+      setOpen(false);
+    }
+  }, [formState.error, isPending]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -108,41 +160,6 @@ export function AdminUsersManagement() {
     }
   };
 
-  const onSubmit = async (formData: FormData) => {
-    setError(null);
-    if (!form.name || !form.email || !form.password) {
-      setError(t("admin_users.error_fill_all_fields"));
-      return;
-    }
-    if (form.password.length < 6) {
-      setError(t("admin_users.error_password_too_short"));
-      return;
-    }
-    setSubmitting(true);
-    try {
-      const res = await nextApi.post("admin/users", {
-        json: form,
-      });
-      if (!res.ok) {
-        const data = await res.json<any>().catch(() => ({}));
-        throw new Error(data?.error || `创建失败: ${res.status}`);
-      }
-      // refresh list
-      const refreshed = await fetch("/api/admin/users");
-      const data = await refreshed.json();
-      setItems(data);
-      setOpen(false);
-      setForm({ name: "", email: "", password: "" });
-    } catch (e: unknown) {
-      console.error(e);
-      const msg =
-        e instanceof Error ? e.message : t("admin_users.error_create_failed");
-      setError(msg);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -165,28 +182,17 @@ export function AdminUsersManagement() {
                 {t("admin_users.create_dialog_description")}
               </DialogDescription>
             </DialogHeader>
-            {error && <div className="text-sm text-destructive">{error}</div>}
-            <form action={onSubmit} className="space-y-4" autoComplete="off">
+            {formState.error && (
+              <div className="text-sm text-destructive">{formState.error}</div>
+            )}
+            <form action={formAction} className="space-y-4" autoComplete="off">
               <div className="space-y-2">
                 <Label htmlFor="name">{t("admin_users.form_name")}</Label>
-                <Input
-                  id="name"
-                  value={form.name}
-                  onChange={(e) =>
-                    setForm((s) => ({ ...s, name: e.target.value }))
-                  }
-                />
+                <Input id="name" name="name" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">{t("admin_users.form_email")}</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={form.email}
-                  onChange={(e) =>
-                    setForm((s) => ({ ...s, email: e.target.value }))
-                  }
-                />
+                <Input id="email" name="email" type="email" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">
@@ -194,19 +200,18 @@ export function AdminUsersManagement() {
                 </Label>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
-                  value={form.password}
-                  onChange={(e) =>
-                    setForm((s) => ({ ...s, password: e.target.value }))
-                  }
+                  required
+                  minLength={6}
                 />
               </div>
               <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={() => setOpen(false)}>
                   {t("admin_users.cancel")}
                 </Button>
-                <Button type="submit" disabled={submitting}>
-                  {submitting
+                <Button type="submit" disabled={isPending}>
+                  {isPending
                     ? t("admin_users.creating")
                     : t("admin_users.create_button")}
                 </Button>
@@ -220,6 +225,9 @@ export function AdminUsersManagement() {
         <CardHeader>
           <CardTitle>{t("admin_users.list_title")}</CardTitle>
           <CardDescription>{t("admin_users.list_description")}</CardDescription>
+          {error && (
+            <div className="text-sm text-destructive mb-4">{error}</div>
+          )}
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4 mb-4">

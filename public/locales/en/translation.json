@@ -24,6 +24,7 @@
     "open": "Open",
     "set_page_size": "Set page size",
     "generate_video": "Generate video",
+    "generating": "Generating...",
     "archive_draft": "Archive draft",
     "view_draft_data": "View Draft Data",
     "search": "Search"
@@ -94,6 +95,9 @@
     },
     "tips": {
       "location_hint": "Enter the path of the draft file marked with a red line"
+    },
+    "messages": {
+      "generate_video_success": "Video generation started successfully!"
     }
   },
   "video_tasks": {

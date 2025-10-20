@@ -24,6 +24,7 @@
     "open": "開く",
     "set_page_size": "ページサイズを設定",
     "generate_video": "動画を生成",
+    "generating": "生成中...",
     "archive_draft": "ドラフトをアーカイブ",
     "view_draft_data": "ドラフトデータを表示",
     "search": "検索"
@@ -94,6 +95,9 @@
     },
     "tips": {
       "location_hint": "赤線でマークされたドラフトフォルダーのパスを入力してください"
+    },
+    "messages": {
+      "generate_video_success": "動画生成が正常に開始されました！"
     }
   },
   "video_tasks": {

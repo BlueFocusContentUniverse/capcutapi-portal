@@ -2,11 +2,11 @@ import "./globals.css";
 
 import { dir } from "i18next";
 import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import type React from "react";
 
-import { auth } from "@/auth";
 import { CookiesProviderWrapper } from "@/components/cookies-provider";
+import { Toaster } from "@/components/ui/sonner";
 import I18NProvider from "@/lib/i18n/client-provider";
 import { cookieName } from "@/lib/i18n/settings";
 
@@ -31,16 +31,13 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const lng = cookieStore.get(cookieName)?.value;
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
   return (
     <html lang={lng ?? "en"} dir={dir(lng ?? "en")}>
       <body className={`font-sans`}>
         <I18NProvider locale={lng ?? "en"}>
           <CookiesProviderWrapper>{children}</CookiesProviderWrapper>
         </I18NProvider>
+        <Toaster />
       </body>
     </html>
   );

@@ -30,12 +30,13 @@ export async function GET(
     // Construct the external API URL
     const externalApiUrl = `${baseUrl}/api/drafts/${draftId}/content`;
 
+    console.log("externalApiUrl", externalApiUrl);
+
     // Call the external API with authorization
     const response = await fetch(externalApiUrl, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${apiToken}`,
-        "Content-Type": "application/json",
       },
     });
 

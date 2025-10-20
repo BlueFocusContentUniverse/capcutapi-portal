@@ -24,8 +24,10 @@
     "open": "打開",
     "set_page_size": "設定每頁數量",
     "generate_video": "生成影片",
+    "generating": "生成中...",
     "archive_draft": "封存草稿",
-    "view_draft_data": "查看草稿資料"
+    "view_draft_data": "查看草稿資料",
+    "search": "搜尋"
   },
   "login": {
     "title": "登入",
@@ -77,6 +79,9 @@
     },
     "tips": {
       "location_hint": "請輸入紅線標註的草稿資料夾路徑"
+    },
+    "messages": {
+      "generate_video_success": "影片生成已成功啟動！"
     }
   },
   "video_tasks": {

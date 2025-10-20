@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { useActionState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 import { generateVideoAction } from "@/app/(main)/drafts/actions";
 import ParamSelect from "@/components/param-select";
@@ -9,6 +11,12 @@ import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+type ActionState = {
+  loading: boolean;
+  error?: string;
+  success?: boolean;
+};
 
 export default function GenerateVideoForm({
   d,
@@ -25,6 +33,7 @@ export default function GenerateVideoForm({
   onSuccess?: () => void;
 }) {
   const { t } = useTranslation();
+
   const initialFramerate = React.useMemo(() => {
     if (d?.fps === 30) return "30fps";
     if (d?.fps === 50) return "50fps";
@@ -41,16 +50,50 @@ export default function GenerateVideoForm({
   }, [d]);
 
   const formRef = React.useRef<HTMLFormElement | null>(null);
-  const action = async (formData: FormData) => {
-    const res = await generateVideoAction(undefined, formData);
-    if (res?.ok) {
-      onSuccess?.();
-      formRef.current?.reset();
+
+  const action = async (
+    prevState: ActionState,
+    formData: FormData,
+  ): Promise<ActionState> => {
+    try {
+      const res = await generateVideoAction(undefined, formData);
+      if (res?.ok) {
+        return { loading: false, success: true };
+      } else {
+        return {
+          loading: false,
+          error: "Failed to generate video",
+        };
+      }
+    } catch {
+      return {
+        loading: false,
+        error: "An error occurred while generating video",
+      };
     }
   };
 
+  const [state, submitAction, isPending] = useActionState(action, {
+    loading: false,
+    success: false,
+  });
+
+  // Handle side effects based on state changes
+  useEffect(() => {
+    if (state.success) {
+      toast.success(
+        t("drafts.messages.generate_video_success") ||
+          "Video generation started successfully!",
+      );
+      onSuccess?.();
+      formRef.current?.reset();
+    } else if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state.success, state.error, t, onSuccess]);
+
   return (
-    <form action={action} ref={formRef} className="space-y-4">
+    <form action={submitAction} ref={formRef} className="space-y-4">
       <div className="grid gap-2">
         <Label htmlFor={`draft_id_${d.id}`}>
           {t("drafts.fields.draft_id")}
@@ -91,7 +134,11 @@ export default function GenerateVideoForm({
             {t("actions.cancel")}
           </Button>
         </DialogClose>
-        <Button type="submit">{t("actions.generate_video")}</Button>
+        <Button type="submit" disabled={isPending}>
+          {isPending
+            ? t("actions.generating") || "Generating..."
+            : t("actions.generate_video")}
+        </Button>
       </DialogFooter>
     </form>
   );

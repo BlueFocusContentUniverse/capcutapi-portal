@@ -24,6 +24,7 @@
     "open": "打开",
     "set_page_size": "设置每页数量",
     "generate_video": "生成视频",
+    "generating": "生成中...",
     "archive_draft": "归档草稿",
     "view_draft_data": "查看草稿数据",
     "search": "搜索"
@@ -94,6 +95,9 @@
     },
     "tips": {
       "location_hint": "请输入红线标注的草稿文件夹路径"
+    },
+    "messages": {
+      "generate_video_success": "视频生成已成功启动！"
     }
   },
   "video_tasks": {

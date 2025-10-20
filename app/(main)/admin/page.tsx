@@ -8,7 +8,8 @@ export default async function AdminUsersPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session?.user || session.user.email !== "super@admin.com") {
+  const isSuperadmin = session?.user?.role === "superadmin";
+  if (!session?.user || !isSuperadmin) {
     redirect("/");
   }
   return <AdminUsersManagement />;
