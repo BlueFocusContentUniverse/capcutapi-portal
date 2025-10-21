@@ -17,6 +17,7 @@ export type DraftListItem = {
   updatedAt: string;
   accessedAt: string | null;
   resource: string | null;
+  currentVersion: number | null;
 };
 
 export async function getDraftsPaginated(
@@ -69,6 +70,7 @@ export async function getDraftsPaginated(
         updatedAt: drafts.updatedAt,
         accessedAt: drafts.accessedAt,
         resource: drafts.resource,
+        currentVersion: drafts.currentVersion,
       })
       .from(drafts)
       .where(whereClause)

@@ -72,6 +72,7 @@
   "drafts": {
     "title": "ドラフト",
     "view_data": "ドラフトデータを表示",
+    "version": "バージョン",
     "fields": {
       "id": "ID",
       "draft_id": "ドラフトID",

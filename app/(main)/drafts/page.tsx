@@ -118,7 +118,7 @@ export default async function DraftsPage({
                 {d.duration ? (d.duration / 1000000).toFixed(2) + "s" : "-"}
               </TableCell>
               <TableCell>{d.fps ?? "-"}</TableCell>
-              <TableCell>{d.version ?? "-"}</TableCell>
+              <TableCell>{d.currentVersion ?? "-"}</TableCell>
               <TableCell>{formatBytes(d.sizeBytes)}</TableCell>
               <TableCell>
                 {d.createdAt ? new Date(d.createdAt).toLocaleString() : "-"}

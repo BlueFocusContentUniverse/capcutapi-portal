@@ -57,6 +57,7 @@
   "drafts": {
     "title": "剪映草稿箱",
     "view_data": "查看草稿資料",
+    "version": "版本",
     "fields": {
       "id": "ID",
       "draft_id": "草稿 ID",

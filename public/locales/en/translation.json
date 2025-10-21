@@ -72,6 +72,7 @@
   "drafts": {
     "title": "Drafts",
     "view_data": "View Draft Data",
+    "version": "Version",
     "fields": {
       "id": "ID",
       "draft_id": "Draft ID",
