@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 // Protect routes: redirect to /login when there is no session or it is expired
-export const middleware = async (req: NextRequest) => {
+export const proxy = async (req: NextRequest) => {
   const sessionCookie = getSessionCookie(req);
 
   if (!sessionCookie) {
