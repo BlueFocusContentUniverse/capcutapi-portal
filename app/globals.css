@@ -119,3 +119,32 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Video Editor Styles */
+@layer utilities {
+  .bg-gray-850 {
+    background-color: rgb(23, 25, 35);
+  }
+  .bg-gray-750 {
+    background-color: rgb(40, 44, 52);
+  }
+  
+  /* Timeline scrollbar styling */
+  .timeline-scroll::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .timeline-scroll::-webkit-scrollbar-track {
+    background: rgb(17, 24, 39);
+  }
+  
+  .timeline-scroll::-webkit-scrollbar-thumb {
+    background: rgb(55, 65, 81);
+    border-radius: 6px;
+  }
+  
+  .timeline-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgb(75, 85, 99);
+  }
+}

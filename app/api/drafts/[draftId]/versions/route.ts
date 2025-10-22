@@ -30,8 +30,6 @@ export async function GET(
     // Construct the external API URL
     const externalApiUrl = `${baseUrl}/api/drafts/${draftId}/versions`;
 
-    console.log("Fetching versions from:", externalApiUrl);
-
     // Call the external API with authorization
     const response = await fetch(externalApiUrl, {
       method: "GET",

@@ -1,3 +1,4 @@
+import { Video } from "lucide-react";
 import Link from "next/link";
 
 import DraftDataViewDialog from "@/components/draft-data-view-dialog";
@@ -131,9 +132,12 @@ export default async function DraftsPage({
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  {/* <Button variant="outline" size="sm">
-                    {t("actions.delete")}
-                  </Button> */}
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/drafts/${d.draftId}/editor`}>
+                      <Video className="mr-1 h-4 w-4" />
+                      Editor
+                    </Link>
+                  </Button>
                   <GenerateVideoDialog
                     d={d}
                     buttonLabel={t("actions.generate_video")}
