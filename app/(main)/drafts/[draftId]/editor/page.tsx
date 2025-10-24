@@ -38,7 +38,7 @@ export default function EditorPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [versions, setVersions] = useState<
-    { version: string; created_at: number }[]
+    { version: string; updated_at: number }[]
   >([]);
   const [selectedVersion, setSelectedVersion] = useState<string | null>(null);
   const [loadingVersions, setLoadingVersions] = useState(false);
@@ -199,7 +199,7 @@ export default function EditorPage() {
                       <SelectItem key={i} value={version.version}>
                         {version.version}
                         <span className="text-xs text-muted-foreground ml-2">
-                          {new Date(version.created_at * 1000).toLocaleString()}
+                          {new Date(version.updated_at * 1000).toLocaleString()}
                         </span>
                       </SelectItem>
                     ))}

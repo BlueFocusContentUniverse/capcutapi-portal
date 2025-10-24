@@ -45,7 +45,7 @@ export default function DraftDataViewDialog({
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [versions, setVersions] = React.useState<
-    { version: string; created_at: number }[]
+    { version: string; updated_at: number }[]
   >([]);
   const [selectedVersion, setSelectedVersion] = React.useState<string | null>(
     null,
@@ -162,7 +162,7 @@ export default function DraftDataViewDialog({
                     <SelectItem key={i} value={version.version}>
                       {version.version} -{" "}
                       <span className="text-xs text-muted-foreground">
-                        {new Date(version.created_at * 1000).toLocaleString()}
+                        {new Date(version.updated_at * 1000).toLocaleString()}
                       </span>
                     </SelectItem>
                   ))}
