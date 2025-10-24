@@ -14,6 +14,9 @@ COPY . .
 # Set build-time environment variables
 # ENV NODE_ENV=production
 
+# This is for build checking
+ENV DATABASE_URL=postgresql://postgres:postgres@stub:5432/
+
 # Install dependencies using npm ci (ensures a clean, reproducible install)
 RUN npm ci && npm cache clean --force
 
