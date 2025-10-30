@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@vidstack/react/player/styles/base.css";
 
 :root {
   --background: oklch(1 0 0);
@@ -146,5 +147,14 @@
   
   .timeline-scroll::-webkit-scrollbar-thumb:hover {
     background: rgb(75, 85, 99);
+  }
+}
+
+/* Vidstack Player Customization */
+@layer base {
+  /* Customize the default Vidstack theme colors */
+  media-player {
+    --media-brand: var(--primary);
+    --media-focus-ring: var(--primary);
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { TimelineSegment } from "@/components/timeline-segment";
+import { TimelineSegment } from "./timeline-segment";
 
 interface Segment {
   id: string;
@@ -50,11 +50,11 @@ export function TimelineTrack({
     >
       {/* Track Label */}
       <div
-        className={`sticky left-0 z-20 w-[200px] flex-shrink-0 flex items-center px-3 py-2 border-r border-gray-700 ${bgClass}`}
+        className={`sticky left-0 z-20 w-[200px] shrink-0 flex items-center px-3 py-2 border-r border-gray-700 ${bgClass}`}
       >
         <div className="flex items-center gap-2 w-full">
           <div
-            className={`w-3 h-3 rounded ${trackColor} flex-shrink-0`}
+            className={`w-3 h-3 rounded ${trackColor} shrink-0`}
             title={track.type}
           />
           <div className="flex-1 min-w-0">

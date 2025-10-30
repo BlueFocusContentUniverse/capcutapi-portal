@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { VideoEditor } from "@/components/video-editor";
+import { VideoEditor } from "@/components/video-editor/index";
 
 interface DraftContent {
   content: {
@@ -22,6 +22,7 @@ interface DraftContent {
       height: number;
       ratio: string;
     };
+    name: string;
     tracks: any[];
     materials: any;
   };
@@ -163,8 +164,9 @@ export default function EditorPage() {
           </Button>
           <div className="flex-1">
             <h1 className="text-xl font-semibold text-white">
-              Video Editor - {draftData.draft_id}
+              {draftData.content.name}
             </h1>
+            <h5 className="text-sm text-gray-400">ID: {draftData.draft_id}</h5>
             <p className="text-sm text-gray-400 mt-1">
               Duration: {(draftData.content.duration / 1000000).toFixed(2)}s |
               Canvas: {draftData.content.canvas_config.width}x

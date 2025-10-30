@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  ChevronLeft,
+  ChevronRight,
   FolderOpen,
   Home,
   LogOut,
@@ -24,6 +26,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { signOut, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
+import { useSidebar } from "./admin-layout";
+
 const navigation = [
   { key: "nav.dashboard", href: "/", icon: Home },
   { key: "nav.drafts", href: "/drafts", icon: FolderOpen },
@@ -32,6 +36,7 @@ const navigation = [
 
 export function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isCollapsed, setIsCollapsed } = useSidebar();
   const pathname = usePathname();
   const { data: session } = useSession();
   const { t } = useTranslation();
@@ -44,6 +49,10 @@ export function AdminSidebar() {
         },
       },
     });
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
   return (
@@ -61,21 +70,50 @@ export function AdminSidebar() {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-sidebar border-r border-sidebar-border transform transition-transform duration-200 ease-in-out md:translate-x-0",
-          isOpen ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 left-0 z-40 bg-sidebar border-r border-sidebar-border transform transition-all duration-200 ease-in-out md:translate-x-0",
+          // Mobile behavior (slide in/out)
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+          // Desktop collapse behavior
+          isCollapsed ? "md:w-16" : "md:w-64",
         )}
       >
         <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
-            <Image src="/kox-logo-web.png" alt="logo" width={32} height={32} />
-            <span className="ml-2 text-lg font-semibold text-sidebar-foreground">
-              {t("sidebar.title")}
-            </span>
+          <div className="flex h-16 items-center border-b border-sidebar-border">
+            <div
+              className={cn("flex items-center", isCollapsed ? "px-2" : "px-6")}
+            >
+              <Image
+                src="/kox-logo-web.png"
+                alt="logo"
+                width={32}
+                height={32}
+              />
+              {!isCollapsed && (
+                <span className="ml-2 text-lg font-semibold text-sidebar-foreground">
+                  {t("sidebar.title")}
+                </span>
+              )}
+            </div>
+            {/* Collapse button - only visible on desktop */}
+            <div className="ml-auto hidden md:block">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-sidebar-foreground hover:bg-sidebar-accent/50"
+                onClick={toggleCollapse}
+              >
+                {isCollapsed ? (
+                  <ChevronRight className="h-4 w-4" />
+                ) : (
+                  <ChevronLeft className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
           </div>
 
           {/* Navigation */}
-          <ScrollArea className="flex-1 px-3 py-4">
+          <ScrollArea className="flex-1 py-4">
             <nav className="space-y-2">
               {navigation.map((item) => {
                 const isActive = pathname === item.href;
@@ -84,15 +122,21 @@ export function AdminSidebar() {
                     key={item.key}
                     href={item.href}
                     className={cn(
-                      "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                      "flex items-center rounded-md transition-colors",
+                      isCollapsed
+                        ? "px-2 py-2 justify-center"
+                        : "px-3 py-2 text-sm font-medium",
                       isActive
                         ? "bg-sidebar-accent text-sidebar-accent-foreground"
                         : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground",
                     )}
                     onClick={() => setIsOpen(false)}
+                    title={isCollapsed ? t(item.key) : undefined}
                   >
-                    <item.icon className="mr-3 h-5 w-5" />
-                    {t(item.key)}
+                    <item.icon
+                      className={cn("h-5 w-5", isCollapsed ? "" : "mr-3")}
+                    />
+                    {!isCollapsed && <span>{t(item.key)}</span>}
                   </Link>
                 );
               })}
@@ -100,49 +144,81 @@ export function AdminSidebar() {
                 <Link
                   href="/admin"
                   className={cn(
-                    "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                    "flex items-center rounded-md transition-colors",
+                    isCollapsed
+                      ? "px-2 py-2 justify-center"
+                      : "px-3 py-2 text-sm font-medium",
                     pathname === "/admin"
                       ? "bg-sidebar-accent text-sidebar-accent-foreground"
                       : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground",
                   )}
                   onClick={() => setIsOpen(false)}
+                  title={isCollapsed ? t("nav.admin") : undefined}
                 >
-                  <Users className="mr-3 h-5 w-5" /> {t("nav.admin")}
+                  <Users className={cn("h-5 w-5", isCollapsed ? "" : "mr-3")} />
+                  {!isCollapsed && <span>{t("nav.admin")}</span>}
                 </Link>
               )}
             </nav>
 
-            <div className="mt-4 px-2">
+            <div
+              className={cn(
+                "mt-4",
+                isCollapsed ? "px-2 flex justify-center" : "px-2",
+              )}
+            >
               <LanguageSwitcher />
             </div>
           </ScrollArea>
 
           {session && (
-            <div className="border-t border-sidebar-border p-4">
-              <div className="flex items-center space-x-3 mb-3">
+            <div
+              className={cn(
+                "border-t border-sidebar-border",
+                isCollapsed ? "p-2" : "p-4",
+              )}
+            >
+              <div
+                className={cn(
+                  "flex items-center mb-3",
+                  isCollapsed ? "flex-col space-y-2 space-x-0" : "space-x-3",
+                )}
+              >
                 <Avatar className="h-8 w-8">
                   <AvatarFallback>
                     <User className="h-4 w-4" />
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-sidebar-foreground truncate">
-                    {session.user?.name || t("sidebar.admin_fallback")}
-                  </p>
-                  <p className="text-xs text-sidebar-foreground/60 truncate">
-                    {session.user?.email || "admin@example.com"}
-                  </p>
+                {!isCollapsed && (
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-sidebar-foreground truncate">
+                      {session.user?.name || t("sidebar.admin_fallback")}
+                    </p>
+                    <p className="text-xs text-sidebar-foreground/60 truncate">
+                      {session.user?.email || "admin@example.com"}
+                    </p>
+                  </div>
+                )}
+                <div className={cn(isCollapsed && "flex justify-center")}>
+                  <ProfileDialog />
                 </div>
-                <ProfileDialog />
               </div>
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent/50"
+                className={cn(
+                  "text-sidebar-foreground hover:bg-sidebar-accent/50",
+                  isCollapsed
+                    ? "w-full justify-center px-2"
+                    : "w-full justify-start",
+                )}
                 onClick={handleSignOut}
+                title={isCollapsed ? t("nav.logout") : undefined}
               >
-                <LogOut className="mr-2 h-4 w-4" />
-                {t("nav.logout")}
+                <LogOut className="h-4 w-4" />
+                {!isCollapsed && (
+                  <span className="ml-2">{t("nav.logout")}</span>
+                )}
               </Button>
             </div>
           )}
