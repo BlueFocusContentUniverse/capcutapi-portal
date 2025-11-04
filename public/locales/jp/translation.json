@@ -26,6 +26,7 @@
     "generate_video": "動画を生成",
     "generating": "生成中...",
     "archive_draft": "ドラフトをアーカイブ",
+    "archiving": "アーカイブ中...",
     "view_draft_data": "ドラフトデータを表示",
     "search": "検索"
   },
@@ -99,7 +100,11 @@
     },
     "messages": {
       "generate_video_success": "動画生成が正常に開始されました！"
-    }
+    },
+    "archive_success": "アーカイブが完了しました！",
+    "download_draft": "ドラフトをダウンロード",
+    "archiving_in_progress": "ドラフトをアーカイブしています...",
+    "please_wait": "しばらくお待ちください"
   },
   "video_tasks": {
     "title": "動画生成タスク状況",
@@ -111,7 +116,7 @@
       "status": "ステータス",
       "progress": "進捗",
       "message": "メッセージ",
-      "draft_url": "ドラフトURL",
+      "oss_url": "OSS URL",
       "created": "作成日時",
       "updated": "更新日時",
       "operations": "操作"

@@ -6,9 +6,9 @@ interface ArchiveDraftRequest {
   [property: string]: unknown;
 }
 
-async function archiveDraft(
+async function saveDraft(
   formData: FormData,
-): Promise<{ ok: true } | { ok: false; error: string }> {
+): Promise<{ ok: true; draftUrl: string } | { ok: false; error: string }> {
   const baseUrl = process.env.JYAPI_BASEURL;
   if (!baseUrl) {
     console.error("JYAPI_BASEURL is not set");
@@ -34,27 +34,30 @@ async function archiveDraft(
   };
 
   try {
-    const res = await fetch(`${baseUrl}/archive_draft`, {
+    const res = await fetch(`${baseUrl}/save_draft`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.error("archive_draft failed:", res.status, text);
+      console.error("save_draft failed:", res.status, text);
       return { ok: false, error: text || `HTTP ${res.status}` };
     }
-    return { ok: true };
+    const data = await res.json();
+    const draftUrl = data?.output?.draft_url || "";
+    if (!draftUrl) {
+      console.error("draft_url not found in response");
+      return { ok: false, error: "draft_url not found in response" };
+    }
+    return { ok: true, draftUrl };
   } catch (err) {
-    console.error("archive_draft request error:", err);
+    console.error("save_draft request error:", err);
     return { ok: false, error: "Request error" };
   }
 }
 
-export async function archiveDraftAction(
-  _prevState: unknown,
-  formData: FormData,
-) {
+export async function saveDraftAction(_prevState: unknown, formData: FormData) {
   "use server";
-  return archiveDraft(formData);
+  return saveDraft(formData);
 }

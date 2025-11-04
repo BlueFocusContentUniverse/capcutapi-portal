@@ -3,8 +3,9 @@
 import Image from "next/image";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
-import { archiveDraftAction } from "@/app/(main)/video-tasks/actions";
+import { saveDraftAction } from "@/app/(main)/video-tasks/actions";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -13,34 +14,28 @@ import type { DraftListItem } from "@/drizzle/queries";
 
 export default function ArchiveDraftForm({
   d,
-  onSuccess,
 }: {
   d: Pick<DraftListItem, "id" | "draftId">;
-  onSuccess?: () => void;
 }) {
   const { t } = useTranslation();
   const [directoryPath, setDirectoryPath] = React.useState<string>("");
   const formRef = React.useRef<HTMLFormElement | null>(null);
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
-  const action = async (formData: FormData) => {
-    if (!directoryPath) {
-      return;
+  const [state, formAction, isPending] = React.useActionState(
+    saveDraftAction,
+    undefined,
+  );
+
+  React.useEffect(() => {
+    if (state?.ok) {
+      toast.success(t("drafts.archive_success"));
+    } else if (state?.error) {
+      toast.error(state.error);
     }
-    formData.set("draft_folder", directoryPath);
-    const res = await archiveDraftAction(undefined, formData);
-    if (res?.ok) {
-      onSuccess?.();
-      formRef.current?.reset();
-      setDirectoryPath("");
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-    }
-  };
+  }, [state, t]);
 
   return (
-    <form action={action} ref={formRef} className="space-y-4">
+    <form action={formAction} ref={formRef} className="space-y-4">
       <div className="grid gap-2">
         <Label htmlFor={`archive_draft_id_${d.id}`}>
           {t("drafts.fields.draft_id")}
@@ -80,16 +75,48 @@ export default function ArchiveDraftForm({
         </div>
       </div>
 
+      {/* Success state with download link */}
+      {state?.ok && (
+        <div className="rounded-md border border-green-200 bg-green-50 p-4">
+          <p className="text-sm font-medium text-green-800 mb-2">
+            ✅ {t("drafts.archive_success")}
+          </p>
+          <a
+            href={state.draftUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 underline"
+          >
+            📥 {t("drafts.download_draft")}
+          </a>
+        </div>
+      )}
+
       <DialogFooter>
         <DialogClose asChild>
           <Button type="button" variant="outline">
             {t("actions.cancel")}
           </Button>
         </DialogClose>
-        <Button type="submit" disabled={!directoryPath}>
-          {t("actions.archive_draft")}
+        <Button type="submit" disabled={!directoryPath || isPending}>
+          {isPending ? t("actions.archiving") : t("actions.archive_draft")}
         </Button>
       </DialogFooter>
+
+      {/* Full screen loading mask */}
+      {isPending && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="rounded-lg bg-white p-6 shadow-xl">
+            <div className="flex flex-col items-center gap-4">
+              <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600"></div>
+              <p className="text-lg font-medium text-gray-900">
+                {t("drafts.archiving_in_progress")}
+              </p>
+              <p className="text-sm text-gray-500">{t("drafts.please_wait")}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

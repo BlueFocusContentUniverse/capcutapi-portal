@@ -1,7 +1,7 @@
-import { and, count, desc, gte, ilike, lte, or } from "drizzle-orm";
+import { and, count, desc, eq, gte, ilike, lte, or } from "drizzle-orm";
 
 import { db } from "./db";
-import { drafts, videoTasks } from "./schema/public";
+import { drafts, videos, videoTasks } from "./schema/public";
 
 export type DraftListItem = {
   id: number;
@@ -97,14 +97,16 @@ export type VideoTaskListItem = {
   id: number;
   taskId: string;
   draftId: string;
+  renderStatus: string;
   videoName: string | null;
   status: string;
   progress: number | null;
   message: string | null;
-  draftUrl: string | null;
   extra: unknown | null;
   createdAt: string;
   updatedAt: string;
+  videoId: string | null;
+  ossUrl: string | null;
 };
 
 export async function getVideoTasksPaginated(
@@ -150,13 +152,16 @@ export async function getVideoTasksPaginated(
         videoName: videoTasks.videoName,
         status: videoTasks.status,
         progress: videoTasks.progress,
+        renderStatus: videoTasks.renderStatus,
         message: videoTasks.message,
-        draftUrl: videoTasks.draftUrl,
         extra: videoTasks.extra,
         createdAt: videoTasks.createdAt,
         updatedAt: videoTasks.updatedAt,
+        videoId: videoTasks.videoId,
+        ossUrl: videos.ossUrl,
       })
       .from(videoTasks)
+      .leftJoin(videos, eq(videoTasks.videoId, videos.videoId))
       .where(whereClause)
       .orderBy(desc(videoTasks.createdAt))
       .limit(safePageSize)

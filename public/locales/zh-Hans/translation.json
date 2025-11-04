@@ -26,6 +26,7 @@
     "generate_video": "生成视频",
     "generating": "生成中...",
     "archive_draft": "归档草稿",
+    "archiving": "归档中...",
     "view_draft_data": "查看草稿数据",
     "search": "搜索"
   },
@@ -99,7 +100,11 @@
     },
     "messages": {
       "generate_video_success": "视频生成已成功启动！"
-    }
+    },
+    "archive_success": "归档成功！",
+    "download_draft": "下载草稿",
+    "archiving_in_progress": "正在归档草稿...",
+    "please_wait": "请稍候，这可能需要一点时间"
   },
   "video_tasks": {
     "title": "生成视频任务状态",
@@ -111,7 +116,7 @@
       "status": "状态",
       "progress": "进度",
       "message": "消息",
-      "draft_url": "草稿链接",
+      "oss_url": "OSS URL",
       "created": "创建时间",
       "updated": "更新时间",
       "operations": "操作"

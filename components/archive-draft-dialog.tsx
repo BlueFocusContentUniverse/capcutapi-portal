@@ -37,7 +37,7 @@ export default function ArchiveDraftDialog({
         <DialogHeader>
           <DialogTitle>{buttonLabel}</DialogTitle>
         </DialogHeader>
-        <ArchiveDraftForm d={d} onSuccess={() => setOpen(false)} />
+        <ArchiveDraftForm d={d} />
       </DialogContent>
     </Dialog>
   );

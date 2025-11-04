@@ -26,6 +26,7 @@
     "generate_video": "Generate video",
     "generating": "Generating...",
     "archive_draft": "Archive draft",
+    "archiving": "Archiving...",
     "view_draft_data": "View Draft Data",
     "search": "Search"
   },
@@ -99,7 +100,11 @@
     },
     "messages": {
       "generate_video_success": "Video generation started successfully!"
-    }
+    },
+    "archive_success": "Archive completed successfully!",
+    "download_draft": "Download Draft",
+    "archiving_in_progress": "Archiving Draft...",
+    "please_wait": "Please wait, this may take a moment"
   },
   "video_tasks": {
     "title": "Video Task Status",
@@ -111,7 +116,7 @@
       "status": "Status",
       "progress": "Progress",
       "message": "Message",
-      "draft_url": "Draft URL",
+      "oss_url": "OSS URL",
       "created": "Created",
       "updated": "Updated",
       "operations": "Operations"

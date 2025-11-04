@@ -26,6 +26,7 @@
     "generate_video": "生成影片",
     "generating": "生成中...",
     "archive_draft": "封存草稿",
+    "archiving": "封存中...",
     "view_draft_data": "查看草稿資料",
     "search": "搜尋"
   },
@@ -83,7 +84,11 @@
     },
     "messages": {
       "generate_video_success": "影片生成已成功啟動！"
-    }
+    },
+    "archive_success": "封存成功！",
+    "download_draft": "下載草稿",
+    "archiving_in_progress": "正在封存草稿...",
+    "please_wait": "請稍候，這可能需要一些時間"
   },
   "video_tasks": {
     "title": "生成視頻任務狀態",
@@ -95,7 +100,7 @@
       "status": "狀態",
       "progress": "進度",
       "message": "訊息",
-      "draft_url": "草稿連結",
+      "oss_url": "OSS URL",
       "created": "建立時間",
       "updated": "更新時間",
       "operations": "操作"
