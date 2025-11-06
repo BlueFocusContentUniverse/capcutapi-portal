@@ -75,20 +75,15 @@ export default function ArchiveDraftForm({
         </div>
       </div>
 
-      {/* Success state with download link */}
+      {/* Success state - async task submitted */}
       {state?.ok && (
         <div className="rounded-md border border-green-200 bg-green-50 p-4">
           <p className="text-sm font-medium text-green-800 mb-2">
             ✅ {t("drafts.archive_success")}
           </p>
-          <a
-            href={state.draftUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 underline"
-          >
-            📥 {t("drafts.download_draft")}
-          </a>
+          <p className="text-sm text-green-700">
+            {t("drafts.archive_submitted_message")}
+          </p>
         </div>
       )}
 

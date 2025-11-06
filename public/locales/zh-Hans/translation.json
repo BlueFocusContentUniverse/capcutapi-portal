@@ -7,6 +7,7 @@
     "logout": "退出登录",
     "drafts": "剪映草稿箱",
     "video_tasks": "生成视频任务状态",
+    "draft_archives": "草稿归档",
     "admin": "Admin 管理"
   },
   "sidebar": {
@@ -101,7 +102,8 @@
     "messages": {
       "generate_video_success": "视频生成已成功启动！"
     },
-    "archive_success": "归档成功！",
+    "archive_success": "归档请求已提交！",
+    "archive_submitted_message": "归档任务已提交。您可以在草稿归档页面查看状态。",
     "download_draft": "下载草稿",
     "archiving_in_progress": "正在归档草稿...",
     "please_wait": "请稍候，这可能需要一点时间"
@@ -122,6 +124,50 @@
       "operations": "操作"
     },
     "search_placeholder": "按草稿 ID 或视频名称搜索"
+  },
+  "draft_archives": {
+    "title": "草稿归档",
+    "refresh": "刷新",
+    "loading": "加载归档中...",
+    "please_wait": "请稍候",
+    "error": "错误",
+    "no_archives": "未找到归档",
+    "no_archives_filtered": "未找到符合筛选条件的归档",
+    "clear_filters": "清除筛选",
+    "filters": {
+      "draft_id_placeholder": "按草稿 ID 筛选",
+      "user_id_placeholder": "按用户 ID 筛选"
+    },
+    "table": {
+      "archive_id": "归档 ID",
+      "draft_id": "草稿 ID",
+      "version": "版本",
+      "user_id": "用户 ID",
+      "user_name": "用户名",
+      "status": "状态",
+      "progress": "进度",
+      "files": "文件",
+      "message": "消息",
+      "created": "创建时间",
+      "updated": "更新时间",
+      "actions": "操作"
+    },
+    "status": {
+      "completed": "已完成",
+      "in_progress": "进行中",
+      "pending": "等待中"
+    },
+    "version_current": "当前版本",
+    "pagination": {
+      "page_info": "第 {{page}} 页，共 {{totalPages}} 页 · 总计 {{totalCount}} 个归档",
+      "previous": "上一页",
+      "next": "下一页"
+    },
+    "download": "下载",
+    "delete": "删除",
+    "delete_confirm": "您确定要删除归档 {{archive_id}} 吗？",
+    "delete_success": "归档删除成功",
+    "delete_error": "删除归档失败"
   },
   "pagination": {
     "prev": "上一页",

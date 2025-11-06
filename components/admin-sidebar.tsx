@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Archive,
   ChevronLeft,
   ChevronRight,
   FolderOpen,
@@ -32,6 +33,7 @@ const navigation = [
   { key: "nav.dashboard", href: "/", icon: Home },
   { key: "nav.drafts", href: "/drafts", icon: FolderOpen },
   { key: "nav.video_tasks", href: "/video-tasks", icon: Trophy },
+  { key: "nav.draft_archives", href: "/draft-archives", icon: Archive },
 ];
 
 export function AdminSidebar() {

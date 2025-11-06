@@ -7,6 +7,7 @@
     "logout": "Logout",
     "drafts": "Drafts",
     "video_tasks": "Video Task Status",
+    "draft_archives": "Draft Archives",
     "admin": "Admin"
   },
   "sidebar": {
@@ -101,7 +102,8 @@
     "messages": {
       "generate_video_success": "Video generation started successfully!"
     },
-    "archive_success": "Archive completed successfully!",
+    "archive_success": "Archive request submitted successfully!",
+    "archive_submitted_message": "The archive task has been submitted. You can check the status in the Draft Archives page.",
     "download_draft": "Download Draft",
     "archiving_in_progress": "Archiving Draft...",
     "please_wait": "Please wait, this may take a moment"
@@ -122,6 +124,50 @@
       "operations": "Operations"
     },
     "search_placeholder": "Search by draft ID or video name"
+  },
+  "draft_archives": {
+    "title": "Draft Archives",
+    "refresh": "Refresh",
+    "loading": "Loading archives...",
+    "please_wait": "Please wait",
+    "error": "Error",
+    "no_archives": "No archives found",
+    "no_archives_filtered": "No archives found matching your filters",
+    "clear_filters": "Clear Filters",
+    "filters": {
+      "draft_id_placeholder": "Filter by Draft ID",
+      "user_id_placeholder": "Filter by User ID"
+    },
+    "table": {
+      "archive_id": "Archive ID",
+      "draft_id": "Draft ID",
+      "version": "Version",
+      "user_id": "User ID",
+      "user_name": "User Name",
+      "status": "Status",
+      "progress": "Progress",
+      "files": "Files",
+      "message": "Message",
+      "created": "Created",
+      "updated": "Updated",
+      "actions": "Actions"
+    },
+    "status": {
+      "completed": "Completed",
+      "in_progress": "In Progress",
+      "pending": "Pending"
+    },
+    "version_current": "Current",
+    "pagination": {
+      "page_info": "Page {{page}} of {{totalPages}} · {{totalCount}} total archives",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "download": "Download",
+    "delete": "Delete",
+    "delete_confirm": "Are you sure you want to delete archive {{archive_id}}?",
+    "delete_success": "Archive deleted successfully",
+    "delete_error": "Failed to delete archive"
   },
   "pagination": {
     "prev": "Prev",

@@ -1,12 +1,13 @@
 {
   "normal": "通常",
-  "nav": {
+    "nav": {
     "dashboard": "ダッシュボード",
     "users": "ユーザー",
     "settings": "設定",
     "logout": "ログアウト",
     "drafts": "ドラフト",
     "video_tasks": "動画生成タスク状況",
+    "draft_archives": "ドラフトアーカイブ",
     "admin": "管理"
   },
   "sidebar": {
@@ -101,7 +102,8 @@
     "messages": {
       "generate_video_success": "動画生成が正常に開始されました！"
     },
-    "archive_success": "アーカイブが完了しました！",
+    "archive_success": "アーカイブリクエストが送信されました！",
+    "archive_submitted_message": "アーカイブタスクが送信されました。ドラフトアーカイブページでステータスを確認できます。",
     "download_draft": "ドラフトをダウンロード",
     "archiving_in_progress": "ドラフトをアーカイブしています...",
     "please_wait": "しばらくお待ちください"
@@ -122,6 +124,50 @@
       "operations": "操作"
     },
     "search_placeholder": "ドラフトIDまたは動画名で検索"
+  },
+  "draft_archives": {
+    "title": "ドラフトアーカイブ",
+    "refresh": "更新",
+    "loading": "アーカイブを読み込み中...",
+    "please_wait": "お待ちください",
+    "error": "エラー",
+    "no_archives": "アーカイブが見つかりません",
+    "no_archives_filtered": "フィルター条件に一致するアーカイブが見つかりません",
+    "clear_filters": "フィルターをクリア",
+    "filters": {
+      "draft_id_placeholder": "ドラフトIDでフィルター",
+      "user_id_placeholder": "ユーザーIDでフィルター"
+    },
+    "table": {
+      "archive_id": "アーカイブID",
+      "draft_id": "ドラフトID",
+      "version": "バージョン",
+      "user_id": "ユーザーID",
+      "user_name": "ユーザー名",
+      "status": "ステータス",
+      "progress": "進捗",
+      "files": "ファイル",
+      "message": "メッセージ",
+      "created": "作成日時",
+      "updated": "更新日時",
+      "actions": "操作"
+    },
+    "status": {
+      "completed": "完了",
+      "in_progress": "進行中",
+      "pending": "待機中"
+    },
+    "version_current": "現在",
+    "pagination": {
+      "page_info": "{{page}} / {{totalPages}} ページ · 合計 {{totalCount}} アーカイブ",
+      "previous": "前へ",
+      "next": "次へ"
+    },
+    "download": "ダウンロード",
+    "delete": "削除",
+    "delete_confirm": "アーカイブ {{archive_id}} を削除してもよろしいですか？",
+    "delete_success": "アーカイブが正常に削除されました",
+    "delete_error": "アーカイブの削除に失敗しました"
   },
   "pagination": {
     "prev": "前へ",
