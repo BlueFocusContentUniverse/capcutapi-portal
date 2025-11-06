@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import ArchiveDraftDialog from "@/components/archive-draft-dialog";
+import { ArchiveDraftDialog } from "@/components/archive-draft-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -154,7 +154,11 @@ export default async function VideoTasksPage({
                 </TableCell>
                 <TableCell>
                   <ArchiveDraftDialog
-                    d={{ id: task.id, draftId: task.draftId }}
+                    d={{
+                      id: task.id,
+                      draftId: task.draftId,
+                      videoName: task.videoName,
+                    }}
                     buttonLabel={t("actions.archive_draft")}
                   />
                 </TableCell>

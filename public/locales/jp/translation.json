@@ -90,11 +90,13 @@
       "accessed": "アクセス日時",
       "operations": "操作",
       "draft_folder": "ドラフトフォルダー",
-      "select_draft_file": "ドラフトファイルを選択"
+      "select_draft_file": "ドラフトファイルを選択",
+      "archive_name": "アーカイブ名"
     },
     "placeholders": {
       "draft_folder": "ドラフトフォルダーを選択",
-      "search_placeholder": "ドラフトIDまたは名前で検索"
+      "search_placeholder": "ドラフトIDまたは名前で検索",
+      "archive_name": "アーカイブ名を入力"
     },
     "tips": {
       "location_hint": "赤線でマークされたドラフトフォルダーのパスを入力してください"

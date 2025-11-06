@@ -3,7 +3,10 @@
 import { ArrowLeft } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
+import { ArchiveDraftDialog } from "@/components/archive-draft-dialog";
+import DraftDataViewDialog from "@/components/draft-data-view-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -31,6 +34,7 @@ interface DraftContent {
 }
 
 export default function EditorPage() {
+  const { t } = useTranslation();
   const params = useParams();
   const router = useRouter();
   const draftId = params.draftId as string;
@@ -208,6 +212,23 @@ export default function EditorPage() {
                   </SelectContent>
                 </Select>
               </>
+            )}
+
+            {/* Draft Data View Dialog */}
+            {draftData && (
+              <DraftDataViewDialog draftData={draftData} draftId={draftId} />
+            )}
+
+            {/* Archive Draft Dialog */}
+            {draftData && (
+              <ArchiveDraftDialog
+                d={{
+                  draftId: draftId,
+                  videoName: draftData.content.name,
+                }}
+                buttonLabel={t("actions.archive_draft")}
+                draftVersion={selectedVersion}
+              />
             )}
           </div>
         </div>

@@ -7,7 +7,8 @@ import { auth } from "@/auth";
 interface ArchiveDraftRequest {
   draft_id: string;
   draft_folder: string;
-  draft_version?: string;
+  archive_name?: string;
+  draft_version?: number;
   user_id?: string;
   user_name?: string;
 }
@@ -39,6 +40,8 @@ async function saveDraft(
 
   const draft_id = formData.get("draft_id");
   const draft_folder = formData.get("draft_folder");
+  const archive_name = formData.get("archive_name");
+  const draft_version = formData.get("draft_version");
 
   if (!draft_id || typeof draft_id !== "string") {
     console.error("draft_id is required");
@@ -59,6 +62,17 @@ async function saveDraft(
     user_id,
     user_name,
   };
+
+  if (archive_name && typeof archive_name === "string") {
+    payload.archive_name = archive_name;
+  }
+
+  if (draft_version && typeof draft_version === "string") {
+    const parsedVersion = Number(draft_version);
+    if (!isNaN(parsedVersion) && isFinite(parsedVersion)) {
+      payload.draft_version = parsedVersion;
+    }
+  }
 
   try {
     const res = await fetch(`${baseUrl}/save_draft`, {

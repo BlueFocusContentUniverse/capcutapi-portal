@@ -1,7 +1,6 @@
 import { Video } from "lucide-react";
 import Link from "next/link";
 
-import DraftDataViewDialog from "@/components/draft-data-view-dialog";
 import GenerateVideoDialog from "@/components/generate-video-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,10 +140,6 @@ export default async function DraftsPage({
                   <GenerateVideoDialog
                     d={d}
                     buttonLabel={t("actions.generate_video")}
-                  />
-                  <DraftDataViewDialog
-                    d={d}
-                    buttonLabel={t("actions.view_draft_data")}
                   />
                 </div>
               </TableCell>

@@ -12,13 +12,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { DraftListItem } from "@/drizzle/queries";
 
-export default function ArchiveDraftForm({
+export function ArchiveDraftForm({
   d,
+  videoName,
+  draftVersion,
 }: {
-  d: Pick<DraftListItem, "id" | "draftId">;
+  d:
+    | Pick<DraftListItem, "id" | "draftId">
+    | { id: number | string; draftId: string };
+  videoName?: string | null;
+  draftVersion?: string | null;
 }) {
   const { t } = useTranslation();
   const [directoryPath, setDirectoryPath] = React.useState<string>("");
+  const [archiveName, setArchiveName] = React.useState<string>(videoName || "");
   const formRef = React.useRef<HTMLFormElement | null>(null);
 
   const [state, formAction, isPending] = React.useActionState(
@@ -46,6 +53,22 @@ export default function ArchiveDraftForm({
           disabled
         />
         <input type="hidden" name="draft_id" value={d?.draftId ?? ""} />
+        {draftVersion && (
+          <input type="hidden" name="draft_version" value={draftVersion} />
+        )}
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor={`archive_name_${d.id}`}>
+          {t("drafts.fields.archive_name")}
+        </Label>
+        <Input
+          id={`archive_name_${d.id}`}
+          name="archive_name"
+          value={archiveName}
+          onChange={(e) => setArchiveName(e.target.value)}
+          placeholder={t("drafts.placeholders.archive_name") ?? ""}
+        />
       </div>
 
       <div className="grid gap-2">

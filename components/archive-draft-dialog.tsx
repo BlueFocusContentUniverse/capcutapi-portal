@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import ArchiveDraftForm from "@/components/archive-draft-form";
+import { ArchiveDraftForm } from "@/components/archive-draft-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,16 +11,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { DraftListItem } from "@/drizzle/queries";
+import type { VideoTaskListItem } from "@/drizzle/queries";
 
-export default function ArchiveDraftDialog({
+export function ArchiveDraftDialog({
   d,
   buttonLabel,
   trigger,
+  draftVersion,
 }: {
-  d: Pick<DraftListItem, "id" | "draftId">;
+  d:
+    | Pick<VideoTaskListItem, "id" | "draftId" | "videoName">
+    | {
+        id?: number | string;
+        draftId: string;
+        videoName?: string | null;
+      };
   buttonLabel: string;
   trigger?: React.ReactNode;
+  draftVersion?: string | null;
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -37,7 +45,11 @@ export default function ArchiveDraftDialog({
         <DialogHeader>
           <DialogTitle>{buttonLabel}</DialogTitle>
         </DialogHeader>
-        <ArchiveDraftForm d={d} />
+        <ArchiveDraftForm
+          d={{ id: d.id ?? d.draftId, draftId: d.draftId }}
+          videoName={d.videoName}
+          draftVersion={draftVersion}
+        />
       </DialogContent>
     </Dialog>
   );

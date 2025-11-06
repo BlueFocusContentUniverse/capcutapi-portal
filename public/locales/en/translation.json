@@ -90,11 +90,13 @@
       "accessed": "Accessed",
       "operations": "Operations",
       "draft_folder": "Draft Folder",
-      "select_draft_file": "Select Draft File"
+      "select_draft_file": "Select Draft File",
+      "archive_name": "Archive Name"
     },
     "placeholders": {
       "draft_folder": "Select draft folder",
-      "search_placeholder": "Search by draft ID or name"
+      "search_placeholder": "Search by draft ID or name",
+      "archive_name": "Enter archive name"
     },
     "tips": {
       "location_hint": "Enter the path of the draft file marked with a red line"

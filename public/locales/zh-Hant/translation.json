@@ -75,10 +75,12 @@
       "accessed": "存取時間",
       "operations": "操作",
       "draft_folder": "草稿資料夾",
-      "select_draft_file": "選擇草稿檔案"
+      "select_draft_file": "選擇草稿檔案",
+      "archive_name": "封存名稱"
     },
     "placeholders": {
-      "draft_folder": "選擇草稿資料夾"
+      "draft_folder": "選擇草稿資料夾",
+      "archive_name": "輸入封存名稱"
     },
     "tips": {
       "location_hint": "請輸入紅線標註的草稿資料夾路徑"
