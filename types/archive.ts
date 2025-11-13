@@ -1,6 +1,7 @@
 export interface Archive {
   archive_id: string;
   draft_id: string;
+  archive_name: string | null;
   draft_version: number | null;
   user_id: string | null;
   user_name: string | null;

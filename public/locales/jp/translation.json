@@ -143,6 +143,7 @@
     "table": {
       "archive_id": "アーカイブID",
       "draft_id": "ドラフトID",
+      "archive_name": "アーカイブ名",
       "version": "バージョン",
       "user_id": "ユーザーID",
       "user_name": "ユーザー名",
@@ -197,7 +198,15 @@
     "error_fill_all_fields": "すべてのフィールドを入力してください",
     "error_password_too_short": "パスワードは最低6文字です",
     "role_admin": "admin",
-    "role_superadmin": "superadmin"
+    "role_superadmin": "superadmin",
+    "change_password": "パスワードを変更",
+    "change_password_dialog_title": "ユーザーパスワードを変更",
+    "change_password_dialog_description": "{{user}}のパスワードを変更",
+    "change_password_dialog_description_default": "ユーザーパスワードを変更",
+    "new_password": "新しいパスワード",
+    "confirm_password": "パスワードを確認",
+    "change_password_button": "パスワードを変更",
+    "changing_password": "変更中..."
   },
   "errors": {
     "required": "必須項目です",

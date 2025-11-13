@@ -143,6 +143,7 @@
     "table": {
       "archive_id": "归档 ID",
       "draft_id": "草稿 ID",
+      "archive_name": "归档名称",
       "version": "版本",
       "user_id": "用户 ID",
       "user_name": "用户名",
@@ -197,7 +198,15 @@
     "error_fill_all_fields": "请填写所有字段",
     "error_password_too_short": "密码至少 6 位",
     "role_admin": "admin",
-    "role_superadmin": "superadmin"
+    "role_superadmin": "superadmin",
+    "change_password": "修改密码",
+    "change_password_dialog_title": "修改用户密码",
+    "change_password_dialog_description": "修改 {{user}} 的密码",
+    "change_password_dialog_description_default": "修改用户密码",
+    "new_password": "新密码",
+    "confirm_password": "确认密码",
+    "change_password_button": "修改密码",
+    "changing_password": "修改中..."
   },
   "errors": {
     "required": "此字段为必填",

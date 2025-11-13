@@ -127,6 +127,7 @@
     "table": {
       "archive_id": "封存 ID",
       "draft_id": "草稿 ID",
+      "archive_name": "封存名稱",
       "version": "版本",
       "user_id": "用戶 ID",
       "user_name": "用戶名稱",
@@ -181,7 +182,15 @@
     "error_fill_all_fields": "請填寫所有欄位",
     "error_password_too_short": "密碼至少 6 位",
     "role_admin": "admin",
-    "role_superadmin": "superadmin"
+    "role_superadmin": "superadmin",
+    "change_password": "修改密碼",
+    "change_password_dialog_title": "修改用戶密碼",
+    "change_password_dialog_description": "修改 {{user}} 的密碼",
+    "change_password_dialog_description_default": "修改用戶密碼",
+    "new_password": "新密碼",
+    "confirm_password": "確認密碼",
+    "change_password_button": "修改密碼",
+    "changing_password": "修改中..."
   },
   "errors": {
     "required": "此欄位為必填",

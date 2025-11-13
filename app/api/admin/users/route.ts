@@ -1,10 +1,9 @@
-import { eq } from "drizzle-orm";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 import { db } from "@/drizzle/db";
-import { account, user } from "@/drizzle/schema/portal";
+import { user } from "@/drizzle/schema/portal";
 
 export async function GET(request: NextRequest) {
   try {
@@ -19,14 +18,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const rows = await db.select().from(user);
+    const rows = await auth.api.listUsers({
+      query: {
+        limit: 100,
+      },
+      headers: request.headers,
+    });
 
     const superAdmins = (process.env.SUPERADMINS ?? "")
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
 
-    const result = rows.map((u) => ({
+    const result = rows.users?.map((u) => ({
       id: u.id,
       name: u.name,
       email: u.email,
@@ -116,11 +120,11 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "'id' is required" }, { status: 400 });
     }
 
-    const result = await db.transaction(async (tx) => {
-      // Accounts have ON DELETE CASCADE, but explicitly clearing is fine
-      await tx.delete(account).where(eq(account.userId, id));
-      const deleted = await tx.delete(user).where(eq(user.id, id)).returning();
-      return deleted[0];
+    const result = await auth.api.removeUser({
+      body: {
+        userId: id,
+      },
+      headers: request.headers,
     });
 
     if (!result) {
@@ -132,6 +136,55 @@ export async function DELETE(request: Request) {
     console.error("Error deleting admin user:", err);
     return NextResponse.json(
       { error: "Failed to delete user" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Allow only superadmin role
+    if (session.user.email !== "super@admin.com") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const body = await request.json();
+    const { id, password } = body ?? {};
+
+    if (!id || typeof id !== "string") {
+      return NextResponse.json({ error: "'id' is required" }, { status: 400 });
+    }
+    if (!password || typeof password !== "string" || password.length < 6) {
+      return NextResponse.json(
+        { error: "'password' must be at least 6 characters" },
+        { status: 400 },
+      );
+    }
+
+    console.log("id", id);
+    console.log("password", password);
+    console.log("request.headers", request.headers);
+
+    const result = await auth.api.setUserPassword({
+      body: {
+        newPassword: password,
+        userId: id,
+      },
+      headers: request.headers,
+    });
+
+    return NextResponse.json(result, { status: 200 });
+  } catch (err) {
+    console.error("Error changing password:", err);
+    return NextResponse.json(
+      { error: "Failed to change password" },
       { status: 500 },
     );
   }

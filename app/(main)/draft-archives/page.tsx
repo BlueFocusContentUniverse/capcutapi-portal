@@ -258,6 +258,9 @@ export default function DraftArchivesPage() {
                 <TableHead className="w-[120px]">
                   {t("draft_archives.table.draft_id")}
                 </TableHead>
+                <TableHead className="w-[150px]">
+                  {t("draft_archives.table.archive_name")}
+                </TableHead>
                 <TableHead className="w-[80px]">
                   {t("draft_archives.table.version")}
                 </TableHead>
@@ -290,7 +293,7 @@ export default function DraftArchivesPage() {
             <TableBody>
               {archives.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={12} className="text-center py-8">
+                  <TableCell colSpan={13} className="text-center py-8">
                     <div className="text-muted-foreground">
                       {draftIdFilter || userIdFilter
                         ? t("draft_archives.no_archives_filtered")
@@ -307,6 +310,7 @@ export default function DraftArchivesPage() {
                     <TableCell className="font-mono text-xs">
                       {archive.draft_id}
                     </TableCell>
+                    <TableCell>{archive.archive_name || "-"}</TableCell>
                     <TableCell>
                       {archive.draft_version ||
                         t("draft_archives.version_current")}

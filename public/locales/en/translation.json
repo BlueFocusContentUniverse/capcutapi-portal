@@ -143,6 +143,7 @@
     "table": {
       "archive_id": "Archive ID",
       "draft_id": "Draft ID",
+      "archive_name": "Archive Name",
       "version": "Version",
       "user_id": "User ID",
       "user_name": "User Name",
@@ -197,7 +198,15 @@
     "error_fill_all_fields": "Please fill all fields",
     "error_password_too_short": "Password must be at least 6 characters",
     "role_admin": "admin",
-    "role_superadmin": "superadmin"
+    "role_superadmin": "superadmin",
+    "change_password": "Change Password",
+    "change_password_dialog_title": "Change User Password",
+    "change_password_dialog_description": "Change password for {{user}}",
+    "change_password_dialog_description_default": "Change user password",
+    "new_password": "New Password",
+    "confirm_password": "Confirm Password",
+    "change_password_button": "Change Password",
+    "changing_password": "Changing..."
   },
   "errors": {
     "required": "This field is required",

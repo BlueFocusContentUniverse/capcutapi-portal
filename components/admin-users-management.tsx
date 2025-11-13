@@ -31,6 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useSession } from "@/lib/auth-client";
 import { nextApi } from "@/lib/service";
 
 type AdminUser = {
@@ -80,6 +81,8 @@ async function createAdminUser(
 
 export function AdminUsersManagement() {
   const { t } = useTranslation();
+  const { data: session } = useSession();
+  const isSuperadmin = session?.user?.role === "superadmin";
   const [items, setItems] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -87,6 +90,12 @@ export function AdminUsersManagement() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<AdminUser | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [passwordOpen, setPasswordOpen] = useState(false);
+  const [passwordTarget, setPasswordTarget] = useState<AdminUser | null>(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const [formState, formAction, isPending] = useActionState(createAdminUser, {
     error: null,
@@ -157,6 +166,48 @@ export function AdminUsersManagement() {
       setError(msg);
     } finally {
       setDeleting(false);
+    }
+  };
+
+  const doChangePassword = async () => {
+    if (!passwordTarget) return;
+    setPasswordError(null);
+
+    if (!newPassword || newPassword.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+
+    setChangingPassword(true);
+    try {
+      const res = await nextApi.patch("admin/users", {
+        json: { id: passwordTarget.id, password: newPassword },
+      });
+
+      if (!res.ok) {
+        const data = await res.json<{ error?: string }>().catch(() => ({}));
+        throw new Error(
+          (data as { error?: string }).error ||
+            `Password change failed: ${res.status}`,
+        );
+      }
+
+      setPasswordOpen(false);
+      setPasswordTarget(null);
+      setNewPassword("");
+      setConfirmPassword("");
+      setPasswordError(null);
+    } catch (e) {
+      console.error(e);
+      const msg = e instanceof Error ? e.message : "Password change failed";
+      setPasswordError(msg);
+    } finally {
+      setChangingPassword(false);
     }
   };
 
@@ -283,6 +334,21 @@ export function AdminUsersManagement() {
                           >
                             {t(`admin_users.role_${u.role}`)}
                           </Badge>
+                          {isSuperadmin && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setPasswordTarget(u);
+                                setPasswordOpen(true);
+                                setNewPassword("");
+                                setConfirmPassword("");
+                                setPasswordError(null);
+                              }}
+                            >
+                              {t("admin_users.change_password")}
+                            </Button>
+                          )}
                           <Button
                             variant="outline"
                             size="sm"
@@ -325,6 +391,80 @@ export function AdminUsersManagement() {
               disabled={deleting}
             >
               {deleting ? "Deleting..." : t("actions.delete")}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={passwordOpen} onOpenChange={setPasswordOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {t("admin_users.change_password_dialog_title")}
+            </DialogTitle>
+            <DialogDescription>
+              {passwordTarget
+                ? t("admin_users.change_password_dialog_description", {
+                    user:
+                      passwordTarget.email ??
+                      passwordTarget.name ??
+                      passwordTarget.id,
+                  })
+                : t("admin_users.change_password_dialog_description_default")}
+            </DialogDescription>
+          </DialogHeader>
+          {passwordError && (
+            <div className="text-sm text-destructive">{passwordError}</div>
+          )}
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="new-password">
+                {t("admin_users.new_password")}
+              </Label>
+              <Input
+                id="new-password"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                minLength={6}
+                autoComplete="off"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password">
+                {t("admin_users.confirm_password")}
+              </Label>
+              <Input
+                id="confirm-password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                minLength={6}
+                autoComplete="off"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setPasswordOpen(false);
+                setPasswordTarget(null);
+                setNewPassword("");
+                setConfirmPassword("");
+                setPasswordError(null);
+              }}
+            >
+              {t("actions.cancel")}
+            </Button>
+            <Button
+              onClick={doChangePassword}
+              disabled={changingPassword || !newPassword || !confirmPassword}
+            >
+              {changingPassword
+                ? t("admin_users.changing_password")
+                : t("admin_users.change_password_button")}
             </Button>
           </div>
         </DialogContent>
