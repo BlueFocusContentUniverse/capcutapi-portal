@@ -47,7 +47,9 @@
     "passkey_error": "通行密钥登录失败",
     "sign_in_with_google": "使用 Google 登录",
     "google_signing_in": "正在使用 Google 登录…",
-    "google_error": "Google 登录失败"
+    "google_error": "Google 登录失败",
+    "no_account": "还没有账号？",
+    "signup_button": "立即注册"
   },
   "signup": {
     "title": "注册",

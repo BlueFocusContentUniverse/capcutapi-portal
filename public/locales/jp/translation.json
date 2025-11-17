@@ -47,7 +47,9 @@
     "passkey_error": "パスキーログインに失敗しました",
     "sign_in_with_google": "Googleでログイン",
     "google_signing_in": "Googleでログイン中…",
-    "google_error": "Googleログインに失敗しました"
+    "google_error": "Googleログインに失敗しました",
+    "no_account": "アカウントをお持ちでないですか？",
+    "signup_button": "登録する"
   },
   "signup": {
     "title": "アカウント登録",

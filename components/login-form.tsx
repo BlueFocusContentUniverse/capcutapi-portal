@@ -1,6 +1,7 @@
 "use client";
 
-import { Key, Vault } from "lucide-react";
+import { Key } from "lucide-react";
+import Link from "next/link";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -24,8 +25,6 @@ export default function LoginForm() {
   );
   const [passkeyError, setPasskeyError] = useState<string | null>(null);
   const [isPasskeyPending, startPasskeyTransition] = useTransition();
-  const [oauthError, setOauthError] = useState<string | null>(null);
-  const [isOAuthPending, startOAuthTransition] = useTransition();
 
   useEffect(() => {
     if (state?.redirectURL) {
@@ -77,24 +76,6 @@ export default function LoginForm() {
     });
   };
 
-  const handleGoogleSignIn = () => {
-    setOauthError(null);
-    startOAuthTransition(async () => {
-      try {
-        const result = await authClient.signIn.social({
-          provider: "google",
-        });
-
-        if (result?.error) {
-          setOauthError(result.error.message || t("login.google_error"));
-        }
-      } catch (err) {
-        console.error("Google sign-in error:", err);
-        setOauthError(t("login.google_error"));
-      }
-    });
-  };
-
   return (
     <div className="space-y-4">
       <form action={formAction} className="space-y-4" autoComplete="off">
@@ -109,13 +90,6 @@ export default function LoginForm() {
           <Alert variant="destructive">
             <AlertTitle>{t("login.error")}</AlertTitle>
             <AlertDescription>{passkeyError}</AlertDescription>
-          </Alert>
-        ) : null}
-
-        {oauthError ? (
-          <Alert variant="destructive">
-            <AlertTitle>{t("login.error")}</AlertTitle>
-            <AlertDescription>{oauthError}</AlertDescription>
           </Alert>
         ) : null}
 
@@ -164,26 +138,22 @@ export default function LoginForm() {
         variant="outline"
         className="w-full"
         onClick={handlePasskeySignIn}
-        disabled={isPasskeyPending || pending || isOAuthPending}
+        disabled={isPasskeyPending || pending}
       >
         <Key className="mr-2 h-4 w-4" />
         {isPasskeyPending
           ? t("login.passkey_signing_in")
           : t("login.sign_in_with_passkey")}
       </Button>
-
-      <Button
-        type="button"
-        variant="outline"
-        className="w-full"
-        onClick={handleGoogleSignIn}
-        disabled={isOAuthPending || pending || isPasskeyPending}
-      >
-        <Vault className="mr-2 h-4 w-4" />
-        {isOAuthPending
-          ? t("login.google_signing_in")
-          : t("login.sign_in_with_google")}
-      </Button>
+      <div className="text-center text-sm text-muted-foreground">
+        {t("login.no_account")}{" "}
+        <Link
+          href="/signup"
+          className="font-semibold text-primary hover:underline underline-offset-2"
+        >
+          {t("login.signup_button")}
+        </Link>
+      </div>
     </div>
   );
 }

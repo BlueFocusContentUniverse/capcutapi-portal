@@ -47,7 +47,9 @@
     "passkey_error": "Passkey sign-in failed",
     "sign_in_with_google": "Sign in with Google",
     "google_signing_in": "Signing in with Google…",
-    "google_error": "Google sign-in failed"
+    "google_error": "Google sign-in failed",
+    "no_account": "Don't have an account yet?",
+    "signup_button": "Sign up"
   },
   "signup": {
     "title": "Sign Up",
