@@ -12,7 +12,9 @@ export async function PATCH(request: Request) {
     }
 
     const body = await request.json().catch(() => ({}));
-    const { name, oldPassword, password } = body ?? {};
+    const { name, email, oldPassword, password } = body ?? {};
+
+    const updateData: { name?: string; email?: string } = {};
 
     if (name !== undefined && typeof name !== "string") {
       return NextResponse.json(
@@ -21,32 +23,49 @@ export async function PATCH(request: Request) {
       );
     }
     if (name && name.trim()) {
+      updateData.name = name.trim();
+    }
+
+    if (email !== undefined) {
+      if (typeof email !== "string") {
+        return NextResponse.json(
+          { error: "'email' must be string" },
+          { status: 400 },
+        );
+      }
+      if (email.trim() && email !== session.user.email) {
+        updateData.email = email.trim();
+      }
+    }
+
+    if (Object.keys(updateData).length > 0) {
       await auth.api.updateUser({
-        body: {
-          name: name.trim(),
-        },
+        body: updateData,
         headers: request.headers,
       });
     }
-    if (password !== undefined) {
+
+    if (password !== undefined && password !== null && password !== "") {
       if (typeof password !== "string" || password.length < 6) {
         return NextResponse.json(
           { error: "'password' must be at least 6 characters" },
           { status: 400 },
         );
       }
+
+      const result = await auth.api.changePassword({
+        body: {
+          newPassword: password,
+          currentPassword: oldPassword,
+          revokeOtherSessions: true,
+        },
+        headers: request.headers,
+      });
+
+      return NextResponse.json(result ?? { ok: true }, { status: 200 });
     }
 
-    const result = await auth.api.changePassword({
-      body: {
-        newPassword: password,
-        currentPassword: oldPassword,
-        revokeOtherSessions: true,
-      },
-      headers: request.headers,
-    });
-
-    return NextResponse.json(result ?? { ok: true }, { status: 200 });
+    return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {
     console.error("Error updating profile:", err);
     return NextResponse.json(

@@ -40,7 +40,14 @@
     "submitting": "ログイン中…",
     "error": "ログインエラー",
     "email_placeholder": "メールを入力",
-    "password_placeholder": "パスワードを入力"
+    "password_placeholder": "パスワードを入力",
+    "or": "または",
+    "sign_in_with_passkey": "パスキーでログイン",
+    "passkey_signing_in": "パスキーでログイン中…",
+    "passkey_error": "パスキーログインに失敗しました",
+    "sign_in_with_google": "Googleでログイン",
+    "google_signing_in": "Googleでログイン中…",
+    "google_error": "Googleログインに失敗しました"
   },
   "signup": {
     "title": "アカウント登録",
@@ -218,7 +225,14 @@
   "profile_dialog": {
     "settings_aria": "プロフィール設定",
     "title": "プロフィール",
+    "tabs": {
+      "profile": "プロフィール",
+      "password": "パスワード",
+      "passkey": "パスキー"
+    },
     "username": "ユーザー名",
+    "email": "メール",
+    "placeholder_email": "メールを入力",
     "old_password": "古いパスワード",
     "new_password": "新しいパスワード",
     "confirm_password": "パスワード（確認）",
@@ -232,6 +246,21 @@
     "old_password_required": "新しいパスワードを設定するには古いパスワードが必要です",
     "no_changes": "変更はありません",
     "save_success": "保存しました",
-    "request_failed": "リクエストに失敗しました"
+    "request_failed": "リクエストに失敗しました",
+    "passkey": {
+      "description": "安全な認証のためのパスキーを管理",
+      "create": "パスキーを作成",
+      "delete": "削除",
+      "unnamed": "名前なしパスキー",
+      "no_passkeys": "登録されたパスキーがありません",
+      "load_error": "パスキーの読み込みに失敗しました",
+      "generate_error": "パスキーオプションの生成に失敗しました",
+      "create_error": "パスキーの作成に失敗しました",
+      "create_success": "パスキーが正常に作成されました",
+      "verify_error": "パスキーの検証に失敗しました",
+      "delete_confirm": "このパスキーを削除してもよろしいですか？",
+      "delete_error": "パスキーの削除に失敗しました",
+      "delete_success": "パスキーが正常に削除されました"
+    }
   }
 }

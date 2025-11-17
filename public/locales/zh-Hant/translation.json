@@ -40,7 +40,14 @@
     "submitting": "登入中…",
     "error": "登入錯誤",
     "email_placeholder": "請輸入電郵",
-    "password_placeholder": "請輸入密碼"
+    "password_placeholder": "請輸入密碼",
+    "or": "或",
+    "sign_in_with_passkey": "使用通行金鑰登入",
+    "passkey_signing_in": "正在使用通行金鑰登入…",
+    "passkey_error": "通行金鑰登入失敗",
+    "sign_in_with_google": "使用 Google 登入",
+    "google_signing_in": "正在使用 Google 登入…",
+    "google_error": "Google 登入失敗"
   },
   "dashboard": {
     "title": "管理系統儀表板",
@@ -202,7 +209,14 @@
   "profile_dialog": {
     "settings_aria": "個人設定",
     "title": "個人資料",
+    "tabs": {
+      "profile": "個人資料",
+      "password": "密碼",
+      "passkey": "通行金鑰"
+    },
     "username": "使用者名稱",
+    "email": "電郵",
+    "placeholder_email": "請輸入電郵",
     "old_password": "舊密碼",
     "new_password": "新密碼",
     "confirm_password": "確認密碼",
@@ -216,7 +230,22 @@
     "old_password_required": "設定新密碼需要輸入舊密碼",
     "no_changes": "沒有變更",
     "save_success": "已儲存",
-    "request_failed": "請求失敗"
+    "request_failed": "請求失敗",
+    "passkey": {
+      "description": "管理您的通行金鑰以進行安全身份驗證",
+      "create": "建立通行金鑰",
+      "delete": "刪除",
+      "unnamed": "未命名通行金鑰",
+      "no_passkeys": "未註冊通行金鑰",
+      "load_error": "載入通行金鑰失敗",
+      "generate_error": "生成通行金鑰選項失敗",
+      "create_error": "建立通行金鑰失敗",
+      "create_success": "通行金鑰建立成功",
+      "verify_error": "驗證通行金鑰失敗",
+      "delete_confirm": "您確定要刪除此通行金鑰嗎？",
+      "delete_error": "刪除通行金鑰失敗",
+      "delete_success": "通行金鑰刪除成功"
+    }
   }
 }
 

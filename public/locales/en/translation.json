@@ -40,7 +40,14 @@
     "submitting": "Logging in…",
     "error": "Login error",
     "email_placeholder": "Enter email",
-    "password_placeholder": "Enter password"
+    "password_placeholder": "Enter password",
+    "or": "Or",
+    "sign_in_with_passkey": "Sign in with Passkey",
+    "passkey_signing_in": "Signing in with passkey…",
+    "passkey_error": "Passkey sign-in failed",
+    "sign_in_with_google": "Sign in with Google",
+    "google_signing_in": "Signing in with Google…",
+    "google_error": "Google sign-in failed"
   },
   "signup": {
     "title": "Sign Up",
@@ -218,7 +225,14 @@
   "profile_dialog": {
     "settings_aria": "Profile settings",
     "title": "Profile",
+    "tabs": {
+      "profile": "Profile",
+      "password": "Password",
+      "passkey": "Passkey"
+    },
     "username": "Username",
+    "email": "Email",
+    "placeholder_email": "Enter email",
     "old_password": "Old password",
     "new_password": "New password",
     "confirm_password": "Confirm password",
@@ -232,6 +246,21 @@
     "old_password_required": "Old password is required to set new password",
     "no_changes": "No changes",
     "save_success": "Saved",
-    "request_failed": "Request failed"
+    "request_failed": "Request failed",
+    "passkey": {
+      "description": "Manage your passkeys for secure authentication",
+      "create": "Create Passkey",
+      "delete": "Delete",
+      "unnamed": "Unnamed Passkey",
+      "no_passkeys": "No passkeys registered",
+      "load_error": "Failed to load passkeys",
+      "generate_error": "Failed to generate passkey options",
+      "create_error": "Failed to create passkey",
+      "create_success": "Passkey created successfully",
+      "verify_error": "Failed to verify passkey",
+      "delete_confirm": "Are you sure you want to delete this passkey?",
+      "delete_error": "Failed to delete passkey",
+      "delete_success": "Passkey deleted successfully"
+    }
   }
 }

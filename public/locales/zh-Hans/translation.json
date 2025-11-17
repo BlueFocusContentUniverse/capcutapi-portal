@@ -40,7 +40,14 @@
     "submitting": "登录中…",
     "error": "登录出错",
     "email_placeholder": "请输入邮箱",
-    "password_placeholder": "请输入密码"
+    "password_placeholder": "请输入密码",
+    "or": "或",
+    "sign_in_with_passkey": "使用通行密钥登录",
+    "passkey_signing_in": "正在使用通行密钥登录…",
+    "passkey_error": "通行密钥登录失败",
+    "sign_in_with_google": "使用 Google 登录",
+    "google_signing_in": "正在使用 Google 登录…",
+    "google_error": "Google 登录失败"
   },
   "signup": {
     "title": "注册",
@@ -218,7 +225,14 @@
   "profile_dialog": {
     "settings_aria": "个人设置",
     "title": "个人资料",
+    "tabs": {
+      "profile": "个人资料",
+      "password": "密码",
+      "passkey": "通行密钥"
+    },
     "username": "用户名",
+    "email": "邮箱",
+    "placeholder_email": "请输入邮箱",
     "old_password": "旧密码",
     "new_password": "新密码",
     "confirm_password": "确认密码",
@@ -232,7 +246,22 @@
     "old_password_required": "设置新密码需要输入旧密码",
     "no_changes": "没有更改",
     "save_success": "已保存",
-    "request_failed": "请求失败"
+    "request_failed": "请求失败",
+    "passkey": {
+      "description": "管理您的通行密钥以进行安全身份验证",
+      "create": "创建通行密钥",
+      "delete": "删除",
+      "unnamed": "未命名通行密钥",
+      "no_passkeys": "未注册通行密钥",
+      "load_error": "加载通行密钥失败",
+      "generate_error": "生成通行密钥选项失败",
+      "create_error": "创建通行密钥失败",
+      "create_success": "通行密钥创建成功",
+      "verify_error": "验证通行密钥失败",
+      "delete_confirm": "您确定要删除此通行密钥吗？",
+      "delete_error": "删除通行密钥失败",
+      "delete_success": "通行密钥删除成功"
+    }
   }
 }
 
