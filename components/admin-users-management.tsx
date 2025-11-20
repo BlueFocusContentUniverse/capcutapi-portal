@@ -7,13 +7,6 @@ import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -212,11 +205,11 @@ export function AdminUsersManagement() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="h-full flex flex-col space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("admin_users.title")}</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-2xl font-bold">{t("admin_users.title")}</h1>
+          <p className="text-muted-foreground text-sm mt-1">
             {t("admin_users.subtitle")}
           </p>
         </div>
@@ -272,103 +265,97 @@ export function AdminUsersManagement() {
         </Dialog>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("admin_users.list_title")}</CardTitle>
-          <CardDescription>{t("admin_users.list_description")}</CardDescription>
-          {error && (
-            <div className="text-sm text-destructive mb-4">{error}</div>
-          )}
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center gap-4 mb-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                className="pl-9"
-                placeholder={t("admin_users.search_placeholder")}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
+      {error && <div className="text-sm text-destructive">{error}</div>}
+
+      <div className="flex items-center gap-4">
+        <div className="relative w-72">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            className="pl-9"
+            placeholder={t("admin_users.search_placeholder")}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="flex-1 border rounded-md overflow-hidden">
+        <div className="h-full w-full overflow-auto">
+          <Table className="min-w-max">
+            <TableHeader className="sticky top-0 bg-background z-10">
+              <TableRow>
+                <TableHead>{t("admin_users.form_name")}</TableHead>
+                <TableHead>{t("admin_users.form_email")}</TableHead>
+                <TableHead>{t("users.role")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {loading ? (
                 <TableRow>
-                  <TableHead>{t("admin_users.form_name")}</TableHead>
-                  <TableHead>{t("admin_users.form_email")}</TableHead>
-                  <TableHead>{t("users.role")}</TableHead>
+                  <TableCell
+                    colSpan={3}
+                    className="text-center text-muted-foreground"
+                  >
+                    {t("admin_users.loading")}
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell
-                      colSpan={3}
-                      className="text-center text-muted-foreground"
-                    >
-                      {t("admin_users.loading")}
-                    </TableCell>
-                  </TableRow>
-                ) : filtered.length === 0 ? (
-                  <TableRow>
-                    <TableCell
-                      colSpan={3}
-                      className="text-center text-muted-foreground"
-                    >
-                      {t("admin_users.no_data")}
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filtered.map((u) => (
-                    <TableRow key={u.id}>
-                      <TableCell>{u.name ?? "-"}</TableCell>
-                      <TableCell>{u.email ?? "-"}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Badge
-                            variant={
-                              u.role === "superadmin" ? "default" : "secondary"
-                            }
-                          >
-                            {t(`admin_users.role_${u.role}`)}
-                          </Badge>
-                          {isSuperadmin && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => {
-                                setPasswordTarget(u);
-                                setPasswordOpen(true);
-                                setNewPassword("");
-                                setConfirmPassword("");
-                                setPasswordError(null);
-                              }}
-                            >
-                              {t("admin_users.change_password")}
-                            </Button>
-                          )}
+              ) : filtered.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={3}
+                    className="text-center text-muted-foreground"
+                  >
+                    {t("admin_users.no_data")}
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filtered.map((u) => (
+                  <TableRow key={u.id}>
+                    <TableCell>{u.name ?? "-"}</TableCell>
+                    <TableCell>{u.email ?? "-"}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Badge
+                          variant={
+                            u.role === "superadmin" ? "default" : "secondary"
+                          }
+                        >
+                          {t(`admin_users.role_${u.role}`)}
+                        </Badge>
+                        {isSuperadmin && (
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => {
-                              setDeleteTarget(u);
-                              setDeleteOpen(true);
+                              setPasswordTarget(u);
+                              setPasswordOpen(true);
+                              setNewPassword("");
+                              setConfirmPassword("");
+                              setPasswordError(null);
                             }}
                           >
-                            {t("actions.delete")}
+                            {t("admin_users.change_password")}
                           </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+                        )}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setDeleteTarget(u);
+                            setDeleteOpen(true);
+                          }}
+                        >
+                          {t("actions.delete")}
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent>
           <DialogHeader>

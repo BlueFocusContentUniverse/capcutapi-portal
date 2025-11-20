@@ -48,7 +48,7 @@ export default async function VideoTasksPage({
   const nextPage = Math.min(totalPages, page + 1);
 
   return (
-    <div className="container mx-auto p-4 space-y-4">
+    <div className="h-full flex flex-col space-y-4">
       <h1 className="text-xl font-semibold">{t("video_tasks.title")}</h1>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -78,94 +78,96 @@ export default async function VideoTasksPage({
         </div>
       </div>
 
-      <div className="border rounded-md max-h-[calc(100vh-16rem)] overflow-auto">
-        <Table className="min-w-max">
-          <TableHeader className="sticky top-0 bg-background z-10 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-border">
-            <TableRow>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.id")}
-              </TableHead>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.task_id")}
-              </TableHead>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.draft_id")}
-              </TableHead>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.video_name")}
-              </TableHead>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.status")}
-              </TableHead>
-              <TableHead>{t("video_tasks.fields.message")}</TableHead>
-              <TableHead>{t("video_tasks.fields.oss_url")}</TableHead>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.created")}
-              </TableHead>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.updated")}
-              </TableHead>
-              <TableHead className="bg-background">
-                {t("video_tasks.fields.operations")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items.map((task) => (
-              <TableRow key={task.id}>
-                <TableCell>{task.id}</TableCell>
-                <TableCell className="font-mono">{task.taskId}</TableCell>
-                <TableCell className="font-mono">{task.draftId}</TableCell>
-                <TableCell
-                  className="max-w-[24rem] truncate"
-                  title={task.videoName ?? undefined}
-                >
-                  {task.videoName ?? "-"}
-                </TableCell>
-                <TableCell>{task.renderStatus}</TableCell>
-                <TableCell
-                  className="max-w-[24rem] truncate"
-                  title={task.message ?? undefined}
-                >
-                  {task.message ?? "-"}
-                </TableCell>
-                <TableCell>
-                  {task.ossUrl ? (
-                    <Link
-                      href={task.ossUrl}
-                      className="text-blue-600 hover:underline"
-                      target="_blank"
-                    >
-                      {t("actions.open")}
-                    </Link>
-                  ) : (
-                    "-"
-                  )}
-                </TableCell>
-                <TableCell>
-                  {task.createdAt
-                    ? new Date(task.createdAt).toLocaleString()
-                    : "-"}
-                </TableCell>
-                <TableCell>
-                  {task.updatedAt
-                    ? new Date(task.updatedAt).toLocaleString()
-                    : "-"}
-                </TableCell>
-                <TableCell>
-                  <ArchiveDraftDialog
-                    d={{
-                      id: task.id,
-                      draftId: task.draftId,
-                      videoName: task.videoName,
-                    }}
-                    buttonLabel={t("actions.archive_draft")}
-                  />
-                </TableCell>
+      <div className="flex-1 border rounded-md overflow-hidden">
+        <div className="h-full w-full overflow-auto">
+          <Table className="min-w-max">
+            <TableHeader className="sticky top-0 bg-background z-10 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-border">
+              <TableRow>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.id")}
+                </TableHead>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.task_id")}
+                </TableHead>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.draft_id")}
+                </TableHead>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.video_name")}
+                </TableHead>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.status")}
+                </TableHead>
+                <TableHead>{t("video_tasks.fields.message")}</TableHead>
+                <TableHead>{t("video_tasks.fields.oss_url")}</TableHead>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.created")}
+                </TableHead>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.updated")}
+                </TableHead>
+                <TableHead className="bg-background">
+                  {t("video_tasks.fields.operations")}
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {items.map((task) => (
+                <TableRow key={task.id}>
+                  <TableCell>{task.id}</TableCell>
+                  <TableCell className="font-mono">{task.taskId}</TableCell>
+                  <TableCell className="font-mono">{task.draftId}</TableCell>
+                  <TableCell
+                    className="max-w-[24rem] truncate"
+                    title={task.videoName ?? undefined}
+                  >
+                    {task.videoName ?? "-"}
+                  </TableCell>
+                  <TableCell>{task.renderStatus}</TableCell>
+                  <TableCell
+                    className="max-w-[24rem] truncate"
+                    title={task.message ?? undefined}
+                  >
+                    {task.message ?? "-"}
+                  </TableCell>
+                  <TableCell>
+                    {task.ossUrl ? (
+                      <Link
+                        href={task.ossUrl}
+                        className="text-blue-600 hover:underline"
+                        target="_blank"
+                      >
+                        {t("actions.open")}
+                      </Link>
+                    ) : (
+                      "-"
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {task.createdAt
+                      ? new Date(task.createdAt).toLocaleString()
+                      : "-"}
+                  </TableCell>
+                  <TableCell>
+                    {task.updatedAt
+                      ? new Date(task.updatedAt).toLocaleString()
+                      : "-"}
+                  </TableCell>
+                  <TableCell>
+                    <ArchiveDraftDialog
+                      d={{
+                        id: task.id,
+                        draftId: task.draftId,
+                        videoName: task.videoName,
+                      }}
+                      buttonLabel={t("actions.archive_draft")}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       <div className="flex items-center justify-between">

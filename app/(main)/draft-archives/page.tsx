@@ -249,7 +249,7 @@ export default function DraftArchivesPage() {
       {/* Table Container with Scrolling */}
       <div className="flex-1 border rounded-lg overflow-hidden">
         <div className="h-full w-full overflow-x-auto overflow-y-auto">
-          <Table>
+          <Table className="min-w-max">
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>
                 <TableHead className="w-[120px]">

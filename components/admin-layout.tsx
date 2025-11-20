@@ -30,14 +30,16 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <SidebarContext.Provider value={{ isCollapsed, setIsCollapsed }}>
-      <div className="min-h-screen bg-background">
+      <div className="h-screen bg-background">
         <AdminSidebar />
         <div
-          className={`transition-all duration-200 ${
+          className={`h-full flex flex-col transition-all duration-200 ${
             isCollapsed ? "md:pl-16" : "md:pl-64"
           }`}
         >
-          <main className="p-6 md:p-8">{children}</main>
+          <main className="flex-1 overflow-hidden p-6 md:p-8 flex flex-col">
+            {children}
+          </main>
         </div>
       </div>
     </SidebarContext.Provider>

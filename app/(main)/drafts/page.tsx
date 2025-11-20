@@ -56,7 +56,7 @@ export default async function DraftsPage({
   const nextPage = Math.min(totalPages, page + 1);
 
   return (
-    <div className="container mx-auto p-4 space-y-4">
+    <div className="h-full flex flex-col space-y-4">
       <h1 className="text-xl font-semibold">{t("drafts.title")}</h1>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -86,67 +86,73 @@ export default async function DraftsPage({
         </div>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>{t("drafts.fields.id")}</TableHead>
-            <TableHead>{t("drafts.fields.draft_id")}</TableHead>
-            <TableHead>{t("drafts.fields.draft_name")}</TableHead>
-            <TableHead>{t("drafts.fields.resource")}</TableHead>
-            <TableHead>{t("drafts.fields.resolution")}</TableHead>
-            <TableHead>{t("drafts.fields.duration")}</TableHead>
-            <TableHead>{t("drafts.fields.fps")}</TableHead>
-            <TableHead>{t("drafts.fields.version")}</TableHead>
-            <TableHead>{t("drafts.fields.size")}</TableHead>
-            <TableHead>{t("drafts.fields.created")}</TableHead>
-            <TableHead>{t("drafts.fields.updated")}</TableHead>
-            <TableHead>{t("drafts.fields.accessed")}</TableHead>
-            <TableHead>{t("drafts.fields.operations")}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {items.map((d) => (
-            <TableRow key={d.id}>
-              <TableCell>{d.id}</TableCell>
-              <TableCell className="font-mono">{d.draftId}</TableCell>
-              <TableCell>{d.draftName ?? "-"}</TableCell>
-              <TableCell>{d.resource ?? "-"}</TableCell>
-              <TableCell>
-                {d.width ?? "-"}×{d.height ?? "-"}
-              </TableCell>
-              <TableCell>
-                {d.duration ? (d.duration / 1000000).toFixed(2) + "s" : "-"}
-              </TableCell>
-              <TableCell>{d.fps ?? "-"}</TableCell>
-              <TableCell>{d.currentVersion ?? "-"}</TableCell>
-              <TableCell>{formatBytes(d.sizeBytes)}</TableCell>
-              <TableCell>
-                {d.createdAt ? new Date(d.createdAt).toLocaleString() : "-"}
-              </TableCell>
-              <TableCell>
-                {d.updatedAt ? new Date(d.updatedAt).toLocaleString() : "-"}
-              </TableCell>
-              <TableCell>
-                {d.accessedAt ? new Date(d.accessedAt).toLocaleString() : "-"}
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href={`/drafts/${d.draftId}/editor`}>
-                      <Video className="mr-1 h-4 w-4" />
-                      Editor
-                    </Link>
-                  </Button>
-                  <GenerateVideoDialog
-                    d={d}
-                    buttonLabel={t("actions.generate_video")}
-                  />
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div className="flex-1 border rounded-md overflow-hidden">
+        <div className="h-full w-full overflow-auto">
+          <Table className="min-w-max">
+            <TableHeader className="sticky top-0 bg-background z-10">
+              <TableRow>
+                <TableHead>{t("drafts.fields.id")}</TableHead>
+                <TableHead>{t("drafts.fields.draft_id")}</TableHead>
+                <TableHead>{t("drafts.fields.draft_name")}</TableHead>
+                <TableHead>{t("drafts.fields.resource")}</TableHead>
+                <TableHead>{t("drafts.fields.resolution")}</TableHead>
+                <TableHead>{t("drafts.fields.duration")}</TableHead>
+                <TableHead>{t("drafts.fields.fps")}</TableHead>
+                <TableHead>{t("drafts.fields.version")}</TableHead>
+                <TableHead>{t("drafts.fields.size")}</TableHead>
+                <TableHead>{t("drafts.fields.created")}</TableHead>
+                <TableHead>{t("drafts.fields.updated")}</TableHead>
+                <TableHead>{t("drafts.fields.accessed")}</TableHead>
+                <TableHead>{t("drafts.fields.operations")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {items.map((d) => (
+                <TableRow key={d.id}>
+                  <TableCell>{d.id}</TableCell>
+                  <TableCell className="font-mono">{d.draftId}</TableCell>
+                  <TableCell>{d.draftName ?? "-"}</TableCell>
+                  <TableCell>{d.resource ?? "-"}</TableCell>
+                  <TableCell>
+                    {d.width ?? "-"}×{d.height ?? "-"}
+                  </TableCell>
+                  <TableCell>
+                    {d.duration ? (d.duration / 1000000).toFixed(2) + "s" : "-"}
+                  </TableCell>
+                  <TableCell>{d.fps ?? "-"}</TableCell>
+                  <TableCell>{d.currentVersion ?? "-"}</TableCell>
+                  <TableCell>{formatBytes(d.sizeBytes)}</TableCell>
+                  <TableCell>
+                    {d.createdAt ? new Date(d.createdAt).toLocaleString() : "-"}
+                  </TableCell>
+                  <TableCell>
+                    {d.updatedAt ? new Date(d.updatedAt).toLocaleString() : "-"}
+                  </TableCell>
+                  <TableCell>
+                    {d.accessedAt
+                      ? new Date(d.accessedAt).toLocaleString()
+                      : "-"}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/drafts/${d.draftId}/editor`}>
+                          <Video className="mr-1 h-4 w-4" />
+                          Editor
+                        </Link>
+                      </Button>
+                      <GenerateVideoDialog
+                        d={d}
+                        buttonLabel={t("actions.generate_video")}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">

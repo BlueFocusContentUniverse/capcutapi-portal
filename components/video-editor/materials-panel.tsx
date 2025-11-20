@@ -13,29 +13,47 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoPlayer } from "@/components/video-player/video-player";
 
+interface MaterialItem {
+  id?: string;
+  name?: string;
+  material_name?: string;
+  text?: string;
+  content?: string;
+  duration?: number;
+  remote_url?: string;
+  [key: string]: unknown;
+}
+
 interface Materials {
-  videos?: any[];
-  audios?: any[];
-  texts?: any[];
-  stickers?: any[];
-  effects?: any[];
-  video_effects?: any[];
-  [key: string]: any;
+  videos?: MaterialItem[];
+  audios?: MaterialItem[];
+  texts?: MaterialItem[];
+  stickers?: MaterialItem[];
+  effects?: MaterialItem[];
+  video_effects?: MaterialItem[];
+  [key: string]: MaterialItem[] | undefined;
 }
 
 interface MaterialsPanelProps {
   materials: Materials;
 }
 
+interface MaterialListItem {
+  id: string;
+  type: string;
+  data: MaterialItem;
+}
+
+const hasMaterialId = (
+  item: MaterialItem,
+): item is MaterialItem & { id: string } => !!item.id;
+
 export function MaterialsPanel({ materials }: MaterialsPanelProps) {
   const [selectedMaterialId, setSelectedMaterialId] = useState<string | null>(
     null,
   );
-  const [playingMaterial, setPlayingMaterial] = useState<{
-    id: string;
-    type: string;
-    data: any;
-  } | null>(null);
+  const [playingMaterial, setPlayingMaterial] =
+    useState<MaterialListItem | null>(null);
 
   // Count materials by type
   const materialCounts = useMemo(() => {
@@ -53,7 +71,7 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
 
   // Get all materials with their type
   const allMaterials = useMemo(() => {
-    const items: Array<{ id: string; type: string; data: any }> = [];
+    const items: MaterialListItem[] = [];
     if (materials) {
       Object.keys(materials).forEach((key) => {
         const materialItems = materials[key];
@@ -96,7 +114,11 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
   };
 
   // Get display name for a material
-  const getDisplayName = (material: any, type: string) => {
+  const getDisplayName = (
+    material: MaterialItem,
+    type: string,
+    fallbackId: string,
+  ) => {
     if (material.name) return material.name;
     if (material.material_name) return material.material_name;
     if (material.text) return material.text;
@@ -108,7 +130,7 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
         // Ignore parsing errors
       }
     }
-    return `${type.slice(0, -1)} ${material.id.slice(0, 8)}`;
+    return `${type.slice(0, -1)} ${fallbackId.slice(0, 8)}`;
   };
 
   // Check if material is playable (video or audio)
@@ -117,20 +139,13 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
   };
 
   // Handle play media
-  const handlePlayMedia = (
-    item: { id: string; type: string; data: any },
-    event: React.MouseEvent,
-  ) => {
+  const handlePlayMedia = (item: MaterialListItem, event: React.MouseEvent) => {
     event.stopPropagation();
     setPlayingMaterial(item);
   };
 
   // Render material item
-  const renderMaterialItem = (item: {
-    id: string;
-    type: string;
-    data: any;
-  }) => {
+  const renderMaterialItem = (item: MaterialListItem) => {
     const isSelected = selectedMaterialId === item.id;
     return (
       <div
@@ -150,7 +165,7 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
           </div>
           <div className="flex-1 min-w-0 overflow-hidden">
             <div className="text-sm font-medium text-white truncate">
-              {getDisplayName(item.data, item.type)}
+              {getDisplayName(item.data, item.type, item.id)}
             </div>
             <div className="text-xs text-gray-400 mt-1">
               ID: {item.id.slice(0, 12)}...
@@ -217,7 +232,16 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
   // Render materials by type
   const renderMaterialsByType = (type: string) => {
     const items = materials[type];
-    if (!Array.isArray(items) || items.length === 0) {
+    if (!Array.isArray(items)) {
+      return (
+        <div className="text-center text-gray-400 text-sm py-8">
+          No {type} in this draft
+        </div>
+      );
+    }
+
+    const validItems = items.filter(hasMaterialId);
+    if (validItems.length === 0) {
       return (
         <div className="text-center text-gray-400 text-sm py-8">
           No {type} in this draft
@@ -227,7 +251,7 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
 
     return (
       <div className="space-y-2">
-        {items.map((item) =>
+        {validItems.map((item) =>
           renderMaterialItem({ id: item.id, type, data: item }),
         )}
       </div>
@@ -235,7 +259,7 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
   };
 
   return (
-    <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col h-full">
+    <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col h-full overflow-y-auto">
       <Card className="bg-transparent border-0 flex-1 flex flex-col">
         <CardHeader className="shrink-0">
           <CardTitle className="text-lg font-semibold text-white">
@@ -245,65 +269,66 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
             Total: {allMaterials.length} materials
           </div>
         </CardHeader>
-        <CardContent className="flex-1 overflow-hidden flex flex-col px-4 pb-4">
-          <Tabs defaultValue="all" className="flex-1 flex flex-col">
-            <TabsList className="grid w-full grid-cols-3 bg-gray-900 mb-3">
-              <TabsTrigger value="all" className="text-xs">
-                All ({allMaterials.length})
-              </TabsTrigger>
-              <TabsTrigger value="videos" className="text-xs">
-                Videos ({materialCounts.videos || 0})
-              </TabsTrigger>
-              <TabsTrigger value="audios" className="text-xs">
-                Audio ({materialCounts.audios || 0})
-              </TabsTrigger>
-            </TabsList>
+        <CardContent className="flex-1 overflow-hidden px-4 pb-4">
+          <ScrollArea className="h-full pr-2">
+            <div className="flex flex-col gap-4">
+              <Tabs defaultValue="all" className="flex flex-col gap-3">
+                <TabsList className="grid w-full grid-cols-3 bg-gray-900">
+                  <TabsTrigger value="all" className="text-xs">
+                    All ({allMaterials.length})
+                  </TabsTrigger>
+                  <TabsTrigger value="videos" className="text-xs">
+                    Videos ({materialCounts.videos || 0})
+                  </TabsTrigger>
+                  <TabsTrigger value="audios" className="text-xs">
+                    Audio ({materialCounts.audios || 0})
+                  </TabsTrigger>
+                </TabsList>
 
-            <ScrollArea className="flex-1">
-              <TabsContent value="all" className="mt-0">
-                {allMaterials.length === 0 ? (
-                  <div className="text-center text-gray-400 text-sm py-8">
-                    No materials in this draft
+                <TabsContent value="all" className="mt-0">
+                  {allMaterials.length === 0 ? (
+                    <div className="text-center text-gray-400 text-sm py-8">
+                      No materials in this draft
+                    </div>
+                  ) : (
+                    <div className="space-y-2 pr-2">
+                      {allMaterials.map((item) => renderMaterialItem(item))}
+                    </div>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="videos" className="mt-0">
+                  <div className="pr-2">{renderMaterialsByType("videos")}</div>
+                </TabsContent>
+
+                <TabsContent value="audios" className="mt-0">
+                  <div className="pr-2">{renderMaterialsByType("audios")}</div>
+                </TabsContent>
+              </Tabs>
+
+              {(materialCounts.texts || 0) > 0 && (
+                <div className="pt-4 border-t border-gray-700">
+                  <div className="text-sm font-medium text-gray-300 mb-2">
+                    Texts ({materialCounts.texts})
                   </div>
-                ) : (
-                  <div className="space-y-2 pr-4">
-                    {allMaterials.map((item) => renderMaterialItem(item))}
+                </div>
+              )}
+              {(materialCounts.stickers || 0) > 0 && (
+                <div>
+                  <div className="text-sm font-medium text-gray-300 mb-2">
+                    Stickers ({materialCounts.stickers})
                   </div>
-                )}
-              </TabsContent>
-
-              <TabsContent value="videos" className="mt-0">
-                <div className="pr-4">{renderMaterialsByType("videos")}</div>
-              </TabsContent>
-
-              <TabsContent value="audios" className="mt-0">
-                <div className="pr-4">{renderMaterialsByType("audios")}</div>
-              </TabsContent>
-            </ScrollArea>
-          </Tabs>
-
-          {/* Additional material types as separate sections */}
-          {(materialCounts.texts || 0) > 0 && (
-            <div className="mt-4 pt-4 border-t border-gray-700">
-              <div className="text-sm font-medium text-gray-300 mb-2">
-                Texts ({materialCounts.texts})
-              </div>
+                </div>
+              )}
+              {(materialCounts.effects || 0) > 0 && (
+                <div>
+                  <div className="text-sm font-medium text-gray-300 mb-2">
+                    Effects ({materialCounts.effects})
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-          {(materialCounts.stickers || 0) > 0 && (
-            <div className="mt-2">
-              <div className="text-sm font-medium text-gray-300 mb-2">
-                Stickers ({materialCounts.stickers})
-              </div>
-            </div>
-          )}
-          {(materialCounts.effects || 0) > 0 && (
-            <div className="mt-2">
-              <div className="text-sm font-medium text-gray-300 mb-2">
-                Effects ({materialCounts.effects})
-              </div>
-            </div>
-          )}
+          </ScrollArea>
         </CardContent>
       </Card>
 
@@ -316,7 +341,11 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
           <DialogHeader>
             <DialogTitle className="text-white">
               {playingMaterial &&
-                getDisplayName(playingMaterial.data, playingMaterial.type)}
+                getDisplayName(
+                  playingMaterial.data,
+                  playingMaterial.type,
+                  playingMaterial.id,
+                )}
             </DialogTitle>
           </DialogHeader>
           <div className="mt-4">
@@ -326,6 +355,7 @@ export function MaterialsPanel({ materials }: MaterialsPanelProps) {
                 title={getDisplayName(
                   playingMaterial.data,
                   playingMaterial.type,
+                  playingMaterial.id,
                 )}
                 aspectRatio={
                   playingMaterial.type === "audios" ? "16/3" : "16/9"
