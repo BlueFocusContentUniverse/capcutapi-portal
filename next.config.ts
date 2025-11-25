@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   output: "standalone",
+  serverExternalPackages: ["@remotion/bundler", "@remotion/renderer"],
 };
 
 export default nextConfig;
