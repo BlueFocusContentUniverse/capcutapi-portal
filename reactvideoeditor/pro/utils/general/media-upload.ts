@@ -320,7 +320,7 @@ export const deleteMediaFile = async (
   filePath: string,
 ): Promise<boolean> => {
   try {
-    const response = await fetch("/api/media/delete", {
+    const response = await fetch("/api/latest/local-media/delete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

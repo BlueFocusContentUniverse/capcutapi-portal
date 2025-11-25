@@ -43,38 +43,53 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.55 0.15 160); /* Brighter emerald for dark mode */
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.6 0.15 160); /* Brighter emerald accent for dark mode */
-  --accent-foreground: oklch(0.145 0 0);
-  --destructive: oklch(0.6 0.2 25);
-  --destructive-foreground: oklch(0.145 0 0);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.55 0.15 160);
-  --chart-1: oklch(0.7 0.15 120);
-  --chart-2: oklch(0.6 0.15 160);
-  --chart-3: oklch(0.6 0.2 25);
-  --chart-4: oklch(0.5 0.15 160);
-  --chart-5: oklch(0.55 0.15 160);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.55 0.15 160);
-  --sidebar-primary-foreground: oklch(0.145 0 0);
-  --sidebar-accent: oklch(0.6 0.15 160);
-  --sidebar-accent-foreground: oklch(0.145 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.55 0.15 160);
+  /* Base colors - deep dark backgrounds */
+  --background: oklch(0.13 0 0);
+  --foreground: oklch(0.93 0 0);
+  --card: oklch(0.16 0.005 15);
+  --card-foreground: oklch(0.93 0 0);
+  --popover: oklch(0.18 0.005 15);
+  --popover-foreground: oklch(0.93 0 0);
+
+  /* Primary - coral red, brightened for dark mode visibility */
+  --primary: #ff7b7b;
+  --primary-foreground: #1a0808;
+
+  /* Secondary & Muted - subtle warm grays */
+  --secondary: oklch(0.22 0.01 15);
+  --secondary-foreground: oklch(0.9 0 0);
+  --muted: oklch(0.22 0.01 15);
+  --muted-foreground: oklch(0.65 0 0);
+
+  /* Accent - warm coral tint */
+  --accent: oklch(0.25 0.02 20);
+  --accent-foreground: oklch(0.93 0 0);
+
+  /* Destructive - vibrant red for dark backgrounds */
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* Borders & inputs - subtle warm gray */
+  --border: oklch(0.28 0.01 15);
+  --input: oklch(0.24 0.01 15);
+  --ring: #ff8585;
+
+  /* Charts - coral/red gradient family for dark mode */
+  --chart-1: #ffb3b3;
+  --chart-2: #ff9494;
+  --chart-3: #ff7b7b;
+  --chart-4: #e85555;
+  --chart-5: #cc3333;
+
+  /* Sidebar - slightly elevated from background */
+  --sidebar: oklch(0.15 0.005 15);
+  --sidebar-foreground: oklch(0.92 0 0);
+  --sidebar-primary: #ff7b7b;
+  --sidebar-primary-foreground: #1a0808;
+  --sidebar-accent: #ff8585;
+  --sidebar-accent-foreground: #1a0808;
+  --sidebar-border: oklch(0.26 0.01 15);
+  --sidebar-ring: #ffb3b3;
 }
 
 @theme inline {
@@ -122,35 +137,6 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-/* Video Editor Styles */
-@layer utilities {
-  .bg-gray-850 {
-    background-color: rgb(23, 25, 35);
-  }
-  .bg-gray-750 {
-    background-color: rgb(40, 44, 52);
-  }
-
-  /* Timeline scrollbar styling */
-  .timeline-scroll::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-  }
-
-  .timeline-scroll::-webkit-scrollbar-track {
-    background: rgb(17, 24, 39);
-  }
-
-  .timeline-scroll::-webkit-scrollbar-thumb {
-    background: rgb(55, 65, 81);
-    border-radius: 6px;
-  }
-
-  .timeline-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgb(75, 85, 99);
   }
 }
 

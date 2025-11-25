@@ -1,6 +1,7 @@
-import React, { memo, useCallback, useRef } from "react";
 import { Player } from "@remotion/player";
+import { memo, useCallback, useRef } from "react";
 import { Sequence } from "remotion";
+
 import { OverlayType, StickerCategory } from "../../../types";
 
 // Wrapper component for sticker preview with static frame

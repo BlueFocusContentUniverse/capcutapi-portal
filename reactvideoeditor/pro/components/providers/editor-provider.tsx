@@ -1,25 +1,25 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import { PlayerRef } from "@remotion/player";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import {
-  EditorProvider as EditorContextProvider,
   EditorContextProps,
+  EditorProvider as EditorContextProvider,
 } from "../../contexts/editor-context";
-import { useOverlays } from "../../hooks/use-overlays";
-import { useVideoPlayer } from "../../hooks/use-video-player";
+import { useRenderer } from "../../contexts/renderer-context";
+import { useAspectRatio } from "../../hooks/use-aspect-ratio";
+import { useAutosave } from "../../hooks/use-autosave";
 // Removed useHistory import - Timeline now manages its own history
 import { useCompositionDuration } from "../../hooks/use-composition-duration";
-import { useAutosave } from "../../hooks/use-autosave";
-import { useAspectRatio } from "../../hooks/use-aspect-ratio";
-import { Overlay, CaptionStyles, AspectRatio } from "../../types";
-
+import { useOverlays } from "../../hooks/use-overlays";
 import { useRendering } from "../../hooks/use-rendering";
-import { useRenderer } from "../../contexts/renderer-context";
-import { PlayerRef } from "@remotion/player";
-import { TIMELINE_CONSTANTS } from "../advanced-timeline/constants";
+import { useVideoPlayer } from "../../hooks/use-video-player";
+import { AspectRatio, CaptionStyles, Overlay } from "../../types";
 import {
-  transformOverlaysForAspectRatio,
-  shouldTransformOverlays,
   getDimensionsForAspectRatio,
+  shouldTransformOverlays,
+  transformOverlaysForAspectRatio,
 } from "../../utils/aspect-ratio-transform";
+import { TIMELINE_CONSTANTS } from "../advanced-timeline/constants";
 
 interface EditorProviderProps {
   children: React.ReactNode;

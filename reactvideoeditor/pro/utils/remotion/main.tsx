@@ -1,12 +1,12 @@
+import type { FontInfo } from "@remotion/google-fonts";
 import React, { useCallback } from "react";
 import { AbsoluteFill } from "remotion";
-import type { FontInfo } from "@remotion/google-fonts";
 
-import { Overlay } from "../../types";
-import { SortedOutlines } from "../../components/selection/sorted-outlines";
-import { Layer } from "./layer";
 import { AlignmentGuides } from "../../components/selection/alignment-guides";
+import { SortedOutlines } from "../../components/selection/sorted-outlines";
 import { useAlignmentGuides } from "../../hooks/use-alignment-guides";
+import { Overlay } from "../../types";
+import { Layer } from "./layer";
 
 /**
  * Props for the Main component

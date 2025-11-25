@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { PlayerRef } from "@remotion/player";
+import type { PlayerRef } from "@remotion/player";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * Custom hook for managing video player functionality

@@ -1,35 +1,34 @@
-import * as React from "react";
 import {
-  Film,
-  Music,
-  Type,
-  Subtitles,
-  ImageIcon,
-  FolderOpen,
-  Sticker,
-  Layout,
   ChevronsLeft,
+  Film,
+  FolderOpen,
+  ImageIcon,
+  Layout,
+  Music,
   Settings,
+  Sticker,
+  Subtitles,
+  Type,
 } from "lucide-react";
+import Image from "next/image";
+import * as React from "react";
 
-// Import OverlayType directly from types to avoid export issues
-import { OverlayType } from "../../types";
-
+import { useEditorContext } from "../../contexts/editor-context";
 // Import hooks and contexts directly
 import { useEditorSidebar } from "../../contexts/sidebar-context";
-import { useEditorContext } from "../../contexts/editor-context";
-
-// Import overlay panels directly
-import { VideoOverlayPanel } from "../overlay/video/video-overlay-panel";
-import { TextOverlaysPanel } from "../overlay/text/text-overlays-panel";
-import SoundsOverlayPanel from "../overlay/sounds/sounds-overlay-panel";
+// Import OverlayType directly from types to avoid export issues
+import { OverlayType } from "../../types";
 import { CaptionsOverlayPanel } from "../overlay/captions/captions-overlay-panel";
 import { ImageOverlayPanel } from "../overlay/images/image-overlay-panel";
 import { LocalMediaPanel } from "../overlay/local-media/local-media-panel";
+import SoundsOverlayPanel from "../overlay/sounds/sounds-overlay-panel";
 import { StickersPanel } from "../overlay/stickers/stickers-panel";
 import { TemplateOverlayPanel } from "../overlay/templates/template-overlay-panel";
+import { TextOverlaysPanel } from "../overlay/text/text-overlays-panel";
+// Import overlay panels directly
+import { VideoOverlayPanel } from "../overlay/video/video-overlay-panel";
 import { SettingsPanel } from "../settings/settings-panel";
-
+import { Button } from "../ui/button";
 // Import UI components directly
 import {
   Sidebar,
@@ -47,7 +46,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Button } from "../ui/button";
 
 interface DefaultSidebarProps {
   /** Custom logo element to display in the header */
@@ -220,11 +218,11 @@ export const DefaultSidebar: React.FC<DefaultSidebarProps> = ({
                 asChild
                 className="md:h-8 md:pb-4 md:pt-4 "
               >
-                <a href="#">
+                <a href="/">
                   <div className="flex aspect-square size-9 items-center justify-center rounded-lg">
                     {logo || (
-                      <img
-                        src="/icons/logo-rve.png"
+                      <Image
+                        src="/kox-logo-web.png"
                         alt="RVE Logo"
                         width={27}
                         height={27}

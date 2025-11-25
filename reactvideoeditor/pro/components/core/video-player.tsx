@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
-import { Player, PlayerRef } from "@remotion/player";
-import { Main } from "../../utils/remotion/main";
+import { Player, type PlayerRef } from "@remotion/player";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+
 import { useEditorContext } from "../../contexts/editor-context";
+import { Main } from "../../utils/remotion/main";
 
 /**
  * Props for the VideoPlayer component

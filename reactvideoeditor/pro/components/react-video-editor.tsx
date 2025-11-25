@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import type { PlayerRef } from "@remotion/player";
+import React, { useEffect, useRef, useState } from "react";
 
-import { DefaultSidebar } from "./shared/default-sidebar";
-import { SidebarInset } from "./ui/sidebar";
+import { CustomTheme } from "../hooks/use-extended-theme-switcher";
+import { OverlayType } from "../types";
+import { AutosaveStatus } from "./autosave/autosave-status";
 import { Editor } from "./core/editor";
 import { VideoPlayer } from "./core/video-player";
-import { AutosaveStatus } from "./autosave/autosave-status";
-import { OverlayType } from "../types";
-import { CustomTheme } from "../hooks/use-extended-theme-switcher";
 import {
   ReactVideoEditorProvider,
   ReactVideoEditorProviderProps,
 } from "./providers/react-video-editor-provider";
-import { PlayerRef } from "@remotion/player";
+import { DefaultSidebar } from "./shared/default-sidebar";
+import { SidebarInset } from "./ui/sidebar";
 
 export interface ReactVideoEditorProps
   extends Omit<ReactVideoEditorProviderProps, "children"> {

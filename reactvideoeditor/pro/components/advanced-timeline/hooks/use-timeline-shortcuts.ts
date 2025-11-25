@@ -1,4 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
+
 import { ZOOM_CONSTRAINTS } from "../constants";
 
 interface UseTimelineShortcutsProps {

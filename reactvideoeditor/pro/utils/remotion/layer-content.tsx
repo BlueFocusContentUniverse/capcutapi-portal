@@ -1,13 +1,14 @@
-import React from "react";
 import type { FontInfo } from "@remotion/google-fonts";
-import { TextLayerContent } from "./components/text-layer-content";
+import React from "react";
+
 import { OverlayType } from "../../types";
+import { Overlay } from "../../types";
 import { CaptionLayerContent } from "./components/caption-layer-content";
-import { VideoLayerContent } from "./components/video-layer-content";
 import { ImageLayerContent } from "./components/image-layer-content";
 import { SoundLayerContent } from "./components/sound-layer-content";
 import { StickerLayerContent } from "./components/sticker-layer-content";
-import { Overlay } from "../../types";
+import { TextLayerContent } from "./components/text-layer-content";
+import { VideoLayerContent } from "./components/video-layer-content";
 
 /**
  * Props for LayerContent component

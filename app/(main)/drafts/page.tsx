@@ -141,6 +141,12 @@ export default async function DraftsPage({
                           Editor
                         </Link>
                       </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/rve/${d.draftId}`}>
+                          <Video className="mr-1 h-4 w-4" />
+                          RVE
+                        </Link>
+                      </Button>
                       <GenerateVideoDialog
                         d={d}
                         buttonLabel={t("actions.generate_video")}

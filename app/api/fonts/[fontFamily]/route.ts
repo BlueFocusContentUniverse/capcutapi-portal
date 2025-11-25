@@ -14,10 +14,10 @@ import { GOOGLE_FONTS_DATABASE } from "@/reactvideoeditor/pro/data/google-fonts"
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { name: string } },
+  { params }: { params: Promise<{ fontFamily: string }> },
 ) {
   try {
-    const fontFamily = params.name;
+    const { fontFamily } = await params;
 
     // Find the font in the database
     const fontInfo = GOOGLE_FONTS_DATABASE.find(

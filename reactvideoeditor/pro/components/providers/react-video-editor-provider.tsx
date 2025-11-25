@@ -1,16 +1,17 @@
+import type { PlayerRef } from "@remotion/player";
 import React from "react";
+
+import { LocalMediaProvider } from "../../contexts/local-media-context";
+import { MediaAdaptorProvider } from "../../contexts/media-adaptor-context";
+import { RendererProvider } from "../../contexts/renderer-context";
+import { SidebarProvider as EditorSidebarProvider } from "../../contexts/sidebar-context";
+import { ThemeProvider } from "../../contexts/theme-context";
+import { CustomTheme } from "../../hooks/use-extended-theme-switcher";
+import { AspectRatio, Overlay } from "../../types";
+import { OverlayAdaptors } from "../../types/overlay-adaptors";
+import { VideoRenderer } from "../../types/renderer";
 import { SidebarProvider as UISidebarProvider } from "../ui/sidebar";
 import { EditorProvider } from "./editor-provider";
-import { RendererProvider } from "../../contexts/renderer-context";
-import { LocalMediaProvider } from "../../contexts/local-media-context";
-import { SidebarProvider as EditorSidebarProvider } from "../../contexts/sidebar-context";
-import { MediaAdaptorProvider } from "../../contexts/media-adaptor-context";
-import { ThemeProvider } from "../../contexts/theme-context";
-import { Overlay, AspectRatio } from "../../types";
-import { VideoRenderer } from "../../types/renderer";
-import { PlayerRef } from "@remotion/player";
-import { OverlayAdaptors } from "../../types/overlay-adaptors";
-import { CustomTheme } from "../../hooks/use-extended-theme-switcher";
 
 export interface ReactVideoEditorProviderProps {
   children: React.ReactNode;
