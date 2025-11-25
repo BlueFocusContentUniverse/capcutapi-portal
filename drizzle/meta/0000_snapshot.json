@@ -95,12 +95,8 @@
           "tableFrom": "account",
           "tableTo": "user",
           "schemaTo": "portal",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -189,12 +185,8 @@
           "tableFrom": "passkey",
           "tableTo": "user",
           "schemaTo": "portal",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -272,12 +264,8 @@
           "tableFrom": "session",
           "tableTo": "user",
           "schemaTo": "portal",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -287,9 +275,7 @@
         "session_token_unique": {
           "name": "session_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -390,16 +376,12 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "user_username_unique": {
           "name": "user_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       },
       "policies": {},
@@ -584,10 +566,7 @@
         "uq_draft_versions_draft_id_version": {
           "name": "uq_draft_versions_draft_id_version",
           "nullsNotDistinct": false,
-          "columns": [
-            "draft_id",
-            "version"
-          ]
+          "columns": ["draft_id", "version"]
         }
       },
       "policies": {},
@@ -870,10 +849,7 @@
     "public.draft_resource": {
       "name": "draft_resource",
       "schema": "public",
-      "values": [
-        "api",
-        "mcp"
-      ]
+      "values": ["api", "mcp"]
     }
   },
   "schemas": {

@@ -2,39 +2,43 @@
 @import "tw-animate-css";
 @import "@vidstack/react/player/styles/base.css";
 
+/* Import RVE Packaged styles */
+@import "../reactvideoeditor/pro/styles.css" layer(utilities);
+@import "../reactvideoeditor/pro/styles.utilities.css";
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.35 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.1450 0 0);
+  --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.1450 0 0);
+  --popover-foreground: oklch(0.145 0 0);
   --primary: #fa6d6d;
   --primary-foreground: #000000;
-  --secondary: oklch(0.9700 0 0);
-  --secondary-foreground: oklch(0.2050 0 0);
-  --muted: oklch(0.9700 0 0);
-  --muted-foreground: oklch(0.5560 0 0);
-  --accent: oklch(0.9700 0 0);
-  --accent-foreground: oklch(0.2050 0 0);
-  --destructive: oklch(0.5770 0.2450 27.3250);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.9220 0 0);
-  --input: oklch(0.9220 0 0);
-  --ring: oklch(0.7080 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
   --chart-1: #ffd3d3;
   --chart-2: #fa8181;
   --chart-3: #f96262;
   --chart-4: #fb2c2c;
   --chart-5: #b70000;
   --radius: 0.5rem;
-  --sidebar: oklch(0.9850 0 0);
+  --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: #242424;
-  --sidebar-primary: oklch(0.2050 0 0);
-  --sidebar-primary-foreground: oklch(0.9850 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: #f96262;
-  --sidebar-accent-foreground: oklch(0.2050 0 0);
-  --sidebar-border: oklch(0.9220 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: #ffd3d3;
 }
 
@@ -129,22 +133,22 @@
   .bg-gray-750 {
     background-color: rgb(40, 44, 52);
   }
-  
+
   /* Timeline scrollbar styling */
   .timeline-scroll::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
-  
+
   .timeline-scroll::-webkit-scrollbar-track {
     background: rgb(17, 24, 39);
   }
-  
+
   .timeline-scroll::-webkit-scrollbar-thumb {
     background: rgb(55, 65, 81);
     border-radius: 6px;
   }
-  
+
   .timeline-scroll::-webkit-scrollbar-thumb:hover {
     background: rgb(75, 85, 99);
   }

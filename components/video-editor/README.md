@@ -14,12 +14,14 @@ This folder contains all components related to the video editor feature.
 ### VideoEditor (index.tsx)
 
 Main component that provides:
+
 - Timeline view with zoom controls
 - Track visualization
 - Materials panel toggle
 - Time ruler and markers
 
 **Props:**
+
 - `tracks` - Array of track objects
 - `materials` - Object containing all materials (videos, audios, texts, etc.)
 - `duration` - Total duration in microseconds
@@ -27,22 +29,26 @@ Main component that provides:
 ### MaterialsPanel
 
 Side panel that displays all materials in the draft:
+
 - Categorized by type (videos, audios, texts, stickers, effects)
 - Tabbed interface for easy navigation
 - Expandable material details
 - Material count summaries
 
 **Props:**
+
 - `materials` - Object containing all materials
 
 ### TimelineTrack
 
 Displays a single track in the timeline:
+
 - Track label with type indicator
 - Segments visualization
 - Responsive to timeline width and zoom
 
 **Props:**
+
 - `track` - Track object
 - `materialMap` - Map of material IDs to material data
 - `timelineWidth` - Width of the timeline in pixels
@@ -53,12 +59,14 @@ Displays a single track in the timeline:
 ### TimelineSegment
 
 Displays a single segment within a track:
+
 - Visual representation with appropriate color
 - Material name display
 - Hover effects and resize handles
 - Tooltip with detailed information
 
 **Props:**
+
 - `segment` - Segment object
 - `material` - Associated material data
 - `startPixels` - Start position in pixels
@@ -69,12 +77,14 @@ Displays a single segment within a track:
 ## Features
 
 ### Materials Panel
+
 - View all materials organized by type
 - Quick navigation between different material categories
 - Detailed view of material properties
 - Material count statistics
 
 ### Timeline Features
+
 - Zoom in/out controls (20% to 500%)
 - Time markers every second
 - Color-coded tracks by type:
@@ -96,10 +106,9 @@ import { VideoEditor } from "@/components/video-editor";
   tracks={draftData.content.tracks}
   materials={draftData.content.materials}
   duration={draftData.content.duration}
-/>
+/>;
 ```
 
 ## Backward Compatibility
 
 The main `components/video-editor.tsx` file re-exports the VideoEditor component for backward compatibility. Similarly, `timeline-track.tsx` and `timeline-segment.tsx` in the components root re-export from this folder.
-
