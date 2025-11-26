@@ -13,7 +13,7 @@ import { Main } from "../../utils/remotion/main";
  * @property {boolean} [isPlayerOnly] - Whether to render in player-only mode (no editor UI)
  */
 export interface VideoPlayerProps {
-  playerRef?: React.RefObject<PlayerRef>;
+  playerRef?: React.RefObject<PlayerRef | undefined>;
   className?: string;
   style?: React.CSSProperties;
   isPlayerOnly?: boolean;

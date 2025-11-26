@@ -9,7 +9,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
  */
 export const useVideoPlayer = (
   fps: number = 30,
-  externalPlayerRef?: React.RefObject<PlayerRef>,
+  externalPlayerRef?: React.RefObject<PlayerRef | undefined>,
 ) => {
   // State management
   const [isPlaying, setIsPlaying] = useState(false);

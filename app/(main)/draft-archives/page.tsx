@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { nextApi } from "@/lib/service";
 import type { Archive, ArchiveListResponse } from "@/types/archive";
 
@@ -25,6 +26,9 @@ export default function DraftArchivesPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Set page title based on user's language
+  usePageTitle("page_titles.draft_archives");
 
   // State
   const [archives, setArchives] = useState<Archive[]>([]);

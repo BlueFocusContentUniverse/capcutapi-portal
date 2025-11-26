@@ -30,7 +30,7 @@ export interface ReactVideoEditorProviderProps {
   isLoadingProject?: boolean; // Whether the project from URL is still loading
 
   // Player Configuration
-  playerRef?: React.RefObject<PlayerRef>; // External playerRef for manual control
+  playerRef?: React.RefObject<PlayerRef | undefined>; // External playerRef for manual control
 
   // API Configuration
   baseUrl?: string;

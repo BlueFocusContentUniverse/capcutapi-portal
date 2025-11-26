@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ArchiveDraftDialog } from "@/components/archive-draft-dialog";
+import { usePageTitle } from "@/hooks/use-page-title";
 import DraftDataViewDialog from "@/components/draft-data-view-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +39,9 @@ export default function EditorPage() {
   const params = useParams();
   const router = useRouter();
   const draftId = params.draftId as string;
+
+  // Set page title based on user's language
+  usePageTitle("page_titles.draft_editor");
 
   const [draftData, setDraftData] = useState<DraftContent | null>(null);
   const [loading, setLoading] = useState(true);

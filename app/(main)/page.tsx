@@ -1,4 +1,5 @@
 import { Users } from "lucide-react";
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
 
@@ -14,6 +15,13 @@ import {
 } from "@/components/ui/card";
 import { getDraftCounts, getVideoTaskCounts } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await serverTranslation();
+  return {
+    title: t("page_titles.dashboard"),
+  };
+}
 
 export default async function DashboardPage() {
   const { t } = await serverTranslation();

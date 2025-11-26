@@ -1,4 +1,5 @@
 import { Video } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import GenerateVideoDialog from "@/components/generate-video-dialog";
@@ -14,6 +15,13 @@ import {
 } from "@/components/ui/table";
 import { getDraftsPaginated } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await serverTranslation();
+  return {
+    title: t("page_titles.drafts"),
+  };
+}
 
 type SearchParams = Promise<{
   page?: string;

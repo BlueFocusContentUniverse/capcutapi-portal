@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ArchiveDraftDialog } from "@/components/archive-draft-dialog";
@@ -13,6 +14,13 @@ import {
 } from "@/components/ui/table";
 import { getVideoTasksPaginated } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await serverTranslation();
+  return {
+    title: t("page_titles.video_tasks"),
+  };
+}
 
 type SearchParams = Promise<{
   page?: string;

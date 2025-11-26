@@ -224,6 +224,15 @@
   "common": {
     "loading": "Loading"
   },
+  "page_titles": {
+    "dashboard": "Dashboard - JYAPI Management",
+    "drafts": "Drafts - JYAPI Management",
+    "draft_editor": "Draft Editor - JYAPI Management",
+    "video_tasks": "Video Tasks - JYAPI Management",
+    "draft_archives": "Draft Archives - JYAPI Management",
+    "admin": "Admin Management - JYAPI Management",
+    "rve_editor": "RVE Editor ({{draftId}}) - JYAPI Management"
+  },
   "profile_dialog": {
     "settings_aria": "Profile settings",
     "title": "Profile",

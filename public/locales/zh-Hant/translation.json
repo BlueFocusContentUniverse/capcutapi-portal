@@ -206,6 +206,15 @@
   "common": {
     "loading": "載入中"
   },
+  "page_titles": {
+    "dashboard": "儀表板 - JYAPI 管理系統",
+    "drafts": "剪映草稿箱 - JYAPI 管理系統",
+    "draft_editor": "草稿編輯器 - JYAPI 管理系統",
+    "video_tasks": "影片任務狀態 - JYAPI 管理系統",
+    "draft_archives": "草稿封存 - JYAPI 管理系統",
+    "admin": "管理員管理 - JYAPI 管理系統",
+    "rve_editor": "RVE 編輯器 ({{draftId}}) - JYAPI 管理系統"
+  },
   "profile_dialog": {
     "settings_aria": "個人設定",
     "title": "個人資料",

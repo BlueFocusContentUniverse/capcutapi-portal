@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { usePageTitle } from "@/hooks/use-page-title";
 import {
   calculateAspectRatioFromDimensions,
   DraftContent,
@@ -44,6 +45,9 @@ export default function DraftEditorPage() {
   const params = useParams();
   const router = useRouter();
   const draftId = params.draftId as string;
+
+  // Set page title based on user's language
+  usePageTitle("page_titles.rve_editor", { draftId });
 
   // State for draft data
   const [draftData, setDraftData] = useState<DraftResponse | null>(null);

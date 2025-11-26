@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 interface AutosaveStatusProps {
   /**

@@ -67,7 +67,7 @@ export const ReactVideoEditor: React.FC<ReactVideoEditorProps> = ({
 }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaveTime, setLastSaveTime] = useState<number | null>(null);
-  const playerRef = useRef<PlayerRef>(null);
+  const playerRef = useRef<PlayerRef>(undefined);
 
   const handleSaving = (saving: boolean) => {
     setIsSaving(saving);

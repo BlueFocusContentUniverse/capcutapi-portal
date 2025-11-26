@@ -224,6 +224,15 @@
   "common": {
     "loading": "読み込み中"
   },
+  "page_titles": {
+    "dashboard": "ダッシュボード - JYAPI 管理システム",
+    "drafts": "ドラフト - JYAPI 管理システム",
+    "draft_editor": "ドラフトエディタ - JYAPI 管理システム",
+    "video_tasks": "動画タスク状況 - JYAPI 管理システム",
+    "draft_archives": "ドラフトアーカイブ - JYAPI 管理システム",
+    "admin": "管理者管理 - JYAPI 管理システム",
+    "rve_editor": "RVE エディタ ({{draftId}}) - JYAPI 管理システム"
+  },
   "profile_dialog": {
     "settings_aria": "プロフィール設定",
     "title": "プロフィール",

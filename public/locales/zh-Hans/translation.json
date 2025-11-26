@@ -224,6 +224,15 @@
   "common": {
     "loading": "加载中"
   },
+  "page_titles": {
+    "dashboard": "仪表板 - JYAPI 管理系统",
+    "drafts": "剪映草稿箱 - JYAPI 管理系统",
+    "draft_editor": "草稿编辑器 - JYAPI 管理系统",
+    "video_tasks": "视频任务状态 - JYAPI 管理系统",
+    "draft_archives": "草稿归档 - JYAPI 管理系统",
+    "admin": "管理员管理 - JYAPI 管理系统",
+    "rve_editor": "RVE 编辑器 ({{draftId}}) - JYAPI 管理系统"
+  },
   "profile_dialog": {
     "settings_aria": "个人设置",
     "title": "个人资料",
