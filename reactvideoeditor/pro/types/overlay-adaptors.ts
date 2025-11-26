@@ -1,8 +1,8 @@
-import { VideoAdaptor, ImageAdaptor, StandardAudio } from "./media-adaptors";
-import { TextOverlayTemplate } from "../templates/text-overlay-templates";
-import { StickerTemplateConfig, StickerCategory } from "./sticker-templates";
-import { TemplateOverlay } from "./index";
 import { AnimationTemplate } from "../adaptors/default-animation-adaptors";
+import { TextOverlayTemplate } from "../templates/text-overlay-templates";
+import { TemplateOverlay } from "./index";
+import { ImageAdaptor, StandardAudio, VideoAdaptor } from "./media-adaptors";
+import { StickerCategory, StickerTemplateConfig } from "./sticker-templates";
 
 // Enhanced result interface with source attribution
 export interface MergedSearchResult<T> {

@@ -142,12 +142,12 @@ export default function DraftEditorPage() {
 
   // Define available themes
   const availableThemes: CustomTheme[] = [
-    {
-      id: "rve",
-      name: "RVE",
-      className: "rve",
-      color: "#3E8AF5",
-    },
+    // {
+    //   id: "rve",
+    //   name: "RVE",
+    //   className: "rve",
+    //   color: "#3E8AF5",
+    // },
   ];
 
   // SSR Renderer for video export
@@ -219,7 +219,6 @@ export default function DraftEditorPage() {
           videoHeight={videoHeight}
           disabledPanels={[]}
           availableThemes={availableThemes}
-          defaultTheme="dark"
           adaptors={{
             video: [
               createPexelsVideoAdaptor(

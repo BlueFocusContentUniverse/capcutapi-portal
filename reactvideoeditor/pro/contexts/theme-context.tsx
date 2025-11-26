@@ -1,4 +1,5 @@
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, ReactNode, useContext } from "react";
+
 import { CustomTheme } from "../hooks/use-extended-theme-switcher";
 
 /**

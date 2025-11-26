@@ -1,14 +1,14 @@
+import { useEffect } from "react";
+
+import { useEditorContext } from "../../contexts/editor-context";
+import { useThemeConfig } from "../../contexts/theme-context";
+import { CustomTheme } from "../../hooks/use-extended-theme-switcher";
+import { useExtendedThemeSwitcher } from "../../hooks/use-extended-theme-switcher";
+import RenderControls from "../rendering/render-controls";
 import { Separator } from "../ui/separator";
 import { SidebarTrigger } from "../ui/sidebar";
 import { ThemeDropdown } from "../ui/theme-dropdown";
-import { CustomTheme } from "../../hooks/use-extended-theme-switcher";
-import { useExtendedThemeSwitcher } from "../../hooks/use-extended-theme-switcher";
-import { useThemeConfig } from "../../contexts/theme-context";
-
-import RenderControls from "../rendering/render-controls";
 import { SaveControls } from "./save-controls";
-import { useEditorContext } from "../../contexts/editor-context";
-import { useEffect } from "react";
 
 export interface EditorHeaderProps {
   /** Array of available custom themes for the theme dropdown */

@@ -34,6 +34,9 @@ export async function getDraftsPaginated(
   // Build search conditions
   const conditions = [];
 
+  // Always exclude deleted drafts
+  conditions.push(eq(drafts.isDeleted, false));
+
   if (search) {
     // Search in draftId, draftName
     conditions.push(
@@ -52,7 +55,7 @@ export async function getDraftsPaginated(
     conditions.push(lte(drafts.createdAt, endDate));
   }
 
-  const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+  const whereClause = and(...conditions);
 
   const [items, totalRow] = await Promise.all([
     db

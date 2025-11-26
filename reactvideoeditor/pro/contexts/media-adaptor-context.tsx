@@ -1,41 +1,42 @@
 import React, {
   createContext,
+  ReactNode,
+  useCallback,
   useContext,
   useMemo,
-  useCallback,
-  ReactNode,
 } from "react";
+
 import {
-  OverlayAdaptors,
-  VideoOverlayAdaptor,
-  ImageOverlayAdaptor,
-  SoundOverlayAdaptor,
-  TextOverlayAdaptor,
-  StickerOverlayAdaptor,
-  TemplateOverlayAdaptor,
-  AnimationOverlayAdaptor,
-  MergedSearchResult,
-  shuffleArray,
-} from "../types/overlay-adaptors";
+  AnimationTemplate,
+  getDefaultAnimationAdaptors,
+} from "../adaptors/default-animation-adaptors";
+import { getDefaultAudioAdaptors } from "../adaptors/default-audio-adaptors";
+import { getDefaultTemplateAdaptors } from "../adaptors/default-templates-adaptor";
+import { getDefaultTextAdaptors } from "../adaptors/default-text-adaptors";
+import { TextOverlayTemplate } from "../templates/text-overlay-templates";
+import { TemplateOverlay } from "../types";
 import {
   MediaSearchParams,
-  StandardVideo,
-  StandardImage,
   StandardAudio,
+  StandardImage,
+  StandardVideo,
 } from "../types/media-adaptors";
-import { TextOverlayTemplate } from "../templates/text-overlay-templates";
 import {
-  StickerTemplateConfig,
+  AnimationOverlayAdaptor,
+  ImageOverlayAdaptor,
+  MergedSearchResult,
+  OverlayAdaptors,
+  shuffleArray,
+  SoundOverlayAdaptor,
+  StickerOverlayAdaptor,
+  TemplateOverlayAdaptor,
+  TextOverlayAdaptor,
+  VideoOverlayAdaptor,
+} from "../types/overlay-adaptors";
+import {
   StickerCategory,
+  StickerTemplateConfig,
 } from "../types/sticker-templates";
-import { TemplateOverlay } from "../types";
-import { getDefaultAudioAdaptors } from "../adaptors/default-audio-adaptors";
-import { getDefaultTextAdaptors } from "../adaptors/default-text-adaptors";
-import { getDefaultTemplateAdaptors } from "../adaptors/default-templates-adaptor";
-import {
-  getDefaultAnimationAdaptors,
-  AnimationTemplate,
-} from "../adaptors/default-animation-adaptors";
 
 interface MediaAdaptorContextType {
   // Raw adaptors

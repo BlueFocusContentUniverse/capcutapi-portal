@@ -1,8 +1,8 @@
 import {
-  VideoAdaptor,
-  StandardVideo,
   MediaSearchParams,
   MediaSearchResult,
+  StandardVideo,
+  VideoAdaptor,
 } from "../types/media-adaptors";
 import { VideoOverlayAdaptor } from "../types/overlay-adaptors";
 
