@@ -1,9 +1,9 @@
+import { passkey } from "@better-auth/passkey";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { admin, username } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
-import { passkey } from "better-auth/plugins/passkey";
 
 import { db } from "./drizzle/db";
 import {

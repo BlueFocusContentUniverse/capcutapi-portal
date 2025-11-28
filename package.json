@@ -10,6 +10,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@better-auth/passkey": "^1.4.3",
     "@microlink/react-json-view": "^1.27.0",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-avatar": "^1.1.11",
