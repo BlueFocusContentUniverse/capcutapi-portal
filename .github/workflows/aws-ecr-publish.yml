@@ -18,6 +18,8 @@ env:
 jobs:
   build-portal:
     runs-on: ubuntu-latest
+    # Skip if this is a stage tag (those go to DockerHub)
+    if: ${{ !contains(github.ref, '-stage') }}
     permissions:
       contents: read
       packages: write
