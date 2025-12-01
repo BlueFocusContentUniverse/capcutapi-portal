@@ -1,21 +1,21 @@
 import React from "react";
-import Timeline from "../../advanced-timeline/timeline";
-import { TimelineTrack } from "../../advanced-timeline/types";
+
+import { FPS } from "@/reactvideoeditor/constants";
 
 import { useEditorContext } from "../../../contexts/editor-context";
 import { useEditorSidebar } from "../../../contexts/sidebar-context";
-
-import { useTimelineTransforms } from "./hooks/use-timeline-transforms";
+import {
+  CaptionOverlay,
+  Overlay,
+  OverlayType,
+  TextOverlay,
+} from "../../../types";
+import Timeline from "../../advanced-timeline/timeline";
+import { TimelineRef, TimelineTrack } from "../../advanced-timeline/types";
+import { TimelineResizeHandle } from "./components";
 import { useTimelineHandlers } from "./hooks/use-timeline-handlers";
 import { useTimelineResize } from "./hooks/use-timeline-resize";
-import { TimelineResizeHandle } from "./components";
-import {
-  Overlay,
-  TextOverlay,
-  CaptionOverlay,
-  OverlayType,
-} from "../../../types";
-import { FPS } from "../../../../constants";
+import { useTimelineTransforms } from "./hooks/use-timeline-transforms";
 
 interface TimelineSectionProps {
   className?: string;
@@ -40,6 +40,12 @@ export const TimelineSection: React.FC<TimelineSectionProps> = () => {
 
   /** State for timeline collapse */
   const [isTimelineCollapsed, setIsTimelineCollapsed] = React.useState(false);
+
+  /** Ref to the Timeline component for imperative actions like scrolling */
+  const timelineRef = React.useRef<TimelineRef>(null);
+
+  /** Ref to track previous overlay IDs for detecting new items */
+  const prevOverlayIdsRef = React.useRef<Set<number>>(new Set());
 
   /** Get editor context values */
   const {
@@ -70,6 +76,32 @@ export const TimelineSection: React.FC<TimelineSectionProps> = () => {
 
   // Get transformation functions
   const { transformOverlaysToTracks } = useTimelineTransforms();
+
+  // Scroll timeline when new items are added (top for most, bottom for audio)
+  React.useEffect(() => {
+    const currentIds = new Set(overlays.map((o) => o.id));
+    const prevIds = prevOverlayIdsRef.current;
+
+    // Find newly added overlays
+    const newOverlays = overlays.filter((o) => !prevIds.has(o.id));
+
+    // Only scroll when items are added (not on initial load)
+    if (newOverlays.length > 0 && prevIds.size > 0) {
+      // Check if any of the new items are audio/sound type
+      const hasAudioItem = newOverlays.some(
+        (o) => o.type === OverlayType.SOUND,
+      );
+
+      if (hasAudioItem) {
+        timelineRef.current?.scroll.scrollToBottom();
+      } else {
+        timelineRef.current?.scroll.scrollToTop();
+      }
+    }
+
+    // Update the previous IDs
+    prevOverlayIdsRef.current = currentIds;
+  }, [overlays]);
 
   // Get timeline handlers
   const {
@@ -268,6 +300,7 @@ export const TimelineSection: React.FC<TimelineSectionProps> = () => {
         className="flex flex-col overflow-hidden"
       >
         <Timeline
+          ref={timelineRef}
           tracks={timelineTracks}
           totalDuration={durationInFrames / FPS} // Convert frames to seconds
           currentFrame={currentFrame}

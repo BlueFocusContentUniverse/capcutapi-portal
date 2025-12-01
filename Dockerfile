@@ -18,7 +18,8 @@ COPY . .
 ENV DATABASE_URL=postgresql://postgres:postgres@stub:5432/
 
 # Install dependencies using npm ci (ensures a clean, reproducible install)
-RUN npm ci && npm cache clean --force
+# -f for current better-auth version
+RUN npm ci -f && npm cache clean --force
 
 RUN npm run build
 

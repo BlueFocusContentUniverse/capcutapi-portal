@@ -36,6 +36,15 @@ export interface TimelineTrack {
   muted?: boolean; // Whether track is muted
 }
 
+// Timeline scroll utilities interface
+export interface TimelineScrollUtils {
+  scrollToTop: () => void;
+  scrollToBottom: () => void;
+  scrollToTrack: (trackIndex: number) => void;
+  getScrollPosition: () => { top: number; left: number };
+  setScrollPosition: (position: { top?: number; left?: number }) => void;
+}
+
 // Timeline component ref interface for imperative methods
 export interface TimelineRef {
   addNewItem: (itemData: {
@@ -47,6 +56,8 @@ export interface TimelineRef {
     preferredTrackId?: string;
     preferredStartTime?: number;
   }) => void;
+  // Scroll utilities
+  scroll: TimelineScrollUtils;
 }
 
 // Timeline component props

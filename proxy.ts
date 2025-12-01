@@ -16,6 +16,6 @@ export const proxy = async (req: NextRequest) => {
 export const config = {
   matcher: [
     // Protect all routes except login, auth and public assets
-    "/((?!login|signup|api/auth|_next/static|_next/image|favicon.ico).*)",
+    "/((?!login|signup|forgot-password|api/auth|_next/static|_next/image|favicon.ico).*)",
   ],
 };

@@ -1,30 +1,32 @@
 import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
   forwardRef,
+  useCallback,
+  useEffect,
   useImperativeHandle,
+  useRef,
+  useState,
 } from "react";
+
 import {
+  TimelineContent,
   TimelineHeader,
   TimelineTrackHandles,
-  TimelineContent,
 } from "./components";
 import {
-  useTimelineZoom,
-  useTimelineInteractions,
-  useTimelineTracks,
-  useTimelineSettings,
-  useTimelineComposition,
-  useTimelineOperations,
-  useTimelineHistory,
-  useTimelineShortcuts,
   useMobileDetection,
+  useTimelineComposition,
+  useTimelineHistory,
+  useTimelineInteractions,
+  useTimelineOperations,
+  useTimelineScroll,
   useTimelineScrollSync,
+  useTimelineSettings,
+  useTimelineShortcuts,
+  useTimelineTracks,
+  useTimelineZoom,
 } from "./hooks";
 import { useTimelineStore } from "./stores";
-import { TimelineProps, TimelineRef } from "./types";
+import type { TimelineProps, TimelineRef } from "./types";
 
 /**
  * Timeline Component with Comprehensive Theming Support
@@ -50,7 +52,7 @@ import { TimelineProps, TimelineRef } from "./types";
  */
 
 // Re-export types for backward compatibility
-export type { TimelineItem, TimelineTrack, TimelineProps } from "./types";
+export type { TimelineItem, TimelineProps, TimelineTrack } from "./types";
 
 export const Timeline = forwardRef<TimelineRef, TimelineProps>(
   (
@@ -105,6 +107,9 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps>(
     ref,
   ) => {
     const timelineRef = useRef<HTMLDivElement>(null);
+
+    // Timeline scroll utilities
+    const scrollUtils = useTimelineScroll();
 
     // Detect mobile devices to adjust UX behavior
     const { isMobile } = useMobileDetection();
@@ -403,8 +408,9 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps>(
       ref,
       () => ({
         addNewItem: handleCombinedAddNewItem,
+        scroll: scrollUtils,
       }),
-      [handleCombinedAddNewItem],
+      [handleCombinedAddNewItem, scrollUtils],
     );
 
     // Add wheel zoom event listener

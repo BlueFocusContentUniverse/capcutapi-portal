@@ -1,4 +1,4 @@
-import { Player, type PlayerRef } from "@remotion/player";
+import { Player, PlayerRef } from "@remotion/player";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { useEditorContext } from "../../contexts/editor-context";
@@ -13,7 +13,7 @@ import { Main } from "../../utils/remotion/main";
  * @property {boolean} [isPlayerOnly] - Whether to render in player-only mode (no editor UI)
  */
 export interface VideoPlayerProps {
-  playerRef?: React.RefObject<PlayerRef | undefined>;
+  playerRef?: React.RefObject<PlayerRef>;
   className?: string;
   style?: React.CSSProperties;
   isPlayerOnly?: boolean;
@@ -151,6 +151,60 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     compositionHeight,
   ]);
 
+  const editorInputProps = useMemo(
+    () => ({
+      overlays,
+      setSelectedOverlayId,
+      changeOverlay,
+      selectedOverlayId,
+      durationInFrames,
+      fps: fps,
+      width: compositionWidth,
+      height: compositionHeight,
+      showAlignmentGuides,
+      backgroundColor,
+    }),
+    [
+      overlays,
+      setSelectedOverlayId,
+      changeOverlay,
+      selectedOverlayId,
+      durationInFrames,
+      fps,
+      compositionWidth,
+      compositionHeight,
+      showAlignmentGuides,
+      backgroundColor,
+    ],
+  );
+
+  // Memoize inputProps for player-only mode (guides disabled)
+  const playerOnlyInputProps = useMemo(
+    () => ({
+      overlays,
+      setSelectedOverlayId,
+      changeOverlay,
+      selectedOverlayId,
+      durationInFrames,
+      fps: fps,
+      width: compositionWidth,
+      height: compositionHeight,
+      showAlignmentGuides: false,
+      backgroundColor,
+    }),
+    [
+      overlays,
+      setSelectedOverlayId,
+      changeOverlay,
+      selectedOverlayId,
+      durationInFrames,
+      fps,
+      compositionWidth,
+      compositionHeight,
+      backgroundColor,
+    ],
+  );
+
   return (
     <div
       ref={containerRef}
@@ -193,18 +247,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                 fps={PLAYER_CONFIG.fps}
                 playbackRate={playbackRate}
                 acknowledgeRemotionLicense={true}
-                inputProps={{
-                  overlays,
-                  setSelectedOverlayId,
-                  changeOverlay,
-                  selectedOverlayId,
-                  durationInFrames,
-                  fps: fps,
-                  width: compositionWidth,
-                  height: compositionHeight,
-                  showAlignmentGuides,
-                  backgroundColor,
-                }}
+                inputProps={editorInputProps}
                 errorFallback={() => <></>}
                 overflowVisible
               />
@@ -237,18 +280,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
               durationInFrames={PLAYER_CONFIG.durationInFrames}
               fps={PLAYER_CONFIG.fps}
               playbackRate={playbackRate}
-              inputProps={{
-                overlays,
-                setSelectedOverlayId,
-                changeOverlay,
-                selectedOverlayId,
-                durationInFrames,
-                fps: fps,
-                width: compositionWidth,
-                height: compositionHeight,
-                showAlignmentGuides: false, // Disable guides in player-only mode
-                backgroundColor,
-              }}
+              inputProps={playerOnlyInputProps}
               errorFallback={() => <></>}
               overflowVisible
             />
