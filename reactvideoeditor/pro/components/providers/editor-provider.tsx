@@ -15,6 +15,7 @@ import { useRendering } from "../../hooks/use-rendering";
 import { useVideoPlayer } from "../../hooks/use-video-player";
 import { AspectRatio, CaptionStyles, Overlay } from "../../types";
 import {
+  CustomDimensionsMap,
   getDimensionsForAspectRatio,
   shouldTransformOverlays,
   transformOverlaysForAspectRatio,
@@ -110,6 +111,13 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
   const rendererConfig = useRenderer();
   const renderType = rendererConfig.renderer.renderType?.type || "ssr";
 
+  // Build custom dimensions map from videoWidth/videoHeight props
+  // This allows external projects to provide their own canvas dimensions
+  const customDimensions: CustomDimensionsMap | undefined =
+    videoWidth && videoHeight && defaultAspectRatio
+      ? { [defaultAspectRatio]: { width: videoWidth, height: videoHeight } }
+      : undefined;
+
   // Initialize hooks
   const {
     overlays,
@@ -188,7 +196,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     playerDimensions,
     updatePlayerDimensions,
     getAspectRatioDimensions,
-  } = useAspectRatio(defaultAspectRatio);
+  } = useAspectRatio(defaultAspectRatio, undefined, customDimensions);
 
   // Track previous canvas dimensions for aspect ratio transformations
   const previousDimensionsRef = useRef(getAspectRatioDimensions());
@@ -217,18 +225,28 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
         setAspectRatioBase(defaultAspectRatio);
 
         // Update the previous dimensions ref to match the loaded aspect ratio
-        previousDimensionsRef.current =
-          getDimensionsForAspectRatio(defaultAspectRatio);
+        previousDimensionsRef.current = getDimensionsForAspectRatio(
+          defaultAspectRatio,
+          customDimensions,
+        );
       }
     }
     previousDefaultAspectRatioRef.current = defaultAspectRatio;
-  }, [defaultAspectRatio, isLoadingProject, setAspectRatioBase]);
+  }, [
+    defaultAspectRatio,
+    isLoadingProject,
+    setAspectRatioBase,
+    customDimensions,
+  ]);
 
   // Wrapped setAspectRatio that transforms overlays when aspect ratio changes
   const setAspectRatio = useCallback(
     (newRatio: typeof aspectRatio) => {
       const oldDimensions = previousDimensionsRef.current;
-      const newDimensions = getDimensionsForAspectRatio(newRatio);
+      const newDimensions = getDimensionsForAspectRatio(
+        newRatio,
+        customDimensions,
+      );
 
       // Update the aspect ratio first
       setAspectRatioBase(newRatio);
@@ -246,7 +264,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
       // Update the previous dimensions ref
       previousDimensionsRef.current = newDimensions;
     },
-    [setAspectRatioBase, overlays, setOverlays],
+    [setAspectRatioBase, overlays, setOverlays, customDimensions],
   );
 
   // Get dynamic dimensions based on current aspect ratio
@@ -316,6 +334,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
         // Update the previous dimensions ref to match the loaded aspect ratio
         previousDimensionsRef.current = getDimensionsForAspectRatio(
           loadedState.aspectRatio,
+          customDimensions,
         );
       }
       if (loadedState.playbackRate) {

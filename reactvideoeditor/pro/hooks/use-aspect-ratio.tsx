@@ -1,17 +1,23 @@
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+
 import { AspectRatio } from "../types";
-import { getDimensionsForAspectRatio } from "../utils/aspect-ratio-transform";
+import {
+  CustomDimensionsMap,
+  getDimensionsForAspectRatio,
+} from "../utils/aspect-ratio-transform";
 
 /**
  * Custom hook for managing aspect ratio and player dimensions.
  * @param initialRatio - The initial aspect ratio to use (default: "16:9")
  * @param onRatioChange - Callback function to call when the aspect ratio changes (optional)
+ * @param customDimensions - Optional custom dimensions map for external projects
  * @returns An object containing aspect ratio state and related functions
  */
 
 export const useAspectRatio = (
   initialRatio: AspectRatio = "16:9",
   onRatioChange?: (ratio: AspectRatio) => void,
+  customDimensions?: CustomDimensionsMap,
 ) => {
   // Single source of truth for aspect ratio
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>(initialRatio);
@@ -74,12 +80,13 @@ export const useAspectRatio = (
   );
 
   /**
-   * Returns the standard dimensions for the current aspect ratio.
+   * Returns the dimensions for the current aspect ratio.
+   * Uses custom dimensions if provided (for external projects), otherwise uses defaults.
    * @returns An object containing the width and height for the current aspect ratio
    */
   const getAspectRatioDimensions = useCallback(() => {
-    return getDimensionsForAspectRatio(aspectRatio);
-  }, [aspectRatio]);
+    return getDimensionsForAspectRatio(aspectRatio, customDimensions);
+  }, [aspectRatio, customDimensions]);
 
   return {
     aspectRatio,

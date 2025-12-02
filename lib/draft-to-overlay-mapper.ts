@@ -229,6 +229,7 @@ function buildMaterialMap(
 /**
  * Parse text content from CapCut text material
  * CapCut stores text content as JSON in the 'content' field
+ * The styles array contains per-range styling with fill colors, shadows, fonts, etc.
  */
 function parseTextContent(material: DraftMaterial): {
   text: string;
@@ -243,9 +244,69 @@ function parseTextContent(material: DraftMaterial): {
       if (parsed.text) {
         text = parsed.text;
       }
-      if (parsed.styles) {
+
+      // Extract styles from the styles array (CapCut format)
+      if (
+        parsed.styles &&
+        Array.isArray(parsed.styles) &&
+        parsed.styles.length > 0
+      ) {
+        const firstStyle = parsed.styles[0];
+
+        // Extract color from fill.content.solid.color [r, g, b] where values are 0-1
+        if (firstStyle.fill?.content?.solid?.color) {
+          const [r, g, b] = firstStyle.fill.content.solid.color;
+          const hexR = Math.round(r * 255)
+            .toString(16)
+            .padStart(2, "0");
+          const hexG = Math.round(g * 255)
+            .toString(16)
+            .padStart(2, "0");
+          const hexB = Math.round(b * 255)
+            .toString(16)
+            .padStart(2, "0");
+          styles.color = `#${hexR}${hexG}${hexB}`.toUpperCase();
+        }
+
+        // Extract font weight from bold
+        if (firstStyle.bold) {
+          styles.fontWeight = "700";
+        }
+
+        // Extract font style from italic
+        if (firstStyle.italic) {
+          styles.fontStyle = "italic";
+        }
+
+        // Extract text decoration from underline
+        if (firstStyle.underline) {
+          styles.textDecoration = "underline";
+        }
+
+        // Extract text shadow from shadows array
+        if (
+          firstStyle.shadows &&
+          Array.isArray(firstStyle.shadows) &&
+          firstStyle.shadows.length > 0
+        ) {
+          const shadow = firstStyle.shadows[0];
+          const shadowColor = shadow.content?.solid?.color || [0, 0, 0];
+          const [sr, sg, sb] = shadowColor;
+          const alpha = shadow.alpha || 1;
+          const distance = shadow.distance || 0;
+          const angle = shadow.angle || 0;
+          // Convert polar to cartesian for CSS text-shadow
+          const angleRad = (angle * Math.PI) / 180;
+          const offsetX = Math.round(distance * Math.cos(angleRad));
+          const offsetY = Math.round(distance * Math.sin(angleRad));
+          const blur = Math.round((shadow.diffuse || 0) * 100);
+          styles.textShadow = `${offsetX}px ${offsetY}px ${blur}px rgba(${Math.round(sr * 255)}, ${Math.round(sg * 255)}, ${Math.round(sb * 255)}, ${alpha})`;
+        }
+      } else if (parsed.styles && !Array.isArray(parsed.styles)) {
+        // Handle legacy styles object format
         styles = parsed.styles;
       }
+
       // Handle nested text structures
       if (parsed.texts && Array.isArray(parsed.texts)) {
         text = parsed.texts
@@ -262,6 +323,11 @@ function parseTextContent(material: DraftMaterial): {
 }
 
 /**
+ * CapCut fixed width base for text dimension calculations
+ */
+const CAPCUT_FIXED_WIDTH_BASE = 720;
+
+/**
  * Create a TextOverlay from CapCut text material and segment
  */
 function createTextOverlay(
@@ -275,24 +341,58 @@ function createTextOverlay(
 ): TextOverlay {
   const { text, styles: parsedStyles } = parseTextContent(material);
 
-  // Transform coordinates from CapCut:
-  // X: 0 = center, -1 = left edge, 1 = right edge (unit: half canvas width)
-  // Y: 0 = center, -1 = top edge, 1 = bottom edge (unit: half canvas height)
-  // Default Y = 0.8 puts text near bottom (subtitle position)
+  // Transform coordinates from CapCut (from segment.clip.transform):
+  // X: 0 = center, -1 = left edge, 1 = right edge
+  // Y: 0 = center, -1 = BOTTOM edge, 1 = TOP edge (Y-axis is inverted from screen coordinates)
+  // Example: {x: 0, y: -0.8} means centered horizontally, near the bottom
   const transformX = segment.clip?.transform?.x ?? 0;
-  const transformY = segment.clip?.transform?.y ?? 0.8; // Default to subtitle position (near bottom)
+  const transformY = segment.clip?.transform?.y ?? -0.8; // Default to subtitle position (near bottom)
 
   // Calculate center position on canvas from normalized transform
+  // X: -1 to 1 maps to 0 to canvasWidth
   const centerX = (canvasWidth / 2) * (1 + transformX);
-  const centerY = (canvasHeight / 2) * (1 + transformY);
+  // Y: -1 (bottom) to 1 (top) maps to canvasHeight to 0 (screen coordinates)
+  const centerY = (canvasHeight / 2) * (1 - transformY);
 
-  // Text dimensions (80% width, auto height based on content)
-  const width = canvasWidth * 0.8;
-  const height = canvasHeight * 0.15; // Estimate for text height
+  // Calculate text dimensions from material's fixed_width and fixed_height
+  // CapCut uses a 720-based coordinate system, so we divide by 720 and multiply by canvas size
+  const fixedWidth = (material as any).fixed_width;
+  const fixedHeight = (material as any).fixed_height;
+
+  let width: number;
+  let height: number;
+
+  if (fixedWidth && fixedWidth > 0) {
+    width = (fixedWidth / CAPCUT_FIXED_WIDTH_BASE) * canvasWidth;
+  } else {
+    // Fallback: use line_max_width if available, otherwise default to 80% of canvas
+    const lineMaxWidth = (material as any).line_max_width;
+    width = lineMaxWidth ? lineMaxWidth * canvasWidth : canvasWidth * 0.8;
+  }
+
+  if (fixedHeight && fixedHeight > 0) {
+    height = (fixedHeight / CAPCUT_FIXED_WIDTH_BASE) * canvasHeight;
+  } else {
+    // Fallback: estimate height based on font size and content
+    height = canvasHeight * 0.15;
+  }
 
   // Calculate top-left position from center point
   const left = Math.max(0, centerX - width / 2);
   const top = Math.max(0, centerY - height / 2);
+
+  // Get font size from material (CapCut stores it at the material level)
+  const materialFontSize = (material as any).font_size;
+  const fontSize = materialFontSize
+    ? `${materialFontSize}px`
+    : parsedStyles.fontSize || "2rem";
+
+  // Get letter spacing from material
+  const letterSpacing = (material as any).letter_spacing ?? 0;
+
+  // Get line spacing from material
+  const lineSpacing = (material as any).line_spacing ?? 0.02;
+  const lineHeight = 1 + lineSpacing;
 
   return {
     id: overlayId,
@@ -311,16 +411,16 @@ function createTextOverlay(
     rotation: segment.clip?.rotation ?? 0,
     isDragging: false,
     styles: {
-      fontSize: parsedStyles.fontSize || "2rem",
+      fontSize,
       fontWeight: parsedStyles.fontWeight || "400",
       color: parsedStyles.color || "#FFFFFF",
       backgroundColor: parsedStyles.backgroundColor || "",
       fontFamily: parsedStyles.fontFamily || "font-inter",
       fontStyle: parsedStyles.fontStyle || "normal",
       textDecoration: parsedStyles.textDecoration || "none",
-      lineHeight: parsedStyles.lineHeight || "1.2",
+      lineHeight: String(lineHeight),
       textAlign: parsedStyles.textAlign || "center",
-      letterSpacing: parsedStyles.letterSpacing || "0",
+      letterSpacing: String(letterSpacing),
       textShadow: parsedStyles.textShadow || "",
       opacity: 1,
       zIndex: 1,

@@ -12,25 +12,40 @@ export interface CanvasDimensions {
 }
 
 /**
+ * Custom dimensions configuration for aspect ratios
+ * Use this when loading external projects with non-standard dimensions
+ */
+export type CustomDimensionsMap = Partial<
+  Record<AspectRatio, CanvasDimensions>
+>;
+
+/**
+ * Default dimensions for each aspect ratio
+ */
+const DEFAULT_DIMENSIONS: Record<AspectRatio, CanvasDimensions> = {
+  "9:16": { width: 1080, height: 1920 },
+  "4:5": { width: 1080, height: 1350 },
+  "1:1": { width: 1080, height: 1080 },
+  "16:9": { width: 1920, height: 1080 },
+};
+
+/**
  * Get canvas dimensions for a specific aspect ratio
  * @param aspectRatio - The aspect ratio to get dimensions for
+ * @param customDimensions - Optional custom dimensions map from external project
  * @returns Canvas dimensions for the given aspect ratio
  */
 export function getDimensionsForAspectRatio(
   aspectRatio: AspectRatio,
+  customDimensions?: CustomDimensionsMap,
 ): CanvasDimensions {
-  switch (aspectRatio) {
-    case "9:16":
-      return { width: 1080, height: 1920 };
-    case "4:5":
-      return { width: 1080, height: 1350 };
-    case "1:1":
-      return { width: 1080, height: 1080 };
-    case "16:9":
-      return { width: 1280, height: 720 };
-    default:
-      return { width: 1920, height: 1080 };
+  // Use custom dimensions if provided for this aspect ratio
+  if (customDimensions?.[aspectRatio]) {
+    return customDimensions[aspectRatio];
   }
+
+  // Fall back to default dimensions
+  return DEFAULT_DIMENSIONS[aspectRatio] || DEFAULT_DIMENSIONS["16:9"];
 }
 
 /**
