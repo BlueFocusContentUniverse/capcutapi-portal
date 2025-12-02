@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 
 import { auth } from "@/auth";
+import { jyApi } from "@/lib/service";
 
 interface ArchiveDraftRequest {
   draft_id: string;
@@ -16,19 +17,6 @@ interface ArchiveDraftRequest {
 async function saveDraft(
   formData: FormData,
 ): Promise<{ ok: true; message: string } | { ok: false; error: string }> {
-  const baseUrl = process.env.JYAPI_BASEURL;
-  const apiToken = process.env.DRAFT_API_TOKEN;
-
-  if (!baseUrl) {
-    console.error("JYAPI_BASEURL is not set");
-    return { ok: false, error: "JYAPI_BASEURL is not set" };
-  }
-
-  if (!apiToken) {
-    console.error("DRAFT_API_TOKEN is not set");
-    return { ok: false, error: "DRAFT_API_TOKEN is not set" };
-  }
-
   // Get user session for authentication
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -75,13 +63,8 @@ async function saveDraft(
   }
 
   try {
-    const res = await fetch(`${baseUrl}/save_draft`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiToken}`,
-      },
-      body: JSON.stringify(payload),
+    const res = await jyApi.post("save_draft", {
+      json: payload,
     });
 
     if (!res.ok) {
@@ -90,7 +73,7 @@ async function saveDraft(
       return { ok: false, error: text || `HTTP ${res.status}` };
     }
 
-    const data = await res.json();
+    const data = await res.json<{ success: boolean; error?: string }>();
 
     if (!data.success) {
       console.error("save_draft API returned success: false", data.error);

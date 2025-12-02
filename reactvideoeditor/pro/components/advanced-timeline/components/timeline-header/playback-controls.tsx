@@ -1,6 +1,11 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@radix-ui/react-tooltip";
+import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import React from "react";
-
-import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
 
 import { Button } from "../../../ui/button";
 import {
@@ -9,12 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@radix-ui/react-tooltip";
 
 interface PlaybackControlsProps {
   isPlaying: boolean;

@@ -1,5 +1,7 @@
 "use server";
 
+import { jyApi } from "@/lib/service";
+
 export interface GenerateVideoRequest {
   draft_id: string;
   framerate?: string;
@@ -11,12 +13,6 @@ export interface GenerateVideoRequest {
 export async function generateVideo(
   formData: FormData,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
-  const baseUrl = process.env.JYAPI_BASEURL;
-  if (!baseUrl) {
-    console.error("JYAPI_BASEURL is not set");
-    return { ok: false, error: "JYAPI_BASEURL is not set" };
-  }
-
   const draft_id = formData.get("draft_id");
   const framerate = formData.get("framerate");
   const name = formData.get("name");
@@ -39,10 +35,8 @@ export async function generateVideo(
   }
 
   try {
-    const res = await fetch(`${baseUrl}/generate_video`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+    const res = await jyApi.post("generate_video", {
+      json: payload,
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
@@ -60,6 +54,5 @@ export async function generateVideoAction(
   _prevState: unknown,
   formData: FormData,
 ) {
-  "use server";
   return generateVideo(formData);
 }

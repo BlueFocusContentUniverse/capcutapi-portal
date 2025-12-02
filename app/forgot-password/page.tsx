@@ -1,6 +1,7 @@
 import { Mountain } from "lucide-react";
 
 import ForgotPasswordForm from "@/components/forgot-password-form";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import {
   Card,
   CardContent,
@@ -14,7 +15,11 @@ export default async function ForgotPasswordPage() {
   const { t } = await serverTranslation();
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">

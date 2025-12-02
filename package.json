@@ -10,6 +10,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@ai-sdk/react": "^3.0.0-beta.128",
     "@better-auth/passkey": "^1.4.4",
     "@microlink/react-json-view": "^1.27.0",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -42,6 +43,7 @@
     "@remotion/renderer": "4.0.374",
     "@tanstack/react-table": "^8.21.3",
     "@vidstack/react": "^1.12.13",
+    "ai": "^6.0.0-beta.128",
     "better-auth": "^1.4.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

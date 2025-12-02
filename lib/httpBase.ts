@@ -1,6 +1,4 @@
-"use client";
-
-let jyAPIbaseUrl = "/api";
+let jyAPIbaseUrl = process.env.JYAPI_BASEURL ?? "/api";
 
 if (typeof window !== "undefined") {
   switch (window.location.host) {
