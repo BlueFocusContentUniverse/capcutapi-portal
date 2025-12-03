@@ -162,15 +162,6 @@ export function AdminSidebar() {
                 </Link>
               )}
             </nav>
-
-            <div
-              className={cn(
-                "mt-4",
-                isCollapsed ? "px-2 flex justify-center" : "px-2",
-              )}
-            >
-              <LanguageSwitcher />
-            </div>
           </ScrollArea>
 
           {session && (
@@ -180,13 +171,14 @@ export function AdminSidebar() {
                 isCollapsed ? "p-2" : "p-4",
               )}
             >
+              {/* User Profile Section */}
               <div
                 className={cn(
                   "flex items-center mb-3",
-                  isCollapsed ? "flex-col space-y-2 space-x-0" : "space-x-3",
+                  isCollapsed ? "flex-col space-y-2" : "space-x-3",
                 )}
               >
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-8 w-8 shrink-0">
                   <AvatarFallback>
                     <User className="h-4 w-4" />
                   </AvatarFallback>
@@ -201,27 +193,37 @@ export function AdminSidebar() {
                     </p>
                   </div>
                 )}
-                <div className={cn(isCollapsed && "flex justify-center")}>
+                <div className="shrink-0">
                   <ProfileDialog />
                 </div>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
+
+              {/* Action Buttons */}
+              <div
                 className={cn(
-                  "text-sidebar-foreground hover:bg-sidebar-accent/50",
-                  isCollapsed
-                    ? "w-full justify-center px-2"
-                    : "w-full justify-start",
+                  "flex gap-2",
+                  isCollapsed ? "flex-col items-center" : "items-center",
                 )}
-                onClick={handleSignOut}
-                title={isCollapsed ? t("nav.logout") : undefined}
               >
-                <LogOut className="h-4 w-4" />
-                {!isCollapsed && (
-                  <span className="ml-2">{t("nav.logout")}</span>
-                )}
-              </Button>
+                <div className={cn(isCollapsed ? "w-full" : "flex-1")}>
+                  <LanguageSwitcher collapsed={isCollapsed} />
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={cn(
+                    "text-sidebar-foreground hover:bg-sidebar-accent/50 shrink-0",
+                    isCollapsed ? "w-full justify-center px-2" : "px-2",
+                  )}
+                  onClick={handleSignOut}
+                  title={t("nav.logout")}
+                >
+                  <LogOut className="h-4 w-4" />
+                  {!isCollapsed && (
+                    <span className="ml-2">{t("nav.logout")}</span>
+                  )}
+                </Button>
+              </div>
             </div>
           )}
         </div>

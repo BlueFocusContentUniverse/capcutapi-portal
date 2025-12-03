@@ -1,6 +1,7 @@
 import { Mountain } from "lucide-react";
 import type React from "react";
 
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import SignupForm from "@/components/signup-form";
 import {
   Card,
@@ -15,7 +16,11 @@ export default async function SignupPage() {
   const { t } = await serverTranslation();
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">

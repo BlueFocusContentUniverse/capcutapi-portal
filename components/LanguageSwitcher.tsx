@@ -1,16 +1,25 @@
 "use client";
 
-import { Globe } from "lucide-react";
-import { useState } from "react";
+import { Check, Globe } from "lucide-react";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cookieName } from "@/lib/i18n/settings";
+import { cn } from "@/lib/utils";
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  collapsed?: boolean;
+}
+
+export function LanguageSwitcher({ collapsed = false }: LanguageSwitcherProps) {
   const { i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
   const [, setCookie] = useCookies([cookieName]);
 
   const languages = [
@@ -24,48 +33,45 @@ export function LanguageSwitcher() {
     languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   const changeLanguage = (languageCode: string) => {
-    // Change the language in i18n.changeLanguage(languageCode);
     i18n.changeLanguage(languageCode);
 
-    // Set the cookie with the new language using react-cookie
     setCookie(cookieName, languageCode, {
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: "lax",
     });
-
-    setIsOpen(false);
   };
 
   return (
-    <div className="relative">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 text-gray-900 dark:text-white hover:text-brand-red text-base"
-      >
-        <Globe className="w-4 h-4" />
-        <span>{currentLanguage.label}</span>
-      </Button>
-
-      {isOpen && (
-        <div className="absolute top-full right-0 mt-2 bg-background border border-gray-200 dark:border-white/10 rounded-lg shadow-lg z-50 min-w-[120px]">
-          {languages.map((language) => (
-            <button
-              key={language.code}
-              onClick={() => changeLanguage(language.code)}
-              className={`w-full px-4 py-2 text-left text-base hover:bg-white/10 transition-colors ${
-                i18n.language === language.code
-                  ? "text-brand-red"
-                  : "text-gray-900 dark:text-white"
-              }`}
-            >
-              {language.label}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className={cn(
+            "flex items-center text-sidebar-foreground hover:bg-sidebar-accent/50 text-sm",
+            collapsed ? "justify-center px-2" : "space-x-2",
+          )}
+          title={collapsed ? currentLanguage.label : undefined}
+        >
+          <Globe className="w-4 h-4" />
+          {!collapsed && <span>{currentLanguage.label}</span>}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" side="top" sideOffset={8}>
+        {languages.map((language) => (
+          <DropdownMenuItem
+            key={language.code}
+            onClick={() => changeLanguage(language.code)}
+            className="cursor-pointer"
+          >
+            <span className="flex-1">{language.label}</span>
+            {i18n.language === language.code && (
+              <Check className="h-4 w-4 text-primary" />
+            )}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

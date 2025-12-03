@@ -19,7 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { usePageTitle } from "@/hooks/use-page-title";
-import { nextApi } from "@/lib/service";
+import { nextApi } from "@/lib/clientService";
 import type { Archive, ArchiveListResponse } from "@/types/archive";
 
 export default function DraftArchivesPage() {

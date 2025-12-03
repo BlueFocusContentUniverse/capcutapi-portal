@@ -1,27 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { jyApi } from "@/lib/serverService";
+
 export async function GET(request: NextRequest) {
   try {
-    // Get environment variables
-    const baseUrl = process.env.JYAPI_BASEURL;
-    const apiToken = process.env.DRAFT_API_TOKEN;
-
-    if (!baseUrl) {
-      console.error("JYAPI_BASEURL environment variable is not set");
-      return NextResponse.json(
-        { error: "Server configuration error" },
-        { status: 500 },
-      );
-    }
-
-    if (!apiToken) {
-      console.error("DRAFT_API_TOKEN environment variable is not set");
-      return NextResponse.json(
-        { error: "Server configuration error" },
-        { status: 500 },
-      );
-    }
-
     // Extract query parameters
     const { searchParams } = new URL(request.url);
     const draft_id = searchParams.get("draft_id");
@@ -36,21 +18,11 @@ export async function GET(request: NextRequest) {
     queryParams.set("page", page);
     queryParams.set("page_size", page_size);
 
-    // Construct the external API URL
-    const externalApiUrl = `${baseUrl}/api/draft_archives/list?${queryParams.toString()}`;
+    console.log("Fetching draft archives with params:", queryParams.toString());
 
-    console.log("Fetching draft archives from:", externalApiUrl);
-
-    // Get authorization header from request
-    const authHeader = request.headers.get("Authorization");
-
-    // Call the external API with authorization
-    const response = await fetch(externalApiUrl, {
-      method: "GET",
-      headers: {
-        Authorization: authHeader || `Bearer ${apiToken}`,
-      },
-    });
+    const response = await jyApi.get(
+      `api/draft_archives/list?${queryParams.toString()}`,
+    );
 
     if (!response.ok) {
       if (response.status === 404) {
@@ -60,7 +32,7 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      const errorText = await response.text();
+      const errorText = await response.text().catch(() => "");
       console.error(`External API error: ${response.status} ${errorText}`);
       return NextResponse.json(
         { error: "Failed to fetch draft archives from external API" },
@@ -68,10 +40,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get the JSON response from the external API
     const data = await response.json();
-
-    // Return the API response directly
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error calling external API:", error);
