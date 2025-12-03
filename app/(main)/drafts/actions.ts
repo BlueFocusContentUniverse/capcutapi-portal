@@ -1,6 +1,6 @@
 "use server";
 
-import { jyApi } from "@/lib/service";
+import { jyApi } from "@/lib/serverService";
 
 export interface GenerateVideoRequest {
   draft_id: string;

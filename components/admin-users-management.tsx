@@ -25,7 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useSession } from "@/lib/auth-client";
-import { nextApi } from "@/lib/service";
+import { nextApi } from "@/lib/clientService";
 
 type AdminUser = {
   id: string;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { jyApi } from "@/lib/service";
+import { jyApi } from "@/lib/serverService";
 
 export async function GET(request: NextRequest) {
   try {

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { authClient, useSession } from "@/lib/auth-client";
-import { nextApi } from "@/lib/service";
+import { nextApi } from "@/lib/clientService";
 
 type Passkey = {
   id: string;

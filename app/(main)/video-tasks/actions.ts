@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 
 import { auth } from "@/auth";
-import { jyApi } from "@/lib/service";
+import { jyApi } from "@/lib/serverService";
 
 interface ArchiveDraftRequest {
   draft_id: string;
