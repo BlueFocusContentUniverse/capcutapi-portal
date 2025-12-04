@@ -13,8 +13,10 @@ import {
 import { DefaultSidebar } from "./shared/default-sidebar";
 import { SidebarInset } from "./ui/sidebar";
 
-export interface ReactVideoEditorProps
-  extends Omit<ReactVideoEditorProviderProps, "children"> {
+export interface ReactVideoEditorProps extends Omit<
+  ReactVideoEditorProviderProps,
+  "children"
+> {
   showSidebar?: boolean;
   showAutosaveStatus?: boolean;
   className?: string;

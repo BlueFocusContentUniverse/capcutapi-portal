@@ -78,13 +78,18 @@ export const useTimelineResize = ({ overlays }: UseTimelineResizeOptions) => {
   /**
    * Vertical resize functionality for timeline with dynamic max height
    */
-  const { bottomHeight, isResizing, handleMouseDown, setHeight } =
-    useVerticalResize({
-      initialHeight: calculateInitialHeight(),
-      minHeight: 155,
-      maxHeight: dynamicMaxHeight,
-      storageKey: "editor-timeline-height",
-    });
+  const {
+    bottomHeight,
+    isResizing,
+    handleMouseDown,
+    handleTouchStart,
+    setHeight,
+  } = useVerticalResize({
+    initialHeight: calculateInitialHeight(),
+    minHeight: 155,
+    maxHeight: dynamicMaxHeight,
+    storageKey: "editor-timeline-height",
+  });
 
   /**
    * Auto-expand timeline height when new tracks are added
@@ -121,6 +126,7 @@ export const useTimelineResize = ({ overlays }: UseTimelineResizeOptions) => {
     bottomHeight,
     isResizing,
     handleMouseDown,
+    handleTouchStart,
     trackCount,
     dynamicMaxHeight,
   };

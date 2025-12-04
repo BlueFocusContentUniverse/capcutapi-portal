@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from "react";
 import { useCurrentScale } from "remotion";
-import { Overlay, OverlayType } from "../../types";
+
 import { useAlignmentGuides } from "../../hooks/use-alignment-guides";
+import { Overlay, OverlayType } from "../../types";
 import { getEffectiveCropDimensions } from "../../utils/crop-utils";
 
 const HANDLE_SIZE = 12;
@@ -100,6 +101,7 @@ export const ResizeHandle: React.FC<{
   const onPointerDown = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
+      e.preventDefault(); // Prevent text selection during drag
       if (e.button !== 0) {
         return;
       }
@@ -111,8 +113,18 @@ export const ResizeHandle: React.FC<{
       const effectiveDimensions = getEffectiveCropDimensions(overlay);
 
       const onPointerMove = (pointerMoveEvent: PointerEvent) => {
-        const offsetX = (pointerMoveEvent.clientX - initialX) / scale;
-        const offsetY = (pointerMoveEvent.clientY - initialY) / scale;
+        const rawOffsetX = (pointerMoveEvent.clientX - initialX) / scale;
+        const rawOffsetY = (pointerMoveEvent.clientY - initialY) / scale;
+
+        // Transform the screen-space offset to the local coordinate system
+        // accounting for the overlay's rotation
+        const rotation = overlay.rotation || 0;
+        const radians = -rotation * (Math.PI / 180); // Negative to go from screen to local
+        const cos = Math.cos(radians);
+        const sin = Math.sin(radians);
+
+        const offsetX = rawOffsetX * cos - rawOffsetY * sin;
+        const offsetY = rawOffsetX * sin + rawOffsetY * cos;
 
         const isLeft = type === "top-left" || type === "bottom-left";
         const isTop = type === "top-left" || type === "top-right";

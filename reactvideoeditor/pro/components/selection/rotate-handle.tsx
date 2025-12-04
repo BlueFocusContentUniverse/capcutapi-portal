@@ -1,6 +1,12 @@
-import React, { useCallback } from "react";
-import { Overlay } from "../../types";
 import { RotateCw } from "lucide-react";
+import React, { useCallback, useMemo } from "react";
+import { useCurrentScale } from "remotion";
+
+import { Overlay } from "../../types";
+
+const HANDLE_SIZE = 28;
+const ICON_SIZE = 20;
+const HANDLE_OFFSET = 38;
 
 /**
  * RotateHandle Component
@@ -12,7 +18,6 @@ import { RotateCw } from "lucide-react";
  * @param {Object} props
  * @param {Overlay} props.overlay - The overlay object to be rotated
  * @param {Function} props.setOverlay - Callback function to update the overlay properties
- * @param {number} [props.scale] - Optional scale factor for the rotation handle
  *
  * @example
  * <RotateHandle
@@ -26,8 +31,8 @@ export const RotateHandle: React.FC<{
     overlayId: number,
     updater: (overlay: Overlay) => Overlay,
   ) => void;
-  scale?: number;
 }> = ({ overlay, setOverlay }) => {
+  const scale = useCurrentScale();
   /**
    * Handles the start of a rotation gesture and sets up event listeners
    * for tracking the rotation movement.
@@ -37,6 +42,7 @@ export const RotateHandle: React.FC<{
   const startRotating = useCallback(
     (e: React.PointerEvent) => {
       e.stopPropagation();
+      e.preventDefault(); // Prevent text selection during drag
 
       const rect = e.currentTarget.parentElement?.getBoundingClientRect();
       if (!rect) return;
@@ -73,24 +79,35 @@ export const RotateHandle: React.FC<{
     [overlay, setOverlay],
   );
 
+  // Scale the handle size and offset based on zoom level
+  const scaledHandleSize = Math.round(HANDLE_SIZE / scale);
+  const scaledIconSize = Math.round(ICON_SIZE / scale);
+  const scaledOffset = Math.round(HANDLE_OFFSET / scale);
+
+  const style: React.CSSProperties = useMemo(
+    () => ({
+      position: "absolute",
+      width: Number.isFinite(scaledHandleSize) ? scaledHandleSize : HANDLE_SIZE,
+      height: Number.isFinite(scaledHandleSize)
+        ? scaledHandleSize
+        : HANDLE_SIZE,
+      cursor: "pointer",
+      top: Number.isFinite(scaledOffset) ? -scaledOffset : -HANDLE_OFFSET,
+      left: "50%",
+      transform: "translateX(-50%)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      pointerEvents: "auto", // Enable pointer events for the rotate handle
+    }),
+    [scaledHandleSize, scaledOffset],
+  );
+
+  const iconSize = Number.isFinite(scaledIconSize) ? scaledIconSize : ICON_SIZE;
+
   return (
-    <div
-      onPointerDown={startRotating}
-      style={{
-        position: "absolute",
-        width: "28px",
-        height: "28px",
-        cursor: "pointer",
-        top: "-48px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        pointerEvents: "auto", // Enable pointer events for the rotate handle
-      }}
-    >
-      <RotateCw size={20} strokeWidth={2} color="var(--primary-500)" />
+    <div onPointerDown={startRotating} style={style}>
+      <RotateCw size={iconSize} strokeWidth={2} color="var(--primary-500)" />
     </div>
   );
 };

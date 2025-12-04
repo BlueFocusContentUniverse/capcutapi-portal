@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { DEFAULT_OVERLAYS } from "@/reactvideoeditor/constants";
-
+import { DEFAULT_OVERLAYS } from "../../constants";
 import { AspectRatio, Overlay } from "../types";
 import { clearAutosave, hasAutosave } from "../utils/general/indexdb-helper";
 
@@ -59,6 +58,7 @@ export function useProjectStateFromUrl(
 ): {
   overlays: Overlay[];
   aspectRatio: AspectRatio | null;
+  backgroundColor: string | null;
   isLoading: boolean;
   showModal: boolean;
   onConfirmLoad: () => void;
@@ -67,6 +67,7 @@ export function useProjectStateFromUrl(
   const fallbackOverlays = DEFAULT_OVERLAYS;
   const [overlays, setOverlays] = useState<Overlay[]>(fallbackOverlays);
   const [aspectRatio, setAspectRatio] = useState<AspectRatio | null>(null);
+  const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -74,6 +75,7 @@ export function useProjectStateFromUrl(
   const pendingProjectDataRef = useRef<{
     overlays: Overlay[];
     aspectRatio?: AspectRatio;
+    backgroundColor?: string;
   } | null>(null);
 
   // Use ref to avoid adding fallbackOverlays to dependency array
@@ -161,6 +163,15 @@ export function useProjectStateFromUrl(
           );
         }
 
+        // Extract background color if provided (API uses snake_case, convert to camelCase)
+        const projectBackgroundColor: string | undefined =
+          projectData.background_color ?? projectData.backgroundColor;
+        if (projectBackgroundColor) {
+          console.log(
+            `[useProjectStateFromUrl] Project background color: ${projectBackgroundColor}`,
+          );
+        }
+
         // Check if there's existing autosave data
         const hasExistingAutosave = await hasAutosave(projectId);
 
@@ -172,6 +183,7 @@ export function useProjectStateFromUrl(
           pendingProjectDataRef.current = {
             overlays: projectData.overlays,
             aspectRatio: projectAspectRatio,
+            backgroundColor: projectBackgroundColor,
           };
           setShowModal(true);
           setIsLoading(false);
@@ -183,6 +195,9 @@ export function useProjectStateFromUrl(
           setOverlays(projectData.overlays);
           if (projectAspectRatio) {
             setAspectRatio(projectAspectRatio);
+          }
+          if (projectBackgroundColor) {
+            setBackgroundColor(projectBackgroundColor);
           }
           setIsLoading(false);
         }
@@ -210,6 +225,9 @@ export function useProjectStateFromUrl(
       if (pendingProjectDataRef.current.aspectRatio) {
         setAspectRatio(pendingProjectDataRef.current.aspectRatio);
       }
+      if (pendingProjectDataRef.current.backgroundColor) {
+        setBackgroundColor(pendingProjectDataRef.current.backgroundColor);
+      }
       pendingProjectDataRef.current = null;
     }
     setShowModal(false);
@@ -226,6 +244,7 @@ export function useProjectStateFromUrl(
   return {
     overlays,
     aspectRatio,
+    backgroundColor,
     isLoading,
     showModal,
     onConfirmLoad,

@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from "react";
 import { useCurrentScale } from "remotion";
-import { Overlay, OverlayType, ClipOverlay, ImageOverlay } from "../../types";
+
 import { useAlignmentGuides } from "../../hooks/use-alignment-guides";
-import { getEffectiveCropDimensions } from "../../utils/crop-utils";
-import { useOverlaySelection } from "../../hooks/use-overlay-section";
 import { useCropHandling } from "../../hooks/use-crop-handling";
+import { useOverlaySelection } from "../../hooks/use-overlay-section";
+import { ClipOverlay, ImageOverlay, Overlay, OverlayType } from "../../types";
+import { getEffectiveCropDimensions } from "../../utils/crop-utils";
 
 /**
  * SelectionOutline is a component that renders a draggable, resizable outline around selected overlays.
@@ -68,7 +69,6 @@ export const SelectionOutline: React.FC<{
 
         // If crop is not already enabled, enable it with default values
         if (!currentOverlay.styles?.cropEnabled) {
-          console.log("Enabling crop for overlay", overlay.id);
           handleCropChange({
             cropEnabled: true,
             cropX: currentOverlay.styles?.cropX ?? 0,
@@ -76,11 +76,7 @@ export const SelectionOutline: React.FC<{
             cropWidth: currentOverlay.styles?.cropWidth ?? 100,
             cropHeight: currentOverlay.styles?.cropHeight ?? 100,
           });
-        } else {
-          console.log("Crop already enabled");
         }
-      } else {
-        console.log("Not a croppable overlay type");
       }
     },
     [overlay, handleCropChange],
@@ -120,7 +116,6 @@ export const SelectionOutline: React.FC<{
       touchAction: "none",
       zIndex,
       pointerEvents: "all",
-      // hovered || isDragging ? "all" : isSelected ? "none" : "all",
       cursor: "pointer",
     };
   }, [overlay, hovered, isDragging, isSelected, scaledBorder]);
@@ -192,6 +187,7 @@ export const SelectionOutline: React.FC<{
   const onPointerDown = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
+      e.preventDefault(); // Prevent text selection during drag
       if (e.button !== 0) {
         return;
       }

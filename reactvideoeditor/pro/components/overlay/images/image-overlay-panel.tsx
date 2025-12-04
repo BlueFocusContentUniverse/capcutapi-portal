@@ -1,18 +1,22 @@
-import { useState, useEffect } from "react";
-import { useEditorContext } from "../../../contexts/editor-context";
-import { useTimelinePositioning } from "../../../hooks/use-timeline-positioning";
-import { useAspectRatio } from "../../../hooks/use-aspect-ratio";
+import { useEffect, useState } from "react";
 
-import { ImageOverlay, Overlay, OverlayType } from "../../../types";
-import { ImageDetails } from "./image-details";
+import {
+  DEFAULT_IMAGE_DURATION_FRAMES,
+  IMAGE_DURATION_PERCENTAGE,
+} from "../../../../constants";
+import { useEditorContext } from "../../../contexts/editor-context";
 import { useMediaAdaptors } from "../../../contexts/media-adaptor-context";
+import { useAspectRatio } from "../../../hooks/use-aspect-ratio";
+import { useImageReplacement } from "../../../hooks/use-image-replacement";
+import { useTimelinePositioning } from "../../../hooks/use-timeline-positioning";
+import { ImageOverlay, Overlay, OverlayType } from "../../../types";
 import { StandardImage } from "../../../types/media-adaptors";
-import { MediaOverlayPanel } from "../shared/media-overlay-panel";
 import {
   calculateIntelligentAssetSize,
   getAssetDimensions,
 } from "../../../utils/asset-sizing";
-import { useImageReplacement } from "../../../hooks/use-image-replacement";
+import { MediaOverlayPanel } from "../shared/media-overlay-panel";
+import { ImageDetails } from "./image-details";
 
 /**
  * Type for images with source attribution
@@ -58,6 +62,7 @@ export const ImageOverlayPanel: React.FC = () => {
     currentFrame,
     setOverlays,
     setSelectedOverlayId,
+    durationInFrames,
   } = useEditorContext();
   const { addAtPlayhead } = useTimelinePositioning();
   const { getAspectRatioDimensions } = useAspectRatio();
@@ -136,12 +141,19 @@ export const ImageOverlayPanel: React.FC = () => {
       );
 
       // Create the new overlay without an ID (addOverlay will generate it)
+      // Use a percentage of composition duration for smart image length when there are existing overlays,
+      // otherwise default to DEFAULT_IMAGE_DURATION_FRAMES
+      const smartDuration =
+        overlays.length > 0
+          ? Math.round(durationInFrames * IMAGE_DURATION_PERCENTAGE)
+          : DEFAULT_IMAGE_DURATION_FRAMES;
+
       const newOverlay = {
         left: 0,
         top: 0,
         width,
         height,
-        durationInFrames: 200,
+        durationInFrames: smartDuration,
         from,
         rotation: 0,
         row,

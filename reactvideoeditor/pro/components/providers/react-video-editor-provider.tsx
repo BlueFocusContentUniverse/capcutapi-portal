@@ -1,4 +1,4 @@
-import type { PlayerRef } from "@remotion/player";
+import { PlayerRef } from "@remotion/player";
 import React from "react";
 
 import { LocalMediaProvider } from "../../contexts/local-media-context";
@@ -18,6 +18,7 @@ export interface ReactVideoEditorProviderProps {
   projectId: string;
   defaultOverlays?: Overlay[];
   defaultAspectRatio?: AspectRatio;
+  defaultBackgroundColor?: string;
   autoSaveInterval?: number;
   fps?: number;
   renderer: VideoRenderer;
@@ -30,7 +31,7 @@ export interface ReactVideoEditorProviderProps {
   isLoadingProject?: boolean; // Whether the project from URL is still loading
 
   // Player Configuration
-  playerRef?: React.RefObject<PlayerRef | undefined>; // External playerRef for manual control
+  playerRef?: React.RefObject<PlayerRef>; // External playerRef for manual control
 
   // API Configuration
   baseUrl?: string;
@@ -87,6 +88,7 @@ export const ReactVideoEditorProvider: React.FC<
   projectId,
   defaultOverlays = [],
   defaultAspectRatio,
+  defaultBackgroundColor,
   autoSaveInterval = 10000,
   fps = 30,
   renderer,
@@ -160,6 +162,7 @@ export const ReactVideoEditorProvider: React.FC<
               projectId={projectId}
               defaultOverlays={defaultOverlays}
               defaultAspectRatio={defaultAspectRatio}
+              defaultBackgroundColor={defaultBackgroundColor}
               autoSaveInterval={autoSaveInterval}
               fps={fps}
               isLoadingProject={isLoadingProject}

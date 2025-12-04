@@ -1,4 +1,4 @@
-import { Overlay, OverlayType } from "@/reactvideoeditor/pro/types";
+import { Overlay, OverlayType } from "../reactvideoeditor/pro/types";
 
 // Default and maximum number of rows to display in the editor
 export const INITIAL_ROWS = 5;
@@ -69,6 +69,25 @@ export const OVERLAY_COLORS = {
   SHAPE: "#6b7280", // gray
   DEFAULT: "#9ca3af", // gray
 } as const;
+
+/**
+ * Default duration for image overlays when added to an empty timeline
+ * Equivalent to approximately 6.67 seconds at 30fps
+ */
+export const DEFAULT_IMAGE_DURATION_FRAMES = 200;
+
+/**
+ * Percentage of composition duration to use for smart image duration
+ * When adding an image to a timeline with existing content, the image duration
+ * will be set to this percentage of the total composition duration (0.2 = 20% or 1/5th)
+ */
+export const IMAGE_DURATION_PERCENTAGE = 0.2;
+
+/**
+ * Minimum composition duration in seconds
+ * Used when calculating smart durations for empty timelines
+ */
+export const MINIMUM_COMPOSITION_DURATION_SECONDS = 1;
 
 export const DEFAULT_OVERLAYS: Overlay[] = [
   {
