@@ -3,7 +3,6 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { admin, emailOTP, username } from "better-auth/plugins";
-import { createAccessControl } from "better-auth/plugins/access";
 
 import { db } from "./drizzle/db";
 import {
@@ -14,36 +13,6 @@ import {
   verification,
 } from "./drizzle/schema/portal";
 import { sendOTPEmail } from "./lib/email";
-
-const superadminAc = createAccessControl({
-  user: [
-    "create",
-    "list",
-    "set-role",
-    "ban",
-    "impersonate",
-    "delete",
-    "set-password",
-    "get",
-    "update",
-  ],
-  session: ["list", "revoke", "delete"],
-});
-
-const superadminRole = superadminAc.newRole({
-  user: [
-    "create",
-    "list",
-    "set-role",
-    "ban",
-    "impersonate",
-    "delete",
-    "set-password",
-    "get",
-    "update",
-  ],
-  session: ["list", "revoke", "delete"],
-});
 
 export const auth = betterAuth({
   socialProviders: {
@@ -57,10 +26,7 @@ export const auth = betterAuth({
     passkey(),
     admin({
       defaultRole: "user",
-      adminRoles: ["admin", "superadmin"],
-      roles: {
-        superadmin: superadminRole,
-      },
+      adminRoles: ["admin"],
     }),
     emailOTP({
       otpLength: 6,

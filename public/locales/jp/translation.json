@@ -212,7 +212,14 @@
     "delete": "削除",
     "delete_confirm": "アーカイブ {{archive_id}} を削除してもよろしいですか？",
     "delete_success": "アーカイブが正常に削除されました",
-    "delete_error": "アーカイブの削除に失敗しました"
+    "delete_error": "アーカイブの削除に失敗しました",
+    "batch_delete": {
+      "button": "選択を削除 ({{count}})",
+      "confirm": "{{count}} 個のアーカイブを削除してもよろしいですか？",
+      "success": "{{count}} 個のアーカイブが正常に削除されました",
+      "error": "アーカイブの削除に失敗しました",
+      "no_selection": "削除するアーカイブを少なくとも1つ選択してください"
+    }
   },
   "pagination": {
     "prev": "前へ",
@@ -239,8 +246,8 @@
     "error_create_failed": "作成失敗",
     "error_fill_all_fields": "すべてのフィールドを入力してください",
     "error_password_too_short": "パスワードは最低6文字です",
-    "role_admin": "admin",
-    "role_superadmin": "superadmin",
+    "role_admin": "管理者",
+    "role_user": "ユーザー",
     "change_password": "パスワードを変更",
     "change_password_dialog_title": "ユーザーパスワードを変更",
     "change_password_dialog_description": "{{user}}のパスワードを変更",

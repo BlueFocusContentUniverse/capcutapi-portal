@@ -1,7 +1,8 @@
-import { Audio, useCurrentFrame, interpolate } from "remotion";
+import { Html5Audio, interpolate, useCurrentFrame } from "remotion";
+
+import { useEditorContext } from "../../../contexts/editor-context";
 import { SoundOverlay } from "../../../types";
 import { toAbsoluteUrl } from "../../general/url-helper";
-import { useEditorContext } from "../../../contexts/editor-context";
 
 interface SoundLayerContentProps {
   overlay: SoundOverlay;
@@ -91,9 +92,9 @@ export const SoundLayerContent: React.FC<SoundLayerContentProps> = ({
   const finalVolume = baseVolume * fadeMultiplier;
 
   return (
-    <Audio
+    <Html5Audio
       src={audioSrc}
-      startFrom={overlay.startFromSound || 0}
+      trimBefore={overlay.startFromSound || 0}
       volume={finalVolume}
     />
   );

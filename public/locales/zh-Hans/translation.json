@@ -212,7 +212,14 @@
     "delete": "删除",
     "delete_confirm": "您确定要删除归档 {{archive_id}} 吗？",
     "delete_success": "归档删除成功",
-    "delete_error": "删除归档失败"
+    "delete_error": "删除归档失败",
+    "batch_delete": {
+      "button": "删除已选 ({{count}})",
+      "confirm": "您确定要删除 {{count}} 个归档吗？",
+      "success": "成功删除 {{count}} 个归档",
+      "error": "删除归档失败",
+      "no_selection": "请至少选择一个归档进行删除"
+    }
   },
   "pagination": {
     "prev": "上一页",
@@ -239,8 +246,8 @@
     "error_create_failed": "创建失败",
     "error_fill_all_fields": "请填写所有字段",
     "error_password_too_short": "密码至少 6 位",
-    "role_admin": "admin",
-    "role_superadmin": "superadmin",
+    "role_admin": "管理员",
+    "role_user": "用户",
     "change_password": "修改密码",
     "change_password_dialog_title": "修改用户密码",
     "change_password_dialog_description": "修改 {{user}} 的密码",

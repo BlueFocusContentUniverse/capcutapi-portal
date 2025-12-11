@@ -28,7 +28,8 @@ export default async function DashboardPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  const isSuperadmin = session?.user?.email === "admin@example.com";
+
+  const isAdmin = session?.user?.role === "admin";
 
   // Fetch dashboard data
   const [draftCounts, videoTaskCounts] = await Promise.all([
@@ -58,7 +59,7 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {isSuperadmin && (
+        {isAdmin && (
           <Card className="hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center text-foreground">

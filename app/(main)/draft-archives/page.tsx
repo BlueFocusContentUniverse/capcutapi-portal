@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -34,6 +35,9 @@ export default function DraftArchivesPage() {
   const [archives, setArchives] = useState<Archive[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedArchives, setSelectedArchives] = useState<Set<string>>(
+    new Set(),
+  );
   const [pagination, setPagination] = useState({
     page: 1,
     page_size: 50,
@@ -74,6 +78,8 @@ export default function DraftArchivesPage() {
       if (result.success) {
         setArchives(result.output.archives);
         setPagination(result.output.pagination);
+        // Clear selections when data changes
+        setSelectedArchives(new Set());
       } else {
         setError(result.error || "Failed to fetch archives");
       }
@@ -116,6 +122,73 @@ export default function DraftArchivesPage() {
   // Handle pagination
   const handlePageChange = (newPage: number) => {
     updateFilters({ page: newPage.toString() });
+  };
+
+  // Handle select all
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedArchives(new Set(archives.map((a) => a.archive_id)));
+    } else {
+      setSelectedArchives(new Set());
+    }
+  };
+
+  // Handle individual checkbox toggle
+  const handleToggleSelect = (archiveId: string) => {
+    setSelectedArchives((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(archiveId)) {
+        newSet.delete(archiveId);
+      } else {
+        newSet.add(archiveId);
+      }
+      return newSet;
+    });
+  };
+
+  // Handle batch delete
+  const handleBatchDelete = async () => {
+    if (selectedArchives.size === 0) {
+      toast.error(t("draft_archives.batch_delete.no_selection"));
+      return;
+    }
+
+    const archiveIds = Array.from(selectedArchives);
+    if (
+      !confirm(
+        t("draft_archives.batch_delete.confirm", {
+          count: archiveIds.length,
+        }),
+      )
+    ) {
+      return;
+    }
+
+    try {
+      const response = await nextApi.post("draft_archives/batch_delete", {
+        json: { archive_ids: archiveIds },
+      });
+      const data = (await response.json()) as {
+        success: boolean;
+        error?: string;
+      };
+
+      if (data.success) {
+        toast.success(
+          t("draft_archives.batch_delete.success", {
+            count: archiveIds.length,
+          }),
+        );
+        setSelectedArchives(new Set());
+        // Refresh the list
+        fetchArchives();
+      } else {
+        toast.error(data.error || t("draft_archives.batch_delete.error"));
+      }
+    } catch (err) {
+      console.error("Error batch deleting archives:", err);
+      toast.error(t("draft_archives.batch_delete.error"));
+    }
   };
 
   // Handle delete
@@ -238,6 +311,15 @@ export default function DraftArchivesPage() {
             {t("draft_archives.clear_filters")}
           </Button>
         )}
+
+        {selectedArchives.size > 0 && (
+          <Button onClick={handleBatchDelete} variant="destructive" size="sm">
+            <Trash2 className="h-4 w-4 mr-2" />
+            {t("draft_archives.batch_delete.button", {
+              count: selectedArchives.size,
+            })}
+          </Button>
+        )}
       </div>
 
       {/* Error Display */}
@@ -256,6 +338,15 @@ export default function DraftArchivesPage() {
           <Table className="min-w-max">
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>
+                <TableHead className="w-[50px]">
+                  <Checkbox
+                    checked={
+                      archives.length > 0 &&
+                      selectedArchives.size === archives.length
+                    }
+                    onCheckedChange={handleSelectAll}
+                  />
+                </TableHead>
                 <TableHead className="w-[120px]">
                   {t("draft_archives.table.archive_id")}
                 </TableHead>
@@ -297,7 +388,7 @@ export default function DraftArchivesPage() {
             <TableBody>
               {archives.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={13} className="text-center py-8">
+                  <TableCell colSpan={14} className="text-center py-8">
                     <div className="text-muted-foreground">
                       {draftIdFilter || userIdFilter
                         ? t("draft_archives.no_archives_filtered")
@@ -308,6 +399,14 @@ export default function DraftArchivesPage() {
               ) : (
                 archives.map((archive) => (
                   <TableRow key={archive.archive_id}>
+                    <TableCell>
+                      <Checkbox
+                        checked={selectedArchives.has(archive.archive_id)}
+                        onCheckedChange={() =>
+                          handleToggleSelect(archive.archive_id)
+                        }
+                      />
+                    </TableCell>
                     <TableCell className="font-mono text-xs">
                       {archive.archive_id.slice(0, 8)}...
                     </TableCell>

@@ -31,7 +31,7 @@ type AdminUser = {
   id: string;
   name: string | null;
   email: string | null;
-  role: "admin" | "superadmin";
+  role: "admin";
 };
 
 async function createAdminUser(
@@ -75,7 +75,7 @@ async function createAdminUser(
 export function AdminUsersManagement() {
   const { t } = useTranslation();
   const { data: session } = useSession();
-  const isSuperadmin = session?.user?.role === "superadmin";
+  const isAdmin = session?.user?.role === "admin";
   const [items, setItems] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -316,13 +316,11 @@ export function AdminUsersManagement() {
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Badge
-                          variant={
-                            u.role === "superadmin" ? "default" : "secondary"
-                          }
+                          variant={u.role === "admin" ? "default" : "secondary"}
                         >
                           {t(`admin_users.role_${u.role}`)}
                         </Badge>
-                        {isSuperadmin && (
+                        {isAdmin && (
                           <Button
                             variant="outline"
                             size="sm"

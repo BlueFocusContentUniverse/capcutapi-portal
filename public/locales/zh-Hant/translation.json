@@ -196,7 +196,14 @@
     "delete": "刪除",
     "delete_confirm": "您確定要刪除封存 {{archive_id}} 嗎？",
     "delete_success": "封存刪除成功",
-    "delete_error": "刪除封存失敗"
+    "delete_error": "刪除封存失敗",
+    "batch_delete": {
+      "button": "刪除已選 ({{count}})",
+      "confirm": "您確定要刪除 {{count}} 個封存嗎？",
+      "success": "成功刪除 {{count}} 個封存",
+      "error": "刪除封存失敗",
+      "no_selection": "請至少選擇一個封存進行刪除"
+    }
   },
   "pagination": {
     "prev": "上一頁",
@@ -223,8 +230,8 @@
     "error_create_failed": "建立失敗",
     "error_fill_all_fields": "請填寫所有欄位",
     "error_password_too_short": "密碼至少 6 位",
-    "role_admin": "admin",
-    "role_superadmin": "superadmin",
+    "role_admin": "管理員",
+    "role_user": "用戶",
     "change_password": "修改密碼",
     "change_password_dialog_title": "修改用戶密碼",
     "change_password_dialog_description": "修改 {{user}} 的密碼",

@@ -1,11 +1,10 @@
 import React from "react";
-import { EditorHeader, EditorHeaderProps } from "./editor-header";
 
 import { useEditorContext } from "../../contexts/editor-context";
-
-import { VideoPlayer } from "./video-player";
-import { TimelineSection } from "./timeline-section";
 import { MobileNavBar } from "../shared/mobile-nav-bar";
+import { EditorHeader, EditorHeaderProps } from "./editor-header";
+import { TimelineSection } from "./timeline-section";
+import { VideoPlayer } from "./video-player";
 
 export interface EditorProps extends EditorHeaderProps {
   /** Whether to hide the theme toggle dropdown */
