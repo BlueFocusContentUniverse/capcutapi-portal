@@ -1,18 +1,19 @@
+import { useCallback, useEffect, useRef } from "react";
 import {
-  OffthreadVideo,
-  useCurrentFrame,
-  delayRender,
   continueRender,
+  delayRender,
+  Html5Video,
+  useCurrentFrame,
 } from "remotion";
-import { ClipOverlay } from "../../../types";
+
+import { FPS } from "../../../../constants";
 import {
   animationTemplates,
   getAnimationKey,
 } from "../../../adaptors/default-animation-adaptors";
-import { toAbsoluteUrl } from "../../general/url-helper";
-import { useEffect, useRef, useCallback } from "react";
 import { useEditorContext } from "../../../contexts/editor-context";
-import { FPS } from "../../../../constants";
+import { ClipOverlay } from "../../../types";
+import { toAbsoluteUrl } from "../../general/url-helper";
 import { calculateObjectFitDimensions } from "../helpers/object-fit-calculator";
 
 /**
@@ -79,7 +80,6 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
   // Otherwise use the toAbsoluteUrl helper for relative URLs
   else if (overlay.src.startsWith("/")) {
     videoSrc = toAbsoluteUrl(overlay.src, resolvedBaseUrl);
-  } else {
   }
 
   useEffect(() => {
@@ -304,9 +304,9 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
       <div style={containerStyle}>
         <div style={{ position: "relative", width: "100%", height: "100%" }}>
           {/* Hidden video that feeds frames to canvas */}
-          <OffthreadVideo
+          <Html5Video
             src={videoSrc}
-            startFrom={startFromFrames}
+            trimBefore={startFromFrames}
             style={{
               ...videoStyle,
               position: "absolute",
@@ -316,7 +316,6 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
             }}
             volume={overlay.styles.volume ?? 1}
             playbackRate={overlay.speed ?? 1}
-            onVideoFrame={onVideoFrame}
           />
           {/* Canvas that displays processed video with greenscreen removed */}
           <canvas
@@ -338,9 +337,9 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
   // Normal rendering without greenscreen removal
   return (
     <div style={containerStyle}>
-      <OffthreadVideo
+      <Html5Video
         src={videoSrc}
-        startFrom={startFromFrames}
+        trimBefore={startFromFrames}
         style={videoStyle}
         volume={overlay.styles.volume ?? 1}
         playbackRate={overlay.speed ?? 1}

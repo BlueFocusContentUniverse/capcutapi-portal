@@ -2,8 +2,6 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
-import { db } from "@/drizzle/db";
-import { user } from "@/drizzle/schema/portal";
 
 export async function GET(request: NextRequest) {
   try {
@@ -14,7 +12,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (session.user.email !== "super@admin.com") {
+    if (session.user.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -25,16 +23,11 @@ export async function GET(request: NextRequest) {
       headers: request.headers,
     });
 
-    const superAdmins = (process.env.SUPERADMINS ?? "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
-
     const result = rows.users?.map((u) => ({
       id: u.id,
       name: u.name,
       email: u.email,
-      role: u.email && superAdmins.includes(u.email) ? "superadmin" : "admin",
+      role: u.role,
     }));
 
     return NextResponse.json(result, { status: 200 });
@@ -56,8 +49,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Allow only superadmin role
-    if (session.user.email !== "super@admin.com") {
+    if (session.user.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -110,7 +102,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (session.user.email !== "super@admin.com") {
+    if (session.user.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -150,8 +142,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Allow only superadmin role
-    if (session.user.email !== "super@admin.com") {
+    if (session.user.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

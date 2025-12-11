@@ -212,7 +212,14 @@
     "delete": "Delete",
     "delete_confirm": "Are you sure you want to delete archive {{archive_id}}?",
     "delete_success": "Archive deleted successfully",
-    "delete_error": "Failed to delete archive"
+    "delete_error": "Failed to delete archive",
+    "batch_delete": {
+      "button": "Delete Selected ({{count}})",
+      "confirm": "Are you sure you want to delete {{count}} archive(s)?",
+      "success": "Successfully deleted {{count}} archive(s)",
+      "error": "Failed to delete archives",
+      "no_selection": "Please select at least one archive to delete"
+    }
   },
   "pagination": {
     "prev": "Prev",
@@ -239,8 +246,8 @@
     "error_create_failed": "Create failed",
     "error_fill_all_fields": "Please fill all fields",
     "error_password_too_short": "Password must be at least 6 characters",
-    "role_admin": "admin",
-    "role_superadmin": "superadmin",
+    "role_admin": "Admin",
+    "role_user": "User",
     "change_password": "Change Password",
     "change_password_dialog_title": "Change User Password",
     "change_password_dialog_description": "Change password for {{user}}",

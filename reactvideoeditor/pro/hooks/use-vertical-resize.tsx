@@ -18,6 +18,8 @@ interface UseVerticalResizeReturn {
   isResizing: boolean;
   /** Handler for mouse down on the resize handle */
   handleMouseDown: (e: React.MouseEvent) => void;
+  /** Handler for touch start on the resize handle */
+  handleTouchStart: (e: React.TouchEvent) => void;
   /** Reset the height to initial value */
   resetHeight: () => void;
   /** Programmatically set the height (will be clamped to min/max) */
@@ -95,7 +97,32 @@ export const useVerticalResize = (
     [isResizing, minHeight, maxHeight],
   );
 
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!isResizing) return;
+
+      // Get the first touch point
+      const touch = e.touches[0];
+      if (!touch) return;
+
+      // Calculate the new height based on touch movement
+      // Since we're dragging up/down, we need to invert the delta
+      const deltaY = startYRef.current - touch.clientY;
+      const newHeight = startHeightRef.current + deltaY;
+
+      // Clamp the height between min and max
+      const clampedHeight = Math.max(minHeight, Math.min(maxHeight, newHeight));
+
+      setBottomHeight(clampedHeight);
+    },
+    [isResizing, minHeight, maxHeight],
+  );
+
   const handleMouseUp = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
     setIsResizing(false);
   }, []);
 
@@ -104,6 +131,19 @@ export const useVerticalResize = (
       e.preventDefault();
       setIsResizing(true);
       startYRef.current = e.clientY;
+      startHeightRef.current = bottomHeight;
+    },
+    [bottomHeight],
+  );
+
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      if (!touch) return;
+
+      setIsResizing(true);
+      startYRef.current = touch.clientY;
       startHeightRef.current = bottomHeight;
     },
     [bottomHeight],
@@ -121,11 +161,15 @@ export const useVerticalResize = (
     [minHeight, maxHeight],
   );
 
-  // Add and remove mouse event listeners
+  // Add and remove mouse and touch event listeners
   useEffect(() => {
     if (isResizing) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener("touchend", handleTouchEnd);
 
       // Prevent text selection while dragging
       document.body.style.userSelect = "none";
@@ -134,11 +178,19 @@ export const useVerticalResize = (
       return () => {
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
         document.body.style.userSelect = "";
         document.body.style.cursor = "";
       };
     }
-  }, [isResizing, handleMouseMove, handleMouseUp]);
+  }, [
+    isResizing,
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchMove,
+    handleTouchEnd,
+  ]);
 
   /**
    * Clamp the height if maxHeight changes dynamically and current height exceeds it
@@ -156,6 +208,7 @@ export const useVerticalResize = (
     bottomHeight,
     isResizing,
     handleMouseDown,
+    handleTouchStart,
     resetHeight,
     setHeight,
   };

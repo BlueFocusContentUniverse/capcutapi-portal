@@ -1,12 +1,12 @@
 import React from "react";
-import { useCurrentScale } from "remotion";
-import { ResizeHandle } from "./resize-handle";
-import { Overlay, OverlayType, ClipOverlay, ImageOverlay } from "../../types";
-import { RotateHandle } from "./rotate-handle";
-import { CropOverlay } from "./crop-overlay";
-import { getEffectiveCropDimensions } from "../../utils/crop-utils";
+
 import { useAlignmentGuides } from "../../hooks/use-alignment-guides";
 import { useCropHandling } from "../../hooks/use-crop-handling";
+import { ClipOverlay, ImageOverlay, Overlay, OverlayType } from "../../types";
+import { getEffectiveCropDimensions } from "../../utils/crop-utils";
+import { CropOverlay } from "./crop-overlay";
+import { ResizeHandle } from "./resize-handle";
+import { RotateHandle } from "./rotate-handle";
 
 /**
  * SelectionHandles renders interactive handles (resize, rotate, crop) for the selected overlay.
@@ -29,8 +29,6 @@ export const SelectionHandles: React.FC<{
   alignmentGuides: ReturnType<typeof useAlignmentGuides>;
   allOverlays: Overlay[];
 }> = ({ overlay, changeOverlay, alignmentGuides, allOverlays }) => {
-  const scale = useCurrentScale();
-
   // Use shared crop handling hook
   const handleCropChange = useCropHandling(overlay, changeOverlay);
 
@@ -84,11 +82,7 @@ export const SelectionHandles: React.FC<{
         alignmentGuides={alignmentGuides}
         allOverlays={allOverlays}
       />
-      <RotateHandle
-        overlay={overlay}
-        setOverlay={changeOverlay}
-        scale={scale}
-      />
+      <RotateHandle overlay={overlay} setOverlay={changeOverlay} />
 
       {/* Crop overlay for video and image overlays when crop is enabled */}
       {overlay.type === OverlayType.VIDEO &&

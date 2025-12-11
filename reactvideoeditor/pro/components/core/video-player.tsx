@@ -178,7 +178,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     ],
   );
 
-  // Memoize inputProps for player-only mode (guides disabled)
+  // Memoize inputProps for player-only mode (guides disabled).
   const playerOnlyInputProps = useMemo(
     () => ({
       overlays,
@@ -215,7 +215,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       {!isPlayerOnly ? (
         /* Editor mode: Grid background container */
         <div
-          className="z-0 video-container relative w-full h-full
+          className="z-0 video-container relative w-full h-full select-none
           bg-muted
           bg-[linear-gradient(to_right,#80808015_1px,transparent_1px),linear-gradient(to_bottom,#80808015_1px,transparent_1px)] 
           dark:bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)]

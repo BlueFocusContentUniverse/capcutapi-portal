@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { ImageOverlay, GreenscreenConfig } from "../../../types";
 import { Sparkles } from "lucide-react";
+import React, { useState } from "react";
+
 import { useEditorContext } from "../../../contexts/editor-context";
+import { GreenscreenConfig, ImageOverlay } from "../../../types";
 import { Slider } from "../../ui/slider";
 import { Switch } from "../../ui/switch";
 

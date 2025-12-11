@@ -1,11 +1,12 @@
+import { PaintBucket, Settings, Sparkles } from "lucide-react";
 import React from "react";
+
 import { ImageOverlay } from "../../../types";
-import { ImageStylePanel } from "./image-style-panel";
-import { ImageSettingsPanel } from "./image-settings-panel";
-import { ImagePreview } from "./image-preview";
-import { ImageAIPanel } from "./image-ai-panel";
 import { UnifiedTabs } from "../shared/unified-tabs";
-import { Settings, PaintBucket, Sparkles } from "lucide-react";
+import { ImageAIPanel } from "./image-ai-panel";
+import { ImagePreview } from "./image-preview";
+import { ImageSettingsPanel } from "./image-settings-panel";
+import { ImageStylePanel } from "./image-style-panel";
 
 /**
  * Props for the ImageDetails component

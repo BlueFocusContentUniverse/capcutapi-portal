@@ -142,7 +142,7 @@ export function AdminSidebar() {
                   </Link>
                 );
               })}
-              {session?.user?.email === "super@admin.com" && (
+              {session?.user?.role === "admin" && (
                 <Link
                   href="/admin"
                   className={cn(

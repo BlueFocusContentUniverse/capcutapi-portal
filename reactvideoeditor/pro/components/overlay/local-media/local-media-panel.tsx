@@ -1,12 +1,18 @@
 import { useCallback } from "react";
+
+import {
+  DEFAULT_IMAGE_DURATION_FRAMES,
+  IMAGE_DURATION_PERCENTAGE,
+} from "@/reactvideoeditor/constants";
+
 import { useEditorContext } from "../../../contexts/editor-context";
-import { useTimelinePositioning } from "../../../hooks/use-timeline-positioning";
 import { useAspectRatio } from "../../../hooks/use-aspect-ratio";
+import { useTimelinePositioning } from "../../../hooks/use-timeline-positioning";
+import { Overlay, OverlayType } from "../../../types";
 import {
   calculateIntelligentAssetSize,
   getAssetDimensions,
 } from "../../../utils/asset-sizing";
-import { Overlay, OverlayType } from "../../../types";
 import { LocalMediaGallery } from "./local-media-gallery";
 
 /**
@@ -18,8 +24,13 @@ import { LocalMediaGallery } from "./local-media-gallery";
  * 3. Add uploaded media to the timeline
  */
 export const LocalMediaPanel: React.FC = () => {
-  const { overlays, currentFrame, setOverlays, setSelectedOverlayId } =
-    useEditorContext();
+  const {
+    overlays,
+    currentFrame,
+    setOverlays,
+    setSelectedOverlayId,
+    durationInFrames,
+  } = useEditorContext();
   const { addAtPlayhead } = useTimelinePositioning();
   const { getAspectRatioDimensions } = useAspectRatio();
 
@@ -93,13 +104,20 @@ export const LocalMediaPanel: React.FC = () => {
           },
         };
       } else if (file.type === "image") {
+        // Use a percentage of composition duration for smart image length when there are existing overlays,
+        // otherwise default to DEFAULT_IMAGE_DURATION_FRAMES
+        const smartDuration =
+          overlays.length > 0
+            ? Math.round(durationInFrames * IMAGE_DURATION_PERCENTAGE)
+            : DEFAULT_IMAGE_DURATION_FRAMES;
+
         newOverlay = {
           id: newId,
           left: 0,
           top: 0,
           width,
           height,
-          durationInFrames: 200,
+          durationInFrames: smartDuration,
           from,
           rotation: 0,
           row,

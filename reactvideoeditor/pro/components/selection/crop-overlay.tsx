@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { useCurrentScale } from "remotion";
+
 import { ClipOverlay, ImageOverlay } from "../../types";
 import {
   generateClipPath,
@@ -69,6 +70,7 @@ export const CropOverlay: React.FC<{
     (type: "left" | "right" | "top" | "bottom") => {
       return (e: React.MouseEvent) => {
         e.stopPropagation();
+        e.preventDefault(); // Prevent text selection during drag
         if (e.button !== 0) return;
 
         const initialX = e.clientX;
