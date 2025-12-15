@@ -15,7 +15,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: uswccr.ccs.tencentyun.com
   # github.repository as <account>/<repo>
-  IMAGE_NAME: jyadmin-portal
+  IMAGE_NAME: jyapi/jyadmin-portal
 
 jobs:
   build-portal:
@@ -61,13 +61,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5 # v5.0.0
         with:
-          images: ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/jyapi-portal
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 
       - name: Materialize env file secret
-        run: printf '%s' "${{ secrets.ENV_FILE_STAGE }}" > /tmp/.env.stage
+        run: printf '%s' "${{ secrets.ENV_FILE }}" > /tmp/.env
         shell: bash
 
       # Build and push Docker image with Buildx (don't push on PR)
@@ -83,6 +83,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=api
           cache-to: type=gha,mode=max,scope=api
+          secret-files: |
+            env_file=/tmp/.env
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker

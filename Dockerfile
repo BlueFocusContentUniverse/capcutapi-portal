@@ -43,11 +43,13 @@ ENV NEXT_TELEMETRY_DISABLE=1
 # Set the working directory inside the container
 WORKDIR /app
 
+# mount env file from secret
+RUN --mount=type=secret,id=env_file cat /run/secrets/env_file > /app/.env
+
 # Copy only necessary files from the builder stage to keep the image minimal
 COPY --from=builder /app/.next/standalone ./      
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-COPY .env.prod ./.env
 
 # Expose port to allow HTTP traffic
 EXPOSE $PORT
