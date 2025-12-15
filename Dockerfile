@@ -31,6 +31,12 @@ RUN npm run build
 # Use the same Node.js version for the final production container
 FROM node:lts-slim AS runner
 
+# Set the working directory inside the container
+WORKDIR /app
+
+# mount env file from secret
+RUN --mount=type=secret,id=env_file cat /run/secrets/env_file > /app/.env
+
 # Use a built-in non-root user for security best practices
 USER node
 
@@ -39,12 +45,6 @@ ENV PORT=3020
 
 # Disable Next.js telemetry during runtime
 ENV NEXT_TELEMETRY_DISABLE=1
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# mount env file from secret
-RUN --mount=type=secret,id=env_file cat /run/secrets/env_file > /app/.env
 
 # Copy only necessary files from the builder stage to keep the image minimal
 COPY --from=builder /app/.next/standalone ./      
