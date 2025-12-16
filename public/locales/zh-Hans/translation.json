@@ -29,7 +29,8 @@
     "archive_draft": "归档草稿",
     "archiving": "归档中...",
     "view_draft_data": "查看草稿数据",
-    "search": "搜索"
+    "search": "搜索",
+    "close": "关闭"
   },
   "login": {
     "title": "登录",
@@ -135,6 +136,11 @@
       "select_draft_file": "选择草稿文件",
       "archive_name": "归档名称"
     },
+    "filters": {
+      "search": "草稿 ID / 名称",
+      "start_date": "开始日期",
+      "end_date": "结束日期"
+    },
     "placeholders": {
       "draft_folder": "选择草稿文件夹",
       "search_placeholder": "按草稿 ID 或名称搜索",
@@ -167,6 +173,12 @@
       "updated": "更新时间",
       "operations": "操作"
     },
+    "filters": {
+      "draft_id": "草稿 ID",
+      "start_date": "开始日期",
+      "end_date": "结束日期",
+      "render_status": "渲染状态"
+    },
     "search_placeholder": "按草稿 ID 或视频名称搜索"
   },
   "draft_archives": {
@@ -179,7 +191,9 @@
     "no_archives_filtered": "未找到符合筛选条件的归档",
     "clear_filters": "清除筛选",
     "filters": {
+      "draft_id_label": "草稿 ID",
       "draft_id_placeholder": "按草稿 ID 筛选",
+      "user_id_label": "用户 ID",
       "user_id_placeholder": "按用户 ID 筛选"
     },
     "table": {

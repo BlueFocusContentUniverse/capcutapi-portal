@@ -12,8 +12,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getVideoTasksPaginated } from "@/drizzle/queries";
 import { serverTranslation } from "@/lib/i18n/server";
+
+import { fetchVideoTasksFromApi } from "./actions";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await serverTranslation();
@@ -28,6 +29,7 @@ type SearchParams = Promise<{
   search?: string;
   startDate?: string;
   endDate?: string;
+  render_status?: string;
 }>;
 
 export default async function VideoTasksPage({
@@ -39,18 +41,25 @@ export default async function VideoTasksPage({
   const params = await searchParams;
   const page = Math.max(1, Number(params?.page ?? 1));
   const pageSize = Math.max(1, Math.min(100, Number(params?.pageSize ?? 50)));
-  const search = params?.search;
+  const draftId = params?.search; // reuse existing search box as draft_id filter
+  const renderStatus = params?.render_status;
   const startDate = params?.startDate;
   const endDate = params?.endDate;
 
-  const { items, total } = await getVideoTasksPaginated(
+  const {
+    items,
+    total,
+    totalPages: apiTotalPages,
+  } = await fetchVideoTasksFromApi({
     page,
     pageSize,
-    search,
+    draftId,
+    renderStatus,
     startDate,
     endDate,
-  );
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  });
+  const totalPages =
+    apiTotalPages ?? Math.max(1, Math.ceil((total || 0) / pageSize));
 
   const prevPage = Math.max(1, page - 1);
   const nextPage = Math.min(totalPages, page + 1);
@@ -61,25 +70,47 @@ export default async function VideoTasksPage({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <form action="" className="flex items-center gap-2">
-            <Input
-              name="search"
-              defaultValue={search}
-              placeholder={t("video_tasks.search_placeholder")}
-              className="w-48"
-            />
-            <Input
-              name="startDate"
-              type="date"
-              defaultValue={startDate}
-              className="w-36"
-            />
-            <Input
-              name="endDate"
-              type="date"
-              defaultValue={endDate}
-              className="w-36"
-            />
-            <Button type="submit" variant="outline">
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("video_tasks.filters.draft_id")}</span>
+              <Input
+                id="draftId"
+                name="search"
+                defaultValue={draftId}
+                placeholder={t("video_tasks.search_placeholder")}
+                className="w-48"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("video_tasks.filters.start_date")}</span>
+              <Input
+                id="startDate"
+                name="startDate"
+                type="date"
+                defaultValue={startDate}
+                className="w-36"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("video_tasks.filters.end_date")}</span>
+              <Input
+                id="endDate"
+                name="endDate"
+                type="date"
+                defaultValue={endDate}
+                className="w-36"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("video_tasks.filters.render_status")}</span>
+              <Input
+                id="renderStatus"
+                name="render_status"
+                defaultValue={renderStatus}
+                placeholder={t("video_tasks.filters.render_status")}
+                className="w-36"
+              />
+            </label>
+            <Button type="submit" variant="outline" className="self-end">
               {t("actions.search")}
             </Button>
           </form>
@@ -200,9 +231,10 @@ export default async function VideoTasksPage({
                 query: {
                   page: String(prevPage),
                   pageSize: String(pageSize),
-                  ...(search && { search }),
+                  ...(draftId && { search: draftId }),
                   ...(startDate && { startDate }),
                   ...(endDate && { endDate }),
+                  ...(renderStatus && { render_status: renderStatus }),
                 },
               }}
             >
@@ -216,9 +248,10 @@ export default async function VideoTasksPage({
                 query: {
                   page: String(nextPage),
                   pageSize: String(pageSize),
-                  ...(search && { search }),
+                  ...(draftId && { search: draftId }),
                   ...(startDate && { startDate }),
                   ...(endDate && { endDate }),
+                  ...(renderStatus && { render_status: renderStatus }),
                 },
               }}
             >

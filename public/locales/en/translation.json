@@ -29,7 +29,8 @@
     "archive_draft": "Archive draft",
     "archiving": "Archiving...",
     "view_draft_data": "View Draft Data",
-    "search": "Search"
+    "search": "Search",
+    "close": "Close"
   },
   "login": {
     "title": "Login",
@@ -135,6 +136,11 @@
       "select_draft_file": "Select Draft File",
       "archive_name": "Archive Name"
     },
+    "filters": {
+      "search": "Draft ID / Name",
+      "start_date": "Start date",
+      "end_date": "End date"
+    },
     "placeholders": {
       "draft_folder": "Select draft folder",
       "search_placeholder": "Search by draft ID or name",
@@ -167,6 +173,12 @@
       "updated": "Updated",
       "operations": "Operations"
     },
+    "filters": {
+      "draft_id": "Draft ID",
+      "start_date": "Start date",
+      "end_date": "End date",
+      "render_status": "Render status"
+    },
     "search_placeholder": "Search by draft ID or video name"
   },
   "draft_archives": {
@@ -179,7 +191,9 @@
     "no_archives_filtered": "No archives found matching your filters",
     "clear_filters": "Clear Filters",
     "filters": {
+      "draft_id_label": "Draft ID",
       "draft_id_placeholder": "Filter by Draft ID",
+      "user_id_label": "User ID",
       "user_id_placeholder": "Filter by User ID"
     },
     "table": {

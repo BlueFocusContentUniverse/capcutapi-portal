@@ -29,7 +29,8 @@
     "archive_draft": "ドラフトをアーカイブ",
     "archiving": "アーカイブ中...",
     "view_draft_data": "ドラフトデータを表示",
-    "search": "検索"
+    "search": "検索",
+    "close": "閉じる"
   },
   "login": {
     "title": "ログイン",
@@ -135,6 +136,11 @@
       "select_draft_file": "ドラフトファイルを選択",
       "archive_name": "アーカイブ名"
     },
+    "filters": {
+      "search": "ドラフトID / 名称",
+      "start_date": "開始日",
+      "end_date": "終了日"
+    },
     "placeholders": {
       "draft_folder": "ドラフトフォルダーを選択",
       "search_placeholder": "ドラフトIDまたは名前で検索",
@@ -167,6 +173,12 @@
       "updated": "更新日時",
       "operations": "操作"
     },
+    "filters": {
+      "draft_id": "ドラフトID",
+      "start_date": "開始日",
+      "end_date": "終了日",
+      "render_status": "レンダリング状態"
+    },
     "search_placeholder": "ドラフトIDまたは動画名で検索"
   },
   "draft_archives": {
@@ -179,7 +191,9 @@
     "no_archives_filtered": "フィルター条件に一致するアーカイブが見つかりません",
     "clear_filters": "フィルターをクリア",
     "filters": {
+      "draft_id_label": "ドラフトID",
       "draft_id_placeholder": "ドラフトIDでフィルター",
+      "user_id_label": "ユーザーID",
       "user_id_placeholder": "ユーザーIDでフィルター"
     },
     "table": {
