@@ -102,13 +102,29 @@ export default async function VideoTasksPage({
             </label>
             <label className="flex flex-col gap-1 text-xs text-muted-foreground">
               <span>{t("video_tasks.filters.render_status")}</span>
-              <Input
+              <select
                 id="renderStatus"
                 name="render_status"
-                defaultValue={renderStatus}
-                placeholder={t("video_tasks.filters.render_status")}
-                className="w-36"
-              />
+                defaultValue={renderStatus ?? ""}
+                className="h-9 w-36 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                <option value="">
+                  {t("video_tasks.filters.all_statuses")}
+                </option>
+                <option value="initialized">
+                  {t("video_tasks.status.initialized")}
+                </option>
+                <option value="pending">
+                  {t("video_tasks.status.pending")}
+                </option>
+                <option value="processing">
+                  {t("video_tasks.status.processing")}
+                </option>
+                <option value="completed">
+                  {t("video_tasks.status.completed")}
+                </option>
+                <option value="failed">{t("video_tasks.status.failed")}</option>
+              </select>
             </label>
             <Button type="submit" variant="outline" className="self-end">
               {t("actions.search")}
@@ -162,7 +178,11 @@ export default async function VideoTasksPage({
                   >
                     {task.videoName ?? "-"}
                   </TableCell>
-                  <TableCell>{task.renderStatus}</TableCell>
+                  <TableCell>
+                    {task.renderStatus
+                      ? t(`video_tasks.status.${task.renderStatus}`)
+                      : "-"}
+                  </TableCell>
                   <TableCell
                     className="max-w-[24rem] truncate"
                     title={task.message ?? undefined}

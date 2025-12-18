@@ -177,7 +177,15 @@
       "draft_id": "ドラフトID",
       "start_date": "開始日",
       "end_date": "終了日",
-      "render_status": "レンダリング状態"
+      "render_status": "レンダリング状態",
+      "all_statuses": "すべてのステータス"
+    },
+    "status": {
+      "initialized": "初期化済み",
+      "pending": "待機中",
+      "processing": "処理中",
+      "completed": "完了",
+      "failed": "失敗"
     },
     "search_placeholder": "ドラフトIDまたは動画名で検索"
   },

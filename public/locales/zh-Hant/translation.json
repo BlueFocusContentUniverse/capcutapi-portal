@@ -161,7 +161,15 @@
       "draft_id": "草稿 ID",
       "start_date": "開始日期",
       "end_date": "結束日期",
-      "render_status": "渲染狀態"
+      "render_status": "渲染狀態",
+      "all_statuses": "全部狀態"
+    },
+    "status": {
+      "initialized": "已初始化",
+      "pending": "等待中",
+      "processing": "處理中",
+      "completed": "已完成",
+      "failed": "失敗"
     },
     "search_placeholder": "搜尋草稿 ID/影片名稱"
   },

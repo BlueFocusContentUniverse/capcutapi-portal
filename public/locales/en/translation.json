@@ -177,7 +177,15 @@
       "draft_id": "Draft ID",
       "start_date": "Start date",
       "end_date": "End date",
-      "render_status": "Render status"
+      "render_status": "Render status",
+      "all_statuses": "All statuses"
+    },
+    "status": {
+      "initialized": "Initialized",
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "failed": "Failed"
     },
     "search_placeholder": "Search by draft ID or video name"
   },
