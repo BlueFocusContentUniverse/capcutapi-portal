@@ -100,6 +100,16 @@ export default async function DraftsPage({
               {t("actions.search")}
             </Button>
           </form>
+          {(search || startDate || endDate) && (
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="self-end text-muted-foreground hover:text-foreground"
+            >
+              <Link href="/drafts">{t("actions.clear_filters")}</Link>
+            </Button>
+          )}
         </div>
       </div>
 

@@ -30,7 +30,8 @@
     "archiving": "归档中...",
     "view_draft_data": "查看草稿数据",
     "search": "搜索",
-    "close": "关闭"
+    "close": "关闭",
+    "clear_filters": "清除筛选"
   },
   "login": {
     "title": "登录",
@@ -175,6 +176,9 @@
     },
     "filters": {
       "draft_id": "草稿 ID",
+      "draft_id_placeholder": "输入草稿 ID",
+      "video_name": "视频名称",
+      "video_name_placeholder": "输入视频名称",
       "start_date": "开始日期",
       "end_date": "结束日期",
       "render_status": "渲染状态",

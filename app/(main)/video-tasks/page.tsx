@@ -27,6 +27,7 @@ type SearchParams = Promise<{
   page?: string;
   pageSize?: string;
   search?: string;
+  video_name?: string;
   startDate?: string;
   endDate?: string;
   render_status?: string;
@@ -42,6 +43,7 @@ export default async function VideoTasksPage({
   const page = Math.max(1, Number(params?.page ?? 1));
   const pageSize = Math.max(1, Math.min(100, Number(params?.pageSize ?? 50)));
   const draftId = params?.search; // reuse existing search box as draft_id filter
+  const videoName = params?.video_name;
   const renderStatus = params?.render_status;
   const startDate = params?.startDate;
   const endDate = params?.endDate;
@@ -54,6 +56,7 @@ export default async function VideoTasksPage({
     page,
     pageSize,
     draftId,
+    videoName,
     renderStatus,
     startDate,
     endDate,
@@ -76,7 +79,17 @@ export default async function VideoTasksPage({
                 id="draftId"
                 name="search"
                 defaultValue={draftId}
-                placeholder={t("video_tasks.search_placeholder")}
+                placeholder={t("video_tasks.filters.draft_id_placeholder")}
+                className="w-48"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("video_tasks.filters.video_name")}</span>
+              <Input
+                id="videoName"
+                name="video_name"
+                defaultValue={videoName}
+                placeholder={t("video_tasks.filters.video_name_placeholder")}
                 className="w-48"
               />
             </label>
@@ -130,6 +143,16 @@ export default async function VideoTasksPage({
               {t("actions.search")}
             </Button>
           </form>
+          {(draftId || videoName || startDate || endDate || renderStatus) && (
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="self-end text-muted-foreground hover:text-foreground"
+            >
+              <Link href="/video-tasks">{t("actions.clear_filters")}</Link>
+            </Button>
+          )}
         </div>
       </div>
 
@@ -252,6 +275,7 @@ export default async function VideoTasksPage({
                   page: String(prevPage),
                   pageSize: String(pageSize),
                   ...(draftId && { search: draftId }),
+                  ...(videoName && { video_name: videoName }),
                   ...(startDate && { startDate }),
                   ...(endDate && { endDate }),
                   ...(renderStatus && { render_status: renderStatus }),
@@ -269,6 +293,7 @@ export default async function VideoTasksPage({
                   page: String(nextPage),
                   pageSize: String(pageSize),
                   ...(draftId && { search: draftId }),
+                  ...(videoName && { video_name: videoName }),
                   ...(startDate && { startDate }),
                   ...(endDate && { endDate }),
                   ...(renderStatus && { render_status: renderStatus }),

@@ -30,7 +30,8 @@
     "archiving": "アーカイブ中...",
     "view_draft_data": "ドラフトデータを表示",
     "search": "検索",
-    "close": "閉じる"
+    "close": "閉じる",
+    "clear_filters": "フィルターをクリア"
   },
   "login": {
     "title": "ログイン",
@@ -175,6 +176,9 @@
     },
     "filters": {
       "draft_id": "ドラフトID",
+      "draft_id_placeholder": "ドラフトIDを入力",
+      "video_name": "動画名",
+      "video_name_placeholder": "動画名を入力",
       "start_date": "開始日",
       "end_date": "終了日",
       "render_status": "レンダリング状態",

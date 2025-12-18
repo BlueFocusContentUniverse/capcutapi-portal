@@ -30,7 +30,8 @@
     "archiving": "Archiving...",
     "view_draft_data": "View Draft Data",
     "search": "Search",
-    "close": "Close"
+    "close": "Close",
+    "clear_filters": "Clear Filters"
   },
   "login": {
     "title": "Login",
@@ -175,6 +176,9 @@
     },
     "filters": {
       "draft_id": "Draft ID",
+      "draft_id_placeholder": "Enter draft ID",
+      "video_name": "Video Name",
+      "video_name_placeholder": "Enter video name",
       "start_date": "Start date",
       "end_date": "End date",
       "render_status": "Render status",

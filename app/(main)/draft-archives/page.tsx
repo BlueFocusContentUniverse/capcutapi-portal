@@ -364,8 +364,9 @@ export default function DraftArchivesPage() {
               setUserIdFilter("");
               updateFilters({ draft_id: "", user_id: "" });
             }}
-            variant="ghost"
+            variant="outline"
             size="sm"
+            className="text-muted-foreground hover:text-foreground"
           >
             {t("draft_archives.clear_filters")}
           </Button>

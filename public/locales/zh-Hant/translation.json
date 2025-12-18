@@ -30,7 +30,8 @@
     "archiving": "封存中...",
     "view_draft_data": "查看草稿資料",
     "search": "搜尋",
-    "close": "關閉"
+    "close": "關閉",
+    "clear_filters": "清除篩選"
   },
   "login": {
     "title": "登入",
@@ -159,6 +160,9 @@
     },
     "filters": {
       "draft_id": "草稿 ID",
+      "draft_id_placeholder": "輸入草稿 ID",
+      "video_name": "影片名稱",
+      "video_name_placeholder": "輸入影片名稱",
       "start_date": "開始日期",
       "end_date": "結束日期",
       "render_status": "渲染狀態",

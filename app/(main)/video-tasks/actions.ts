@@ -129,6 +129,7 @@ export async function fetchVideoTasksFromApi({
   page,
   pageSize,
   draftId,
+  videoName,
   renderStatus,
   startDate,
   endDate,
@@ -136,6 +137,7 @@ export async function fetchVideoTasksFromApi({
   page: number;
   pageSize: number;
   draftId?: string;
+  videoName?: string;
   renderStatus?: string;
   startDate?: string;
   endDate?: string;
@@ -146,6 +148,7 @@ export async function fetchVideoTasksFromApi({
         page: String(page),
         page_size: String(pageSize),
         ...(draftId ? { draft_id: draftId } : {}),
+        ...(videoName ? { video_name: videoName } : {}),
         ...(renderStatus ? { render_status: renderStatus } : {}),
         ...(startDate ? { start_date: startDate } : {}),
         ...(endDate ? { end_date: endDate } : {}),
