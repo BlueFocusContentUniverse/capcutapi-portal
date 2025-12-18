@@ -27,6 +27,7 @@ export function ArchiveDraftForm({
   const [directoryPath, setDirectoryPath] = React.useState<string>("");
   const [archiveName, setArchiveName] = React.useState<string>(videoName || "");
   const formRef = React.useRef<HTMLFormElement | null>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const [state, formAction, isPending] = React.useActionState(
     saveDraftAction,
@@ -36,6 +37,10 @@ export function ArchiveDraftForm({
   React.useEffect(() => {
     if (state?.ok) {
       toast.success(t("drafts.archive_success"));
+      // Close dialog after successful submission
+      setTimeout(() => {
+        closeButtonRef.current?.click();
+      }, 300);
     } else if (state?.error) {
       toast.error(state.error);
     }
@@ -112,7 +117,7 @@ export function ArchiveDraftForm({
 
       <DialogFooter>
         <DialogClose asChild>
-          <Button type="button" variant="outline">
+          <Button type="button" variant="outline" ref={closeButtonRef}>
             {t("actions.cancel")}
           </Button>
         </DialogClose>
