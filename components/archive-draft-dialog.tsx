@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { VideoTaskListItem } from "@/drizzle/queries";
 
 export function ArchiveDraftDialog({
   d,
@@ -19,13 +18,11 @@ export function ArchiveDraftDialog({
   trigger,
   draftVersion,
 }: {
-  d:
-    | Pick<VideoTaskListItem, "id" | "draftId" | "videoName">
-    | {
-        id?: number | string;
-        draftId: string;
-        videoName?: string | null;
-      };
+  d: {
+    id?: number | string;
+    draftId: string;
+    videoName?: string | null;
+  };
   buttonLabel: string;
   trigger?: React.ReactNode;
   draftVersion?: string | null;

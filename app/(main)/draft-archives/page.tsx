@@ -27,6 +27,8 @@ export default function DraftArchivesPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1");
+  const pageSize = parseInt(searchParams.get("page_size") || "50");
 
   // Set page title based on user's language
   usePageTitle("page_titles.draft_archives");
@@ -38,6 +40,10 @@ export default function DraftArchivesPage() {
   const [selectedArchives, setSelectedArchives] = useState<Set<string>>(
     new Set(),
   );
+  const [deletingArchives, setDeletingArchives] = useState<Set<string>>(
+    new Set(),
+  );
+  const [batchDeleting, setBatchDeleting] = useState(false);
   const [pagination, setPagination] = useState({
     page: 1,
     page_size: 50,
@@ -46,6 +52,7 @@ export default function DraftArchivesPage() {
     has_next: false,
     has_prev: false,
   });
+  const [pageInput, setPageInput] = useState(currentPage.toString());
 
   // Filters
   const [draftIdFilter, setDraftIdFilter] = useState(
@@ -54,8 +61,6 @@ export default function DraftArchivesPage() {
   const [userIdFilter, setUserIdFilter] = useState(
     searchParams.get("user_id") || "",
   );
-  const currentPage = parseInt(searchParams.get("page") || "1");
-  const pageSize = parseInt(searchParams.get("page_size") || "50");
 
   // Fetch archives data
   const fetchArchives = async () => {
@@ -111,6 +116,16 @@ export default function DraftArchivesPage() {
     router.push(`/draft-archives?${params.toString()}`);
   };
 
+  const toastWithClose = (type: "success" | "error", message: string) => {
+    const id = toast[type](message, {
+      action: {
+        label: t("actions.close"),
+        onClick: () => toast.dismiss(id),
+      },
+    });
+    return id;
+  };
+
   // Handle search
   const handleSearch = () => {
     updateFilters({
@@ -122,6 +137,21 @@ export default function DraftArchivesPage() {
   // Handle pagination
   const handlePageChange = (newPage: number) => {
     updateFilters({ page: newPage.toString() });
+  };
+
+  const handlePageJump = () => {
+    if (!pageInput.trim()) return;
+    const parsed = Number(pageInput);
+    if (!Number.isFinite(parsed)) return;
+    const clamped = Math.min(
+      Math.max(1, Math.round(parsed)),
+      pagination.total_pages || 1,
+    );
+    if (clamped === pagination.page) {
+      setPageInput(clamped.toString());
+      return;
+    }
+    handlePageChange(clamped);
   };
 
   // Handle select all
@@ -149,7 +179,7 @@ export default function DraftArchivesPage() {
   // Handle batch delete
   const handleBatchDelete = async () => {
     if (selectedArchives.size === 0) {
-      toast.error(t("draft_archives.batch_delete.no_selection"));
+      toastWithClose("error", t("draft_archives.batch_delete.no_selection"));
       return;
     }
 
@@ -165,6 +195,7 @@ export default function DraftArchivesPage() {
     }
 
     try {
+      setBatchDeleting(true);
       const response = await nextApi.post("draft_archives/batch_delete", {
         json: { archive_ids: archiveIds },
       });
@@ -174,7 +205,8 @@ export default function DraftArchivesPage() {
       };
 
       if (data.success) {
-        toast.success(
+        toastWithClose(
+          "success",
           t("draft_archives.batch_delete.success", {
             count: archiveIds.length,
           }),
@@ -183,11 +215,16 @@ export default function DraftArchivesPage() {
         // Refresh the list
         fetchArchives();
       } else {
-        toast.error(data.error || t("draft_archives.batch_delete.error"));
+        toastWithClose(
+          "error",
+          data.error || t("draft_archives.batch_delete.error"),
+        );
       }
     } catch (err) {
       console.error("Error batch deleting archives:", err);
-      toast.error(t("draft_archives.batch_delete.error"));
+      toastWithClose("error", t("draft_archives.batch_delete.error"));
+    } finally {
+      setBatchDeleting(false);
     }
   };
 
@@ -204,6 +241,11 @@ export default function DraftArchivesPage() {
     }
 
     try {
+      setDeletingArchives((prev) => {
+        const next = new Set(prev);
+        next.add(archiveId);
+        return next;
+      });
       const response = await nextApi.delete(
         `draft_archives/delete/${archiveId}`,
       );
@@ -213,15 +255,21 @@ export default function DraftArchivesPage() {
       };
 
       if (data.success) {
-        toast.success(t("draft_archives.delete_success"));
+        toastWithClose("success", t("draft_archives.delete_success"));
         // Refresh the list
         fetchArchives();
       } else {
-        toast.error(data.error || t("draft_archives.delete_error"));
+        toastWithClose("error", data.error || t("draft_archives.delete_error"));
       }
     } catch (err) {
       console.error("Error deleting archive:", err);
-      toast.error(t("draft_archives.delete_error"));
+      toastWithClose("error", t("draft_archives.delete_error"));
+    } finally {
+      setDeletingArchives((prev) => {
+        const next = new Set(prev);
+        next.delete(archiveId);
+        return next;
+      });
     }
   };
 
@@ -254,6 +302,11 @@ export default function DraftArchivesPage() {
     fetchArchives();
   }, [searchParams]);
 
+  // Keep page input in sync with pagination
+  useEffect(() => {
+    setPageInput(pagination.page.toString());
+  }, [pagination.page]);
+
   if (loading) {
     return (
       <div className="flex h-96 items-center justify-center">
@@ -280,19 +333,25 @@ export default function DraftArchivesPage() {
       {/* Filters */}
       <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg">
         <div className="flex items-center gap-2">
-          <Input
-            placeholder={t("draft_archives.filters.draft_id_placeholder")}
-            value={draftIdFilter}
-            onChange={(e) => setDraftIdFilter(e.target.value)}
-            className="w-48"
-          />
-          <Input
-            placeholder={t("draft_archives.filters.user_id_placeholder")}
-            value={userIdFilter}
-            onChange={(e) => setUserIdFilter(e.target.value)}
-            className="w-48"
-          />
-          <Button onClick={handleSearch} variant="outline">
+          <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+            <span>{t("draft_archives.filters.draft_id_label")}</span>
+            <Input
+              placeholder={t("draft_archives.filters.draft_id_placeholder")}
+              value={draftIdFilter}
+              onChange={(e) => setDraftIdFilter(e.target.value)}
+              className="w-48"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+            <span>{t("draft_archives.filters.user_id_label")}</span>
+            <Input
+              placeholder={t("draft_archives.filters.user_id_placeholder")}
+              value={userIdFilter}
+              onChange={(e) => setUserIdFilter(e.target.value)}
+              className="w-48"
+            />
+          </label>
+          <Button onClick={handleSearch} variant="outline" className="self-end">
             <Search className="h-4 w-4 mr-2" />
             {t("actions.search")}
           </Button>
@@ -313,7 +372,12 @@ export default function DraftArchivesPage() {
         )}
 
         {selectedArchives.size > 0 && (
-          <Button onClick={handleBatchDelete} variant="destructive" size="sm">
+          <Button
+            onClick={handleBatchDelete}
+            variant="destructive"
+            size="sm"
+            disabled={batchDeleting || deletingArchives.size > 0}
+          >
             <Trash2 className="h-4 w-4 mr-2" />
             {t("draft_archives.batch_delete.button", {
               count: selectedArchives.size,
@@ -407,18 +471,28 @@ export default function DraftArchivesPage() {
                         }
                       />
                     </TableCell>
-                    <TableCell className="font-mono text-xs">
+                    <TableCell
+                      className="font-mono text-xs"
+                      title={archive.archive_id}
+                    >
                       {archive.archive_id.slice(0, 8)}...
                     </TableCell>
-                    <TableCell className="font-mono text-xs">
+                    <TableCell
+                      className="font-mono text-xs"
+                      title={archive.draft_id}
+                    >
                       {archive.draft_id}
                     </TableCell>
-                    <TableCell>{archive.archive_name || "-"}</TableCell>
+                    <TableCell title={archive.archive_name || undefined}>
+                      {archive.archive_name || "-"}
+                    </TableCell>
                     <TableCell>
                       {archive.draft_version ||
                         t("draft_archives.version_current")}
                     </TableCell>
-                    <TableCell>{archive.user_name || "-"}</TableCell>
+                    <TableCell title={archive.user_name || undefined}>
+                      {archive.user_name || "-"}
+                    </TableCell>
                     <TableCell>{getStatusBadge(archive)}</TableCell>
                     <TableCell>
                       {archive.progress !== null ? (
@@ -442,7 +516,10 @@ export default function DraftArchivesPage() {
                         "-"
                       )}
                     </TableCell>
-                    <TableCell className="max-w-[200px] truncate">
+                    <TableCell
+                      className="max-w-[200px] truncate"
+                      title={archive.message || undefined}
+                    >
                       {archive.message || "-"}
                     </TableCell>
                     <TableCell className="text-xs">
@@ -473,6 +550,10 @@ export default function DraftArchivesPage() {
                           variant="destructive"
                           size="sm"
                           onClick={() => handleDelete(archive.archive_id)}
+                          disabled={
+                            batchDeleting ||
+                            deletingArchives.has(archive.archive_id)
+                          }
                           title={t("draft_archives.delete")}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -497,6 +578,33 @@ export default function DraftArchivesPage() {
           })}
         </div>
         <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <Input
+              type="number"
+              value={pageInput}
+              min={1}
+              max={pagination.total_pages}
+              onChange={(e) => setPageInput(e.target.value)}
+              className="w-24"
+              aria-label={t("draft_archives.pagination.page_info", {
+                page: pagination.page,
+                totalPages: pagination.total_pages,
+                totalCount: pagination.total_count,
+              })}
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handlePageJump}
+              disabled={
+                !pageInput.trim() ||
+                Number.isNaN(Number(pageInput)) ||
+                Number(pageInput) === pagination.page
+              }
+            >
+              Go
+            </Button>
+          </div>
           <Button
             variant="outline"
             size="sm"

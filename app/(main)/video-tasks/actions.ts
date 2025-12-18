@@ -5,6 +5,33 @@ import { headers } from "next/headers";
 import { auth } from "@/auth";
 import { jyApi } from "@/lib/serverService";
 
+type VideoTasksApiItem = {
+  id: number;
+  taskId: string;
+  draftId: string;
+  videoId: string | null;
+  videoName: string | null;
+  renderStatus: string;
+  progress: number | null;
+  message: string | null;
+  extra: unknown | null;
+  createdAt: number | null;
+  updatedAt: number | null;
+  ossUrl: string | null;
+};
+
+type VideoTasksApiResponse = {
+  items: VideoTasksApiItem[];
+  pagination?: {
+    page: number;
+    page_size: number;
+    total_count: number;
+    total_pages: number;
+    has_next: boolean;
+    has_prev: boolean;
+  };
+};
+
 interface ArchiveDraftRequest {
   draft_id: string;
   draft_folder: string;
@@ -96,4 +123,50 @@ async function saveDraft(
 export async function saveDraftAction(_prevState: unknown, formData: FormData) {
   "use server";
   return saveDraft(formData);
+}
+
+export async function fetchVideoTasksFromApi({
+  page,
+  pageSize,
+  draftId,
+  renderStatus,
+  startDate,
+  endDate,
+}: {
+  page: number;
+  pageSize: number;
+  draftId?: string;
+  renderStatus?: string;
+  startDate?: string;
+  endDate?: string;
+}) {
+  try {
+    const res = await jyApi.get("api/video-tasks", {
+      searchParams: {
+        page: String(page),
+        page_size: String(pageSize),
+        ...(draftId ? { draft_id: draftId } : {}),
+        ...(renderStatus ? { render_status: renderStatus } : {}),
+        ...(startDate ? { start_date: startDate } : {}),
+        ...(endDate ? { end_date: endDate } : {}),
+      },
+    });
+
+    const data = (await res.json()) as VideoTasksApiResponse;
+
+    const items: VideoTasksApiItem[] = (data.items ?? []).map((item) => ({
+      ...item,
+      createdAt: item.createdAt ? item.createdAt * 1000 : null,
+      updatedAt: item.updatedAt ? item.updatedAt * 1000 : null,
+    }));
+
+    return {
+      items,
+      total: data.pagination?.total_count ?? items.length,
+      totalPages: data.pagination?.total_pages,
+    };
+  } catch (error) {
+    console.error("Failed to fetch video tasks from external API:", error);
+    return { items: [], total: 0, totalPages: 1 };
+  }
 }

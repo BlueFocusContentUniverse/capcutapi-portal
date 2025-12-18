@@ -69,25 +69,34 @@ export default async function DraftsPage({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <form action="" className="flex items-center gap-2">
-            <Input
-              name="search"
-              defaultValue={search}
-              placeholder={t("drafts.placeholders.search_placeholder")}
-              className="w-48"
-            />
-            <Input
-              name="startDate"
-              type="date"
-              defaultValue={startDate}
-              className="w-36"
-            />
-            <Input
-              name="endDate"
-              type="date"
-              defaultValue={endDate}
-              className="w-36"
-            />
-            <Button type="submit" variant="outline">
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("drafts.filters.search")}</span>
+              <Input
+                name="search"
+                defaultValue={search}
+                placeholder={t("drafts.placeholders.search_placeholder")}
+                className="w-48"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("drafts.filters.start_date")}</span>
+              <Input
+                name="startDate"
+                type="date"
+                defaultValue={startDate}
+                className="w-36"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+              <span>{t("drafts.filters.end_date")}</span>
+              <Input
+                name="endDate"
+                type="date"
+                defaultValue={endDate}
+                className="w-36"
+              />
+            </label>
+            <Button type="submit" variant="outline" className="self-end">
               {t("actions.search")}
             </Button>
           </form>

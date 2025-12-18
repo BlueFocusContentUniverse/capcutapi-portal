@@ -29,7 +29,8 @@
     "archive_draft": "封存草稿",
     "archiving": "封存中...",
     "view_draft_data": "查看草稿資料",
-    "search": "搜尋"
+    "search": "搜尋",
+    "close": "關閉"
   },
   "login": {
     "title": "登入",
@@ -120,6 +121,11 @@
       "select_draft_file": "選擇草稿檔案",
       "archive_name": "封存名稱"
     },
+    "filters": {
+      "search": "草稿 ID / 名稱",
+      "start_date": "開始日期",
+      "end_date": "結束日期"
+    },
     "placeholders": {
       "draft_folder": "選擇草稿資料夾",
       "archive_name": "輸入封存名稱"
@@ -151,6 +157,20 @@
       "updated": "更新時間",
       "operations": "操作"
     },
+    "filters": {
+      "draft_id": "草稿 ID",
+      "start_date": "開始日期",
+      "end_date": "結束日期",
+      "render_status": "渲染狀態",
+      "all_statuses": "全部狀態"
+    },
+    "status": {
+      "initialized": "已初始化",
+      "pending": "等待中",
+      "processing": "處理中",
+      "completed": "已完成",
+      "failed": "失敗"
+    },
     "search_placeholder": "搜尋草稿 ID/影片名稱"
   },
   "draft_archives": {
@@ -163,7 +183,9 @@
     "no_archives_filtered": "未找到符合篩選條件的封存",
     "clear_filters": "清除篩選",
     "filters": {
+      "draft_id_label": "草稿 ID",
       "draft_id_placeholder": "按草稿 ID 篩選",
+      "user_id_label": "用戶 ID",
       "user_id_placeholder": "按用戶 ID 篩選"
     },
     "table": {
