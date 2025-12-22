@@ -8,7 +8,8 @@
     "drafts": "Drafts",
     "video_tasks": "Video Task Status",
     "draft_archives": "Draft Archives",
-    "admin": "Admin"
+    "admin": "Admin",
+    "worker_status": "Worker Status"
   },
   "sidebar": {
     "title": "JYAPI Management System",

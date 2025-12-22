@@ -8,7 +8,8 @@
     "drafts": "剪映草稿箱",
     "video_tasks": "生成视频任务状态",
     "draft_archives": "草稿归档",
-    "admin": "Admin 管理"
+    "admin": "Admin 管理",
+    "worker_status": "Worker 状态"
   },
   "sidebar": {
     "title": "JYAPI 管理系统",
