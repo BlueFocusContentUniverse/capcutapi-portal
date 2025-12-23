@@ -8,7 +8,8 @@
     "drafts": "剪映草稿箱",
     "video_tasks": "生成视频任务状态",
     "draft_archives": "草稿归档",
-    "admin": "Admin 管理"
+    "admin": "Admin 管理",
+    "worker_status": "Worker 状态"
   },
   "sidebar": {
     "title": "JYAPI 管理系统",
@@ -193,6 +194,46 @@
     },
     "search_placeholder": "按草稿 ID 或视频名称搜索"
   },
+  "worker_status": {
+    "title": "渲染 Worker 状态",
+    "subtitle": "监控 Celery worker 可用性和最近的失败记录",
+    "refresh": "刷新",
+    "loading": "加载中...",
+    "total_workers": "总 Worker 数",
+    "available": "可用",
+    "table": {
+      "worker": "Worker",
+      "hostname": "主机名",
+      "status": "状态",
+      "last_heartbeat": "最后心跳",
+      "last_failure": "最后失败",
+      "failure_reason": "失败原因",
+      "failure_count": "失败次数",
+      "actions": "操作"
+    },
+    "status": {
+      "available": "可用",
+      "unavailable": "不可用"
+    },
+    "no_workers": "暂无 worker 状态报告",
+    "delete": {
+      "title": "删除 Worker",
+      "confirm": "您确定要删除 worker \"{{workerName}}\" 吗？此操作无法撤销。",
+      "cancel": "取消",
+      "delete": "删除",
+      "deleting": "删除中...",
+      "success": "Worker 删除成功",
+      "error": "删除 Worker 失败"
+    },
+    "failure_logs": {
+      "title": "失败日志",
+      "description": "显示 worker 的失败日志：\"{{workerName}}\"",
+      "close": "关闭",
+      "no_logs": "未找到失败日志",
+      "total_logs": "总日志数：{{count}}",
+      "task_id": "任务 ID"
+    }
+  },
   "draft_archives": {
     "title": "草稿归档",
     "refresh": "刷新",
@@ -297,7 +338,8 @@
     "video_tasks": "视频任务状态 - JYAPI 管理系统",
     "draft_archives": "草稿归档 - JYAPI 管理系统",
     "admin": "管理员管理 - JYAPI 管理系统",
-    "rve_editor": "RVE 编辑器 ({{draftId}}) - JYAPI 管理系统"
+    "rve_editor": "RVE 编辑器 ({{draftId}}) - JYAPI 管理系统",
+    "worker_status": "Worker 状态 - JYAPI 管理系统"
   },
   "profile_dialog": {
     "settings_aria": "个人设置",

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ArchiveDraftDialog } from "@/components/archive-draft-dialog";
-import { usePageTitle } from "@/hooks/use-page-title";
 import DraftDataViewDialog from "@/components/draft-data-view-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { VideoEditor } from "@/components/video-editor/index";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 interface DraftContent {
   content: {

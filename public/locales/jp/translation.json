@@ -8,7 +8,8 @@
     "drafts": "ドラフト",
     "video_tasks": "動画生成タスク状況",
     "draft_archives": "ドラフトアーカイブ",
-    "admin": "管理"
+    "admin": "管理",
+    "worker_status": "ワーカー状態"
   },
   "sidebar": {
     "title": "JYAPI 管理システム",
@@ -193,6 +194,46 @@
     },
     "search_placeholder": "ドラフトIDまたは動画名で検索"
   },
+  "worker_status": {
+    "title": "レンダリングワーカー状態",
+    "subtitle": "Celery ワーカーの可用性と最近の失敗を監視",
+    "refresh": "更新",
+    "loading": "読み込み中...",
+    "total_workers": "総ワーカー数",
+    "available": "利用可能",
+    "table": {
+      "worker": "ワーカー",
+      "hostname": "ホスト名",
+      "status": "状態",
+      "last_heartbeat": "最後のハートビート",
+      "last_failure": "最後の失敗",
+      "failure_reason": "失敗理由",
+      "failure_count": "失敗回数",
+      "actions": "操作"
+    },
+    "status": {
+      "available": "利用可能",
+      "unavailable": "利用不可"
+    },
+    "no_workers": "ワーカー状態がまだ報告されていません",
+    "delete": {
+      "title": "ワーカーを削除",
+      "confirm": "ワーカー \"{{workerName}}\" を削除してもよろしいですか？この操作は取り消せません。",
+      "cancel": "キャンセル",
+      "delete": "削除",
+      "deleting": "削除中...",
+      "success": "ワーカーを削除しました",
+      "error": "ワーカーの削除に失敗しました"
+    },
+    "failure_logs": {
+      "title": "失敗ログ",
+      "description": "ワーカーの失敗ログを表示中：\"{{workerName}}\"",
+      "close": "閉じる",
+      "no_logs": "失敗ログが見つかりません",
+      "total_logs": "総ログ数：{{count}}",
+      "task_id": "タスク ID"
+    }
+  },
   "draft_archives": {
     "title": "ドラフトアーカイブ",
     "refresh": "更新",
@@ -297,7 +338,8 @@
     "video_tasks": "動画タスク状況 - JYAPI 管理システム",
     "draft_archives": "ドラフトアーカイブ - JYAPI 管理システム",
     "admin": "管理者管理 - JYAPI 管理システム",
-    "rve_editor": "RVE エディタ ({{draftId}}) - JYAPI 管理システム"
+    "rve_editor": "RVE エディタ ({{draftId}}) - JYAPI 管理システム",
+    "worker_status": "ワーカー状態 - JYAPI 管理システム"
   },
   "profile_dialog": {
     "settings_aria": "プロフィール設定",
