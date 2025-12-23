@@ -178,6 +178,46 @@
     },
     "search_placeholder": "搜尋草稿 ID/影片名稱"
   },
+  "worker_status": {
+    "title": "渲染 Worker 狀態",
+    "subtitle": "監控 Celery worker 可用性和最近的失敗記錄",
+    "refresh": "刷新",
+    "loading": "載入中...",
+    "total_workers": "總 Worker 數",
+    "available": "可用",
+    "table": {
+      "worker": "Worker",
+      "hostname": "主機名",
+      "status": "狀態",
+      "last_heartbeat": "最後心跳",
+      "last_failure": "最後失敗",
+      "failure_reason": "失敗原因",
+      "failure_count": "失敗次數",
+      "actions": "操作"
+    },
+    "status": {
+      "available": "可用",
+      "unavailable": "不可用"
+    },
+    "no_workers": "暫無 worker 狀態報告",
+    "delete": {
+      "title": "刪除 Worker",
+      "confirm": "您確定要刪除 worker \"{{workerName}}\" 嗎？此操作無法撤銷。",
+      "cancel": "取消",
+      "delete": "刪除",
+      "deleting": "刪除中...",
+      "success": "Worker 刪除成功",
+      "error": "刪除 Worker 失敗"
+    },
+    "failure_logs": {
+      "title": "失敗日誌",
+      "description": "顯示 worker 的失敗日誌：\"{{workerName}}\"",
+      "close": "關閉",
+      "no_logs": "未找到失敗日誌",
+      "total_logs": "總日誌數：{{count}}",
+      "task_id": "任務 ID"
+    }
+  },
   "draft_archives": {
     "title": "草稿封存",
     "refresh": "重新整理",
@@ -282,7 +322,8 @@
     "video_tasks": "影片任務狀態 - JYAPI 管理系統",
     "draft_archives": "草稿封存 - JYAPI 管理系統",
     "admin": "管理員管理 - JYAPI 管理系統",
-    "rve_editor": "RVE 編輯器 ({{draftId}}) - JYAPI 管理系統"
+    "rve_editor": "RVE 編輯器 ({{draftId}}) - JYAPI 管理系統",
+    "worker_status": "Worker 狀態 - JYAPI 管理系統"
   },
   "profile_dialog": {
     "settings_aria": "個人設定",

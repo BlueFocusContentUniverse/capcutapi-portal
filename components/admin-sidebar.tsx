@@ -35,7 +35,6 @@ const navigation = [
   { key: "nav.drafts", href: "/drafts", icon: FolderOpen },
   { key: "nav.video_tasks", href: "/video-tasks", icon: Trophy },
   { key: "nav.draft_archives", href: "/draft-archives", icon: Archive },
-  { key: "nav.worker_status", href: "/worker-status", icon: Activity },
 ];
 
 export function AdminSidebar() {
@@ -145,23 +144,46 @@ export function AdminSidebar() {
                 );
               })}
               {session?.user?.role === "admin" && (
-                <Link
-                  href="/admin"
-                  className={cn(
-                    "flex items-center rounded-md transition-colors",
-                    isCollapsed
-                      ? "px-2 py-2 justify-center"
-                      : "px-3 py-2 text-sm font-medium",
-                    pathname === "/admin"
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground",
-                  )}
-                  onClick={() => setIsOpen(false)}
-                  title={isCollapsed ? t("nav.admin") : undefined}
-                >
-                  <Users className={cn("h-5 w-5", isCollapsed ? "" : "mr-3")} />
-                  {!isCollapsed && <span>{t("nav.admin")}</span>}
-                </Link>
+                <>
+                  <Link
+                    href="/worker-status"
+                    className={cn(
+                      "flex items-center rounded-md transition-colors",
+                      isCollapsed
+                        ? "px-2 py-2 justify-center"
+                        : "px-3 py-2 text-sm font-medium",
+                      pathname === "/worker-status"
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                        : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground",
+                    )}
+                    onClick={() => setIsOpen(false)}
+                    title={isCollapsed ? t("nav.worker_status") : undefined}
+                  >
+                    <Activity
+                      className={cn("h-5 w-5", isCollapsed ? "" : "mr-3")}
+                    />
+                    {!isCollapsed && <span>{t("nav.worker_status")}</span>}
+                  </Link>
+                  <Link
+                    href="/admin"
+                    className={cn(
+                      "flex items-center rounded-md transition-colors",
+                      isCollapsed
+                        ? "px-2 py-2 justify-center"
+                        : "px-3 py-2 text-sm font-medium",
+                      pathname === "/admin"
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                        : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground",
+                    )}
+                    onClick={() => setIsOpen(false)}
+                    title={isCollapsed ? t("nav.admin") : undefined}
+                  >
+                    <Users
+                      className={cn("h-5 w-5", isCollapsed ? "" : "mr-3")}
+                    />
+                    {!isCollapsed && <span>{t("nav.admin")}</span>}
+                  </Link>
+                </>
               )}
             </nav>
           </ScrollArea>

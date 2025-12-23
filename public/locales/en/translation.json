@@ -194,6 +194,46 @@
     },
     "search_placeholder": "Search by draft ID or video name"
   },
+  "worker_status": {
+    "title": "Render Worker Status",
+    "subtitle": "Monitor Celery worker availability and recent failures",
+    "refresh": "Refresh",
+    "loading": "Loading...",
+    "total_workers": "Total workers",
+    "available": "Available",
+    "table": {
+      "worker": "Worker",
+      "hostname": "Hostname",
+      "status": "Status",
+      "last_heartbeat": "Last Heartbeat",
+      "last_failure": "Last Failure",
+      "failure_reason": "Failure Reason",
+      "failure_count": "Failure Count",
+      "actions": "Actions"
+    },
+    "status": {
+      "available": "Available",
+      "unavailable": "Unavailable"
+    },
+    "no_workers": "No worker status reported yet",
+    "delete": {
+      "title": "Delete Worker",
+      "confirm": "Are you sure you want to delete worker \"{{workerName}}\"? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "success": "Worker deleted successfully",
+      "error": "Failed to delete worker"
+    },
+    "failure_logs": {
+      "title": "Failure Logs",
+      "description": "Showing failure logs for worker: \"{{workerName}}\"",
+      "close": "Close",
+      "no_logs": "No failure logs found",
+      "total_logs": "Total logs: {{count}}",
+      "task_id": "Task ID"
+    }
+  },
   "draft_archives": {
     "title": "Draft Archives",
     "refresh": "Refresh",
@@ -298,7 +338,8 @@
     "video_tasks": "Video Tasks - JYAPI Management",
     "draft_archives": "Draft Archives - JYAPI Management",
     "admin": "Admin Management - JYAPI Management",
-    "rve_editor": "RVE Editor ({{draftId}}) - JYAPI Management"
+    "rve_editor": "RVE Editor ({{draftId}}) - JYAPI Management",
+    "worker_status": "Worker Status - JYAPI Management"
   },
   "profile_dialog": {
     "settings_aria": "Profile settings",
