@@ -32,7 +32,10 @@
     "view_draft_data": "ドラフトデータを表示",
     "search": "検索",
     "close": "閉じる",
-    "clear_filters": "フィルターをクリア"
+    "clear_filters": "フィルターをクリア",
+    "regenerate": "再生成",
+    "confirm": "確認",
+    "processing": "処理中..."
   },
   "login": {
     "title": "ログイン",
@@ -192,7 +195,16 @@
       "completed": "完了",
       "failed": "失敗"
     },
-    "search_placeholder": "ドラフトIDまたは動画名で検索"
+    "search_placeholder": "ドラフトIDまたは動画名で検索",
+    "regenerate": {
+      "title": "再生成の確認",
+      "description": "この動画を再生成してもよろしいですか？この操作により、レンダリングタスクが再送信されます。",
+      "success": "再生成タスクが送信されました",
+      "error": {
+        "no_task_id": "タスクIDが必要です",
+        "failed": "動画の再生成に失敗しました"
+      }
+    }
   },
   "worker_status": {
     "title": "レンダリングワーカー状態",

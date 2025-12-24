@@ -32,7 +32,10 @@
     "view_draft_data": "查看草稿数据",
     "search": "搜索",
     "close": "关闭",
-    "clear_filters": "清除筛选"
+    "clear_filters": "清除筛选",
+    "regenerate": "重新生成",
+    "confirm": "确认",
+    "processing": "处理中..."
   },
   "login": {
     "title": "登录",
@@ -192,7 +195,16 @@
       "completed": "已完成",
       "failed": "失败"
     },
-    "search_placeholder": "按草稿 ID 或视频名称搜索"
+    "search_placeholder": "按草稿 ID 或视频名称搜索",
+    "regenerate": {
+      "title": "确认重新生成",
+      "description": "确定要重新生成此视频吗？此操作将重新提交渲染任务。",
+      "success": "重新生成任务已提交",
+      "error": {
+        "no_task_id": "任务 ID 不能为空",
+        "failed": "重新生成失败"
+      }
+    }
   },
   "worker_status": {
     "title": "渲染 Worker 状态",

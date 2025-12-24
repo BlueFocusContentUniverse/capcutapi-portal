@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ArchiveDraftDialog } from "@/components/archive-draft-dialog";
+import { RegenerateVideoDialog } from "@/components/regenerate-video-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -236,14 +237,21 @@ export default async function VideoTasksPage({
                       : "-"}
                   </TableCell>
                   <TableCell>
-                    <ArchiveDraftDialog
-                      d={{
-                        id: task.id,
-                        draftId: task.draftId,
-                        videoName: task.videoName,
-                      }}
-                      buttonLabel={t("actions.archive_draft")}
-                    />
+                    <div className="flex items-center gap-2">
+                      <RegenerateVideoDialog
+                        taskId={task.taskId}
+                        renderStatus={task.renderStatus}
+                        buttonLabel={t("actions.regenerate")}
+                      />
+                      <ArchiveDraftDialog
+                        d={{
+                          id: task.id,
+                          draftId: task.draftId,
+                          videoName: task.videoName,
+                        }}
+                        buttonLabel={t("actions.archive_draft")}
+                      />
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

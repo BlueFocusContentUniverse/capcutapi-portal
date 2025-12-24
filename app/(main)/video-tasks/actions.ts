@@ -173,3 +173,60 @@ export async function fetchVideoTasksFromApi({
     return { items: [], total: 0, totalPages: 1 };
   }
 }
+
+async function regenerateVideo(
+  taskId: string,
+): Promise<{ ok: true; message: string } | { ok: false; error: string }> {
+  // Get user session for authentication
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
+    return { ok: false, error: "Authentication required" };
+  }
+
+  if (!taskId || typeof taskId !== "string") {
+    console.error("task_id is required");
+    return { ok: false, error: "task_id is required" };
+  }
+
+  try {
+    const res = await jyApi.post("regenerate", {
+      json: { task_id: taskId },
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      console.error("regenerate failed:", res.status, text);
+      return { ok: false, error: text || `HTTP ${res.status}` };
+    }
+
+    const data = await res.json<{
+      success: boolean;
+      output?: { task_id: string; message: string };
+      error?: string;
+    }>();
+
+    if (!data.success) {
+      console.error("regenerate API returned success: false", data.error);
+      return { ok: false, error: data.error || "Regenerate request failed" };
+    }
+
+    return {
+      ok: true,
+      message: data.output?.message || "Video regeneration task has been submitted",
+    };
+  } catch (err) {
+    console.error("regenerate request error:", err);
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Request error",
+    };
+  }
+}
+
+export async function regenerateVideoAction(taskId: string) {
+  "use server";
+  return regenerateVideo(taskId);
+}
