@@ -32,7 +32,10 @@
     "view_draft_data": "View Draft Data",
     "search": "Search",
     "close": "Close",
-    "clear_filters": "Clear Filters"
+    "clear_filters": "Clear Filters",
+    "regenerate": "Regenerate",
+    "confirm": "Confirm",
+    "processing": "Processing..."
   },
   "login": {
     "title": "Login",
@@ -192,7 +195,16 @@
       "completed": "Completed",
       "failed": "Failed"
     },
-    "search_placeholder": "Search by draft ID or video name"
+    "search_placeholder": "Search by draft ID or video name",
+    "regenerate": {
+      "title": "Confirm Regeneration",
+      "description": "Are you sure you want to regenerate this video? This will resubmit the rendering task.",
+      "success": "Regeneration task submitted",
+      "error": {
+        "no_task_id": "Task ID is required",
+        "failed": "Failed to regenerate video"
+      }
+    }
   },
   "worker_status": {
     "title": "Render Worker Status",

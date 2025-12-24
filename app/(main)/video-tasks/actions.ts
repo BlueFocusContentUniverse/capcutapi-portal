@@ -59,12 +59,10 @@ async function saveDraft(
   const draft_version = formData.get("draft_version");
 
   if (!draft_id || typeof draft_id !== "string") {
-    console.error("draft_id is required");
     return { ok: false, error: "draft_id is required" };
   }
 
   if (!draft_folder || typeof draft_folder !== "string") {
-    console.error("draft_folder is required");
     return { ok: false, error: "draft_folder is required" };
   }
 
@@ -96,14 +94,12 @@ async function saveDraft(
 
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.error("save_draft failed:", res.status, text);
       return { ok: false, error: text || `HTTP ${res.status}` };
     }
 
     const data = await res.json<{ success: boolean; error?: string }>();
 
     if (!data.success) {
-      console.error("save_draft API returned success: false", data.error);
       return { ok: false, error: data.error || "Archive request failed" };
     }
 
@@ -115,13 +111,11 @@ async function saveDraft(
         "Archive request submitted successfully. You can check the status in Draft Archives.",
     };
   } catch (err) {
-    console.error("save_draft request error:", err);
     return { ok: false, error: "Request error" };
   }
 }
 
 export async function saveDraftAction(_prevState: unknown, formData: FormData) {
-  "use server";
   return saveDraft(formData);
 }
 
@@ -169,7 +163,53 @@ export async function fetchVideoTasksFromApi({
       totalPages: data.pagination?.total_pages,
     };
   } catch (error) {
-    console.error("Failed to fetch video tasks from external API:", error);
     return { items: [], total: 0, totalPages: 1 };
   }
 }
+
+export async function regenerateVideoAction(taskId: string) {
+  // Get user session for authentication
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
+    return { ok: false, error: "Authentication required" };
+  }
+
+  if (!taskId || typeof taskId !== "string") {
+    return { ok: false, error: "task_id is required" };
+  }
+
+  try {
+    const res = await jyApi.post("regenerate", {
+      json: { task_id: taskId },
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      return { ok: false, error: text || `HTTP ${res.status}` };
+    }
+
+    const data = await res.json<{
+      success: boolean;
+      output?: { task_id: string; message: string };
+      error?: string;
+    }>();
+
+    if (!data.success) {
+      return { ok: false, error: data.error || "Regenerate request failed" };
+    }
+
+    return {
+      ok: true,
+      message: data.output?.message || "Video regeneration task has been submitted",
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Request error",
+    };
+  }
+}
+
