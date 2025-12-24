@@ -59,12 +59,10 @@ async function saveDraft(
   const draft_version = formData.get("draft_version");
 
   if (!draft_id || typeof draft_id !== "string") {
-    console.error("draft_id is required");
     return { ok: false, error: "draft_id is required" };
   }
 
   if (!draft_folder || typeof draft_folder !== "string") {
-    console.error("draft_folder is required");
     return { ok: false, error: "draft_folder is required" };
   }
 
@@ -96,14 +94,12 @@ async function saveDraft(
 
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.error("save_draft failed:", res.status, text);
       return { ok: false, error: text || `HTTP ${res.status}` };
     }
 
     const data = await res.json<{ success: boolean; error?: string }>();
 
     if (!data.success) {
-      console.error("save_draft API returned success: false", data.error);
       return { ok: false, error: data.error || "Archive request failed" };
     }
 
@@ -115,7 +111,6 @@ async function saveDraft(
         "Archive request submitted successfully. You can check the status in Draft Archives.",
     };
   } catch (err) {
-    console.error("save_draft request error:", err);
     return { ok: false, error: "Request error" };
   }
 }
@@ -169,14 +164,13 @@ export async function fetchVideoTasksFromApi({
       totalPages: data.pagination?.total_pages,
     };
   } catch (error) {
-    console.error("Failed to fetch video tasks from external API:", error);
     return { items: [], total: 0, totalPages: 1 };
   }
 }
 
-async function regenerateVideo(
-  taskId: string,
-): Promise<{ ok: true; message: string } | { ok: false; error: string }> {
+export async function regenerateVideoAction(taskId: string) {
+  "use server";
+
   // Get user session for authentication
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -187,7 +181,6 @@ async function regenerateVideo(
   }
 
   if (!taskId || typeof taskId !== "string") {
-    console.error("task_id is required");
     return { ok: false, error: "task_id is required" };
   }
 
@@ -198,7 +191,6 @@ async function regenerateVideo(
 
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.error("regenerate failed:", res.status, text);
       return { ok: false, error: text || `HTTP ${res.status}` };
     }
 
@@ -209,7 +201,6 @@ async function regenerateVideo(
     }>();
 
     if (!data.success) {
-      console.error("regenerate API returned success: false", data.error);
       return { ok: false, error: data.error || "Regenerate request failed" };
     }
 
@@ -218,7 +209,6 @@ async function regenerateVideo(
       message: data.output?.message || "Video regeneration task has been submitted",
     };
   } catch (err) {
-    console.error("regenerate request error:", err);
     return {
       ok: false,
       error: err instanceof Error ? err.message : "Request error",
@@ -226,7 +216,3 @@ async function regenerateVideo(
   }
 }
 
-export async function regenerateVideoAction(taskId: string) {
-  "use server";
-  return regenerateVideo(taskId);
-}

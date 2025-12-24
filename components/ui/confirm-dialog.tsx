@@ -6,13 +6,13 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./button";
 
-const AlertDialog = AlertDialogPrimitive.Root;
+const ConfirmDialog = AlertDialogPrimitive.Root;
 
-const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
+const ConfirmDialogTrigger = AlertDialogPrimitive.Trigger;
 
-const AlertDialogPortal = AlertDialogPrimitive.Portal;
+const ConfirmDialogPortal = AlertDialogPrimitive.Portal;
 
-const AlertDialogOverlay = React.forwardRef<
+const ConfirmDialogOverlay = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
@@ -25,14 +25,14 @@ const AlertDialogOverlay = React.forwardRef<
     ref={ref}
   />
 ));
-AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
+ConfirmDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 
-const AlertDialogContent = React.forwardRef<
+const ConfirmDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
 >(({ className, ...props }, ref) => (
-  <AlertDialogPortal>
-    <AlertDialogOverlay />
+  <ConfirmDialogPortal>
+    <ConfirmDialogOverlay />
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(
@@ -41,11 +41,11 @@ const AlertDialogContent = React.forwardRef<
       )}
       {...props}
     />
-  </AlertDialogPortal>
+  </ConfirmDialogPortal>
 ));
-AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
+ConfirmDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
 
-const AlertDialogHeader = ({
+const ConfirmDialogHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -57,9 +57,9 @@ const AlertDialogHeader = ({
     {...props}
   />
 );
-AlertDialogHeader.displayName = "AlertDialogHeader";
+ConfirmDialogHeader.displayName = "ConfirmDialogHeader";
 
-const AlertDialogFooter = ({
+const ConfirmDialogFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -71,9 +71,9 @@ const AlertDialogFooter = ({
     {...props}
   />
 );
-AlertDialogFooter.displayName = "AlertDialogFooter";
+ConfirmDialogFooter.displayName = "ConfirmDialogFooter";
 
-const AlertDialogTitle = React.forwardRef<
+const ConfirmDialogTitle = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
@@ -83,9 +83,9 @@ const AlertDialogTitle = React.forwardRef<
     {...props}
   />
 ));
-AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
+ConfirmDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
 
-const AlertDialogDescription = React.forwardRef<
+const ConfirmDialogDescription = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
@@ -95,10 +95,10 @@ const AlertDialogDescription = React.forwardRef<
     {...props}
   />
 ));
-AlertDialogDescription.displayName =
+ConfirmDialogDescription.displayName =
   AlertDialogPrimitive.Description.displayName;
 
-const AlertDialogAction = React.forwardRef<
+const ConfirmDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
 >(({ className, ...props }, ref) => (
@@ -108,9 +108,9 @@ const AlertDialogAction = React.forwardRef<
     {...props}
   />
 ));
-AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
+ConfirmDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
-const AlertDialogCancel = React.forwardRef<
+const ConfirmDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
 >(({ className, ...props }, ref) => (
@@ -120,19 +120,19 @@ const AlertDialogCancel = React.forwardRef<
     {...props}
   />
 ));
-AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
+ConfirmDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 
 export {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  ConfirmDialog,
+  ConfirmDialogAction,
+  ConfirmDialogCancel,
+  ConfirmDialogContent,
+  ConfirmDialogDescription,
+  ConfirmDialogFooter,
+  ConfirmDialogHeader,
+  ConfirmDialogOverlay,
+  ConfirmDialogPortal,
+  ConfirmDialogTitle,
+  ConfirmDialogTrigger,
 };
 
