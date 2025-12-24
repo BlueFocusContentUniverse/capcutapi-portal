@@ -116,7 +116,6 @@ async function saveDraft(
 }
 
 export async function saveDraftAction(_prevState: unknown, formData: FormData) {
-  "use server";
   return saveDraft(formData);
 }
 
@@ -169,8 +168,6 @@ export async function fetchVideoTasksFromApi({
 }
 
 export async function regenerateVideoAction(taskId: string) {
-  "use server";
-
   // Get user session for authentication
   const session = await auth.api.getSession({
     headers: await headers(),

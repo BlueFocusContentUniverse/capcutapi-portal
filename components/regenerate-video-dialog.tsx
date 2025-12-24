@@ -8,16 +8,15 @@ import { AlertCircle, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
-  ConfirmDialog,
-  ConfirmDialogAction,
-  ConfirmDialogCancel,
-  ConfirmDialogContent,
-  ConfirmDialogDescription,
-  ConfirmDialogFooter,
-  ConfirmDialogHeader,
-  ConfirmDialogTitle,
-  ConfirmDialogTrigger,
-} from "@/components/ui/confirm-dialog";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { regenerateVideoAction } from "@/app/(main)/video-tasks/actions";
 
@@ -94,22 +93,22 @@ export function RegenerateVideoDialog({
   };
 
   return (
-    <ConfirmDialog open={open} onOpenChange={handleOpenChange}>
-      <ConfirmDialogTrigger asChild>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           {buttonLabel || t("actions.regenerate") || "重新生成"}
         </Button>
-      </ConfirmDialogTrigger>
-      <ConfirmDialogContent>
-        <ConfirmDialogHeader>
-          <ConfirmDialogTitle>
+      </DialogTrigger>
+      <DialogContent showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>
             {t("video_tasks.regenerate.title") || "确认重新生成"}
-          </ConfirmDialogTitle>
-          <ConfirmDialogDescription>
+          </DialogTitle>
+          <DialogDescription>
             {t("video_tasks.regenerate.description") || 
               "确定要重新生成此视频吗？此操作将重新提交渲染任务。"}
-          </ConfirmDialogDescription>
-        </ConfirmDialogHeader>
+          </DialogDescription>
+        </DialogHeader>
         {error && (
           <Alert variant="destructive" className="mt-2">
             <AlertCircle className="h-4 w-4" />
@@ -118,11 +117,13 @@ export function RegenerateVideoDialog({
             </AlertDescription>
           </Alert>
         )}
-        <ConfirmDialogFooter>
-          <ConfirmDialogCancel disabled={isLoading}>
-            {t("actions.cancel") || "取消"}
-          </ConfirmDialogCancel>
-          <ConfirmDialogAction
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline" disabled={isLoading}>
+              {t("actions.cancel") || "取消"}
+            </Button>
+          </DialogClose>
+          <Button
             onClick={handleConfirm}
             disabled={isLoading}
             className="min-w-[100px]"
@@ -135,10 +136,10 @@ export function RegenerateVideoDialog({
             ) : (
               t("actions.confirm") || "确认"
             )}
-          </ConfirmDialogAction>
-        </ConfirmDialogFooter>
-      </ConfirmDialogContent>
-    </ConfirmDialog>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
