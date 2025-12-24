@@ -43,7 +43,6 @@ export function RegenerateVideoDialog({
     if (!taskId) {
       const errorMsg = t("video_tasks.regenerate.error.no_task_id") || "Task ID is required";
       setError(errorMsg);
-      toast.error(errorMsg);
       return;
     }
 
@@ -67,14 +66,12 @@ export function RegenerateVideoDialog({
           t("video_tasks.regenerate.error.failed") || 
           "Failed to regenerate video";
         setError(errorMsg);
-        toast.error(errorMsg);
       }
     } catch (error) {
       const errorMsg = error instanceof Error 
         ? error.message 
         : t("video_tasks.regenerate.error.failed") || "Failed to regenerate video";
       setError(errorMsg);
-      toast.error(errorMsg);
     } finally {
       setIsLoading(false);
     }
