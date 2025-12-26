@@ -762,12 +762,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "draft_url": {
-          "name": "draft_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "extra": {
           "name": "extra",
           "type": "jsonb",

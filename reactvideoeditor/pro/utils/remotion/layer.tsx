@@ -1,6 +1,6 @@
+import type { FontInfo } from "@remotion/google-fonts";
 import React, { useMemo } from "react";
 import { Sequence } from "remotion";
-import type { FontInfo } from "@remotion/google-fonts";
 
 import { Overlay } from "../../types";
 import { LayerContent } from "./layer-content";
@@ -80,13 +80,19 @@ export const Layer: React.FC<{
    * Standard layer rendering for visual elements
    * Wraps the content in a Sequence for timing control and
    * a positioned div for layout management
+   *
+   * premountFor is used to preload assets before they appear, preventing
+   * flickering at split points where a lower track video could briefly show through.
+   * Note: premountFor requires removing layout="none" as the Sequence needs
+   * a container to apply opacity: 0 and pointer-events: none during premount.
+   * @see https://www.remotion.dev/docs/player/premounting
    */
   return (
     <Sequence
       key={overlay.id}
       from={overlay.from}
       durationInFrames={overlay.durationInFrames}
-      layout="none"
+      premountFor={30}
     >
       <div style={style}>
         <LayerContent

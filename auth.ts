@@ -2,7 +2,7 @@ import { passkey } from "@better-auth/passkey";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { admin, emailOTP, username } from "better-auth/plugins";
+import { admin, emailOTP, organization, username } from "better-auth/plugins";
 
 import { db } from "./drizzle/db";
 import {
@@ -15,6 +15,9 @@ import {
 import { sendOTPEmail } from "./lib/email";
 
 export const auth = betterAuth({
+  experimental: {
+    joins: true,
+  },
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
